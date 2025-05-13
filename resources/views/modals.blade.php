@@ -6058,6 +6058,7 @@
 
                     <div class="col-md-6">
                         <label for="status" class="form-label">{{ get_label('status', 'Status') }}</label>
+
                         @if (isset($statuses) && $statuses->isNotEmpty())
                             <select name="status_id" class="form-select" required>
                                 <option value="">{{ get_label('select_status', 'Select Status') }}</option>

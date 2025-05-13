@@ -61,7 +61,6 @@ class EmailSendController extends Controller
                     ]
                 );
             } else {
-                dd('here');
                 return response()->json([
                     'subject' => $template->subject,
                     'body' => $template->body,
@@ -130,7 +129,7 @@ class EmailSendController extends Controller
 
     public function store(Request $request)
     {
-        $isApi = request()->get('isApi', false);
+        // $isApi = request()->get('isApi', false);
         try {
             $general_settings = get_settings('general_settings');
             $maxFileSizeBytes = config('media-library.max_file_size');
@@ -251,14 +250,14 @@ class EmailSendController extends Controller
                 $createdEmails[] = formatEmailSend($email); // Add formatted email
             }
             $message = $isScheduled ? 'Emails scheduled successfully!' : 'Emails sent successfully.';
-            if ($isApi) {
-                return formatApiResponse(false, $message, []);
-            } else {
-                return response()->json([
+            // if ($isApi) {
+            //     return formatApiResponse(false, $message, []);
+            // } else {
+            return response()->json([
                     'error' => false,
                     'message' => $message
                 ]);
-            }
+            // }
         } catch (Exception $e) {
             Log::error('Failed to send or schedule emails: ' . $e->getMessage());
             return response()->json([
@@ -371,49 +370,50 @@ class EmailSendController extends Controller
         ]);
     }
 
-    public function apiHistoryList(Request $request, $id = '')
+    public function apihistoryList(Request $request, $id = '')
     {
         try {
+            // Validate input parameters
+            $request->validate([
+                'search' => 'nullable|string|max:255',
+                'sort' => 'in:id,to_email,subject,scheduled_at,created_at,updated_at',
+                'order' => 'in:ASC,DESC',
+                'limit' => 'integer|min:1|max:100',
+                'offset' => 'integer|min:0',
+            ]);
 
+            // Retrieve input parameters with defaults
             $search = $request->input('search');
-            $order = $request->input('order', 'DESC');
             $sort = $request->input('sort', 'id');
+            $order = $request->input('order', 'DESC');
             $limit = (int) $request->input('limit', 10);
             $offset = (int) $request->input('offset', 0);
 
-
-            // Determin query based on permissions
-            $query = isAdminOrHasAllDataAccess() ? $this->workspace->scheduledEmails() : $this->user->scheduledEmails();
+            // Determine query based on permissions
+            $query = isAdminOrHasAllDataAccess() ? $this->workspace->scheduledEmails() : auth()->user()->scheduledEmails();
 
             if ($id) {
-
-                // find email by id
+                // Find email by ID
                 $email = $query->where('id', $id)->first();
 
                 if (!$email) {
                     return formatApiResponse(
                         false,
                         'Email Not Found!',
-                        [
-                            'total' => 0,
-                            'data' => [],
-                        ],
+                        ['total' => 0, 'data' => []],
                         404
                     );
-                } else {
-
-                    return formatApiResponse(
-                        false,
-                        'Email Retrieved successfully!',
-                        [
-                            'total' => 1,
-                            'data' => formatEmailSend($email),
-                        ]
-                    );
                 }
+
+                return formatApiResponse(
+                    false, // Adjust based on formatApiResponse definition
+                    'Email Retrieved Successfully!',
+                    ['total' => 1, 'data' => formatEmailSend($email)],
+                    200
+                );
             }
 
-
+            // Apply search filter
             if ($search) {
                 $query->where(function ($q) use ($search) {
                     $q->where('to_email', 'like', '%' . $search . '%')
@@ -421,29 +421,43 @@ class EmailSendController extends Controller
                 });
             }
 
-            // apply sorting
+            // Apply sorting
             $query->orderBy('scheduled_emails.' . $sort, $order);
 
-            //get total count for pagination
+            // Get total count for pagination
             $total = $query->count();
 
+            // Fetch emails with pagination
             $emails = $query->skip($offset)->take($limit)->get();
 
+            if ($emails->isEmpty()) {
+                return formatApiResponse(
+                    false,
+                    'No email history found',
+                    ['total' => 0, 'data' => []],
+                    200
+                );
+            }
+
+            // Transform emails
             $data = $emails->map(function ($email) {
-                return formatEmailTemplate($email);
-            });
+                return formatEmailSend($email);
+            })->toArray();
 
             return formatApiResponse(
-                false,
+                false, // Adjust based on formatApiResponse definition
                 'Email History Retrieved Successfully!',
-                [
-                    'total' => $total,
-                    'data' => $data
-                ]
+                ['total' => $total, 'data' => $data],
+                200
             );
         } catch (\Exception $e) {
-            Log::error('Failed to fetch emails!', ['error' => $e->getMessage()]);
-            return formatApiResponse(true, 'Something went wrong.', [], 500);
+            Log::error('Failed to fetch email history!', ['error' => $e->getMessage()]);
+            return formatApiResponse(
+                true,
+                'Something went wrong.',
+                [],
+                500
+            );
         }
     }
 }

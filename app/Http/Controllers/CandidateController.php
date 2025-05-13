@@ -272,6 +272,8 @@ class CandidateController extends Controller
   public function update_status(Request $request, $id)
   {
 
+    $isApi = $request->get('isApi', false) || $request->expectsJson();
+
     $request->validate([
       'status_id' => 'required|exists:candidate_statuses,id'
     ]);
@@ -279,6 +281,13 @@ class CandidateController extends Controller
     $candidate = Candidate::findOrFail($id);
     $candidate->update(['status_id' => $request->status_id]);
 
+    if ($isApi) {
+      return formatApiResponse(
+        false,
+        'Candidate Status Updated Successfully!',
+        []
+      );
+    }
     return response()->json([
       'error' => false,
       'message' => 'Candidate Status Updated Successfully!'
@@ -352,6 +361,7 @@ class CandidateController extends Controller
   public function update(Request $request, $id)
   {
 
+    $isApi = request()->get('isApi', false) || $request->expectsjson();
     $maxFileSizeBytes = config('media-library.max_file_size');
     $maxFileSizeKb = (int) ($maxFileSizeBytes / 1024);
 
@@ -377,11 +387,21 @@ class CandidateController extends Controller
     }
 
 
-    return response()->json([
-      'error' => false,
-      'message' => 'User Updated Successfully!',
-      'candidate' => $candidate
-    ]);
+    if ($isApi) {
+      return formatApiResponse(
+        false,
+        'Candidate Created Successfully!',
+        [
+          'data' => formatCandidate($candidate)
+        ]
+      );
+    } else {
+      return response()->json([
+        'error' => false,
+        'message' => 'Candidate Created Successfully!',
+        'candidate' => $candidate
+      ]);
+    }
   }
 
   public function destroy($id)

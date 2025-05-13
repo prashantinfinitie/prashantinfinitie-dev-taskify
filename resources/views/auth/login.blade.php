@@ -1,4 +1,8 @@
 @extends('layout')
+{{-- @dd(get_settings("general_settings")) --}}
+@php
+$general_settings = get_settings("general_settings")
+@endphp
 <title>{{get_label('login','Login')}} - {{$general_settings['company_title']}}</title>
 @section('content')
 <!-- Content -->
