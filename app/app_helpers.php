@@ -2731,8 +2731,38 @@ if (!function_exists('formatCandidate')) {
                     'mime_type' => $media->mime_type,
                 ];
             })->toArray(),
+            'interviews' => $candidate->interviews->map(function ($interview) {
+                return [
+                    'id' => $interview->id,
+                    'candidate_name' => $interview->candidate->name,
+                    'interviewer' => $interview->interviewer->first_name . ' ' . $interview->interviewer->last_name,
+                    'round' => $interview->round,
+                    'scheduled_at' => $interview->scheduled_at,
+                    'status' => $interview->status,
+                    'location' => $interview->location,
+                    'mode' => $interview->mode,
+                    'created_at' => format_date($interview->created_at),
+                    'updated_at' => format_date($interview->updated_at),
+                ];
+            }),
             'created_at' => format_date($candidate->created_at, to_format: 'Y-m-d'),
             'updated_at' => format_date($candidate->updated_at, to_format: 'Y-m-d'),
+        ];
+    }
+}
+
+if (!function_exists('formatCandidateStuses')) {
+    function formatCandidateStatus($status)
+    {
+        return [
+            'id' => $status->id,
+            'name' => $status->name,
+            'order' => $status->order,
+            'color' => $status->color,
+            'created_at' => format_date($status->created_at),
+            'updated_at' => format_date($status->updated_at),
+            'can_edit' => checkPermission('edit_candidate_status'),
+            'can_delete' => checkPermission('delete_candidate_status'),
         ];
     }
 }

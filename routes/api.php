@@ -32,6 +32,7 @@ use App\Http\Controllers\LeaveRequestController;
 use App\Http\Controllers\EmailTemplateController;
 use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\PaymentMethodsController;
+use App\Http\Controllers\CandidateStatusController;
 use App\Http\Controllers\EstimatesInvoicesController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 
@@ -361,21 +362,25 @@ Route::middleware(['multiguard', 'custom-verified', 'has_workspace'])->group(fun
         Route::put('/update/{id}', [CandidateController::class, 'update'])->name('candidate.update')->middleware('customcan:edit_candidate');
         Route::post('/{id}/update_status', [CandidateController::class, 'update_status'])->name('candidate.update.status')->middleware('customcan:edit_candidate');
         Route::delete('/destroy/{id}', [CandidateController::class, 'destroy'])->name('candidate.destroy')->middleware('customcan:delete_candidate');
-        Route::post('/destroy_multiple', [CandidateController::class, 'destroy_multiple'])->name('candidate.destroy_multiple')->middleware('customcan:delete_candidate');
-        Route::get('/kanban', [CandidateController::class, 'kanban_view'])->name('candidate.kanban_view');
-        Route::get('/list', [CandidateController::class, 'list'])->name('candidate.list');
-        Route::get('/{id}', [CandidateController::class, 'show'])->name('candidate.show');
+        Route::get('/list/{id?}', [CandidateController::class, 'apiList'])->name('candidate.list');
         Route::get('/{id}/interviews', [CandidateController::class, 'getInterviewDetails'])->name('candidate.interviews.details');
-
         Route::post('/{id}/upload-attachment', [CandidateController::class, 'uploadAttachment'])
             ->name('candidate.upload-attachment');
         Route::delete('/candidate-media/destroy/{id}', [CandidateController::class, 'deleteAttachment'])
             ->name('candidate.delete-attachment');
-        Route::get('/{id}/attachments/list', [CandidateController::class, 'attachmentsList'])->name('candidate.attachments.list');
+        Route::get('/{id}/attachments/list', [CandidateController::class, 'apiAttachmentsList'])->name('candidate.attachments.list');
         Route::get('/{candidateId}/attachment/{mediaId}/download', [CandidateController::class, 'downloadAttachment'])
             ->name('candidate.attachment.download');
         Route::get('/{candidateId}/attachment/{mediaId}/view', [CandidateController::class, 'viewAttachment'])
             ->name('candidate.attachment.view');
         Route::get('/{id}/quick-view', [CandidateController::class, 'getCandidate'])->name('candidate.quick-view');
+    });
+
+    Route::prefix('candidate_status')->middleware('customcan:manage_candidate_status')->group(function () {
+        Route::post('/store', [CandidateStatusController::class, 'store'])->name('candidate.status.store')->middleware('customcan:create_candidate_status');
+        Route::put('/update/{id}', [CandidateStatusController::class, 'update'])->name('candidate.status.update')->middleware('customcan:edit_candidate_status');
+        Route::delete('/destroy/{id}', [CandidateStatusController::class, 'destroy'])->name('candidate.status.destroy')->middleware('customcan:delete_candidate_status');
+        Route::post('/reorder', [CandidateStatusController::class, 'reorder'])->name('candidate.status.reorder');
+        Route::get('/list', [CandidateStatusController::class, 'list'])->name('candidate.status.list');
     });
 });

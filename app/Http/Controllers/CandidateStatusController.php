@@ -17,6 +17,8 @@ class CandidateStatusController extends Controller
     public function store(Request $request)
     {
 
+        $isApi = request()->get('isApi', false);
+
         $request->validate([
             'name' => 'required|string|max:255',
             'color' => 'required'
@@ -30,6 +32,17 @@ class CandidateStatusController extends Controller
             'color' => $request->color
         ]);
 
+        if (!$isApi) {
+            return formatApiResponse(
+                false,
+                'Candidate status retrieved successfully!',
+                [
+                    'data' => formatCandidateStatus($candidate_status)
+                ],
+                200
+            );
+        }
+
         return response()->json([
             'error' => false,
             'message' => 'Status Created Successfully!',
@@ -39,6 +52,8 @@ class CandidateStatusController extends Controller
 
     public function update(Request $request, $id)
     {
+
+        $isApi = request('isApi', false);
         $request->validate([
             'name' => 'required|string|max:255'
         ]);
@@ -49,6 +64,17 @@ class CandidateStatusController extends Controller
             'name' => $request->name,
             'color' => $request->color
         ]);
+
+        if ($isApi) {
+            return formatApiResponse(
+                false,
+                'Candidate status updated successfully!',
+                [
+                    'data' => $candidate_status
+                ],
+                200
+            );
+        }
 
         return response()->json([
             'error' => false,

@@ -105,8 +105,8 @@ $(document).ready(function () {
             url: `/candidate/${candidateId}/interviews`,
             method: 'GET',
             success: function (response) {
+                console.log(response);
                 if (response && !response.error) {
-                    console.log(response);
                     // Insert response HTML into modal
                     modal.find('#interviewDetailsContent').html(response.html);
 

@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use App\Notifications\DynamicTemplateMail;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class EmailSendController extends Controller
 {
@@ -76,7 +78,7 @@ class EmailSendController extends Controller
 
     public function preview(Request $request)
     {
-        $isApi = request()->get('isApi', false) || $request->expectsJson();
+        $isApi = request()->get('isApi', false);
         if ($request->has('is_encoded') && $request->is_encoded == '1') {
             $decodedContent = base64_decode($request->content);
             $request->merge(['body' => $decodedContent]);
@@ -370,45 +372,58 @@ class EmailSendController extends Controller
         ]);
     }
 
-    public function apihistoryList(Request $request, $id = '')
+    public function apihistoryList(Request $request, $id = null)
     {
         try {
-            // Validate input parameters
-            $request->validate([
+            // Validate query parameters
+            $validated = $request->validate([
                 'search' => 'nullable|string|max:255',
-                'sort' => 'in:id,to_email,subject,scheduled_at,created_at,updated_at',
-                'order' => 'in:ASC,DESC',
-                'limit' => 'integer|min:1|max:100',
-                'offset' => 'integer|min:0',
+                'sort' => 'nullable|string|in:id,to_email,subject,scheduled_at,created_at,updated_at',
+                'order' => 'nullable|string|in:ASC,DESC',
+                'limit' => 'nullable|integer|min:1|max:100',
+                'offset' => 'nullable|integer|min:0',
             ]);
 
-            // Retrieve input parameters with defaults
-            $search = $request->input('search');
-            $sort = $request->input('sort', 'id');
-            $order = $request->input('order', 'DESC');
-            $limit = (int) $request->input('limit', 10);
-            $offset = (int) $request->input('offset', 0);
+            // Validate ID if provided
+            if ($id !== null && (!is_numeric($id) || $id <= 0)) {
+                throw new \InvalidArgumentException('Invalid email ID.');
+            }
+
+            // Extract parameters with defaults
+            $search = $validated['search'] ?? '';
+            $sort = $validated['sort'] ?? 'id';
+            $order = $validated['order'] ?? 'DESC';
+            $limit = $validated['limit'] ?? config('pagination.default_limit', 10);
+            $offset = $validated['offset'] ?? 0;
 
             // Determine query based on permissions
-            $query = isAdminOrHasAllDataAccess() ? $this->workspace->scheduledEmails() : auth()->user()->scheduledEmails();
+            $query = isAdminOrHasAllDataAccess()
+                ? $this->workspace->scheduledEmails()
+                : auth()->user()->scheduledEmails();
 
+            // Fetch single email if ID is provided
             if ($id) {
-                // Find email by ID
-                $email = $query->where('id', $id)->first();
+                $email = $query->findOrFail($id);
+                $data = formatEmailSend($email);
+                $data['can_edit'] = checkPermission('edit_email');
+                $data['can_delete'] = checkPermission('delete_email');
 
-                if (!$email) {
-                    return formatApiResponse(
-                        false,
-                        'Email Not Found!',
-                        ['total' => 0, 'data' => []],
-                        404
-                    );
-                }
+                Log::info('Single email history fetched via API', [
+                    'email_id' => $id,
+                    'user_id' => auth()->id() ?? 'guest',
+                ]);
 
                 return formatApiResponse(
-                    false, // Adjust based on formatApiResponse definition
-                    'Email Retrieved Successfully!',
-                    ['total' => 1, 'data' => formatEmailSend($email)],
+                    false,
+                    'Email retrieved successfully.',
+                    [
+                        'total' => 1,
+                        'data' => [$data],
+                        'permissions' => [
+                            'can_edit' => $data['can_edit'],
+                            'can_delete' => $data['can_delete'],
+                        ],
+                    ],
                     200
                 );
             }
@@ -416,45 +431,80 @@ class EmailSendController extends Controller
             // Apply search filter
             if ($search) {
                 $query->where(function ($q) use ($search) {
-                    $q->where('to_email', 'like', '%' . $search . '%')
-                        ->orWhere('subject', 'like', '%' . $search . '%');
+                    $q->where('to_email', 'like', '%' . addslashes($search) . '%')
+                        ->orWhere('subject', 'like', '%' . addslashes($search) . '%');
                 });
             }
 
             // Apply sorting
-            $query->orderBy('scheduled_emails.' . $sort, $order);
+            $query->orderBy($sort, $order);
 
-            // Get total count for pagination
+            // Get total count
             $total = $query->count();
 
-            // Fetch emails with pagination
-            $emails = $query->skip($offset)->take($limit)->get();
+            // Check permissions
+            $canEdit = checkPermission('edit_email');
+            $canDelete = checkPermission('delete_email');
 
-            if ($emails->isEmpty()) {
-                return formatApiResponse(
-                    false,
-                    'No email history found',
-                    ['total' => 0, 'data' => []],
-                    200
-                );
-            }
+            // Fetch emails
+            $emails = $query->skip($offset)
+                ->take($limit)
+                ->get()
+                ->map(function ($email) use ($canEdit, $canDelete) {
+                    $data = formatEmailSend($email);
+                    $data['can_edit'] = $canEdit;
+                    $data['can_delete'] = $canDelete;
+                    return $data;
+                });
 
-            // Transform emails
-            $data = $emails->map(function ($email) {
-                return formatEmailSend($email);
-            })->toArray();
+            // Log success
+            Log::info('Email history list fetched via API', [
+                'search' => $search,
+                'sort' => $sort,
+                'order' => $order,
+                'limit' => $limit,
+                'offset' => $offset,
+                'total' => $total,
+                'user_id' => auth()->id() ?? 'guest',
+            ]);
 
             return formatApiResponse(
-                false, // Adjust based on formatApiResponse definition
-                'Email History Retrieved Successfully!',
-                ['total' => $total, 'data' => $data],
+                false,
+                'Emails retrieved successfully.',
+                [
+                    'total' => $total,
+                    'data' => $emails->toArray(),
+                    'permissions' => [
+                        'can_edit' => $canEdit,
+                        'can_delete' => $canDelete,
+                    ],
+                ],
                 200
             );
+        } catch (ValidationException $e) {
+            $errors = $e->validator->errors()->all();
+            $message = 'Validation failed: ' . implode(', ', $errors);
+            Log::warning('Validation failed in apihistoryList', [
+                'errors' => $errors,
+                'input' => $request->all(),
+            ]);
+            return formatApiResponse(true, $message, [], 422);
+        } catch (ModelNotFoundException $e) {
+            Log::error('Email not found in apihistoryList', [
+                'email_id' => $id,
+                'exception' => $e->getMessage(),
+            ]);
+            return formatApiResponse(true, 'Email not found.', [], 404);
         } catch (\Exception $e) {
-            Log::error('Failed to fetch email history!', ['error' => $e->getMessage()]);
+            Log::error('Error in apihistoryList', [
+                'email_id' => $id,
+                'exception' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+                'input' => $request->all(),
+            ]);
             return formatApiResponse(
                 true,
-                'Something went wrong.',
+                config('app.debug') ? $e->getMessage() : 'An error occurred.',
                 [],
                 500
             );

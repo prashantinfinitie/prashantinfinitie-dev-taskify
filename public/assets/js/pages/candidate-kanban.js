@@ -97,6 +97,7 @@ $(document).ready(function () {
                     'X-Requested-With': 'XMLHttpRequest'
                 },
                 success: function (data) {
+                    console.log(data);
                     if (!data?.candidate) {
                         alert('Candidate data is missing.');
                         return;
