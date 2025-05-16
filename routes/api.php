@@ -25,6 +25,7 @@ use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\CandidateController;
 use App\Http\Controllers\EmailSendController;
+use App\Http\Controllers\InterviewController;
 use App\Http\Controllers\WorkspacesController;
 use App\Http\Controllers\ActivityLogController;
 use App\Http\Controllers\Auth\SignUpController;
@@ -343,8 +344,9 @@ Route::middleware(['multiguard', 'custom-verified', 'has_workspace'])->group(fun
         Route::post('/email-templates/store', [EmailTemplateController::class, 'store'])->name('email.templates.store')->middleware('customcan:create_email_template');
         Route::put('/email-templates/update/{id}', [EmailTemplateController::class, 'update'])->name('email.templates.update')->middleware('customcan:edit_email_template');
         Route::delete('/email-templates/destroy/{id}', [EmailTemplateController::class, 'destroy'])->name('email.templates.delete')->middleware('customcan:delete_email_template');
-        Route::get('/email-templates/{id?}', [EmailTemplateController::class, 'apiList'])->name('email.templates.list');
+        Route::get('/email-templates/list/{id?}', [EmailTemplateController::class, 'apiList'])->name('email.templates.list');
     });
+
 
     // Email Sending Routes
     Route::prefix('emails')->middleware('customcan:send_email, isApi')->group(function () {
@@ -363,24 +365,45 @@ Route::middleware(['multiguard', 'custom-verified', 'has_workspace'])->group(fun
         Route::post('/{id}/update_status', [CandidateController::class, 'update_status'])->name('candidate.update.status')->middleware('customcan:edit_candidate');
         Route::delete('/destroy/{id}', [CandidateController::class, 'destroy'])->name('candidate.destroy')->middleware('customcan:delete_candidate');
         Route::get('/list/{id?}', [CandidateController::class, 'apiList'])->name('candidate.list');
+
         Route::get('/{id}/interviews', [CandidateController::class, 'getInterviewDetails'])->name('candidate.interviews.details');
+
         Route::post('/{id}/upload-attachment', [CandidateController::class, 'uploadAttachment'])
             ->name('candidate.upload-attachment');
+
         Route::delete('/candidate-media/destroy/{id}', [CandidateController::class, 'deleteAttachment'])
             ->name('candidate.delete-attachment');
+
         Route::get('/{id}/attachments/list', [CandidateController::class, 'apiAttachmentsList'])->name('candidate.attachments.list');
+
         Route::get('/{candidateId}/attachment/{mediaId}/download', [CandidateController::class, 'downloadAttachment'])
             ->name('candidate.attachment.download');
+
         Route::get('/{candidateId}/attachment/{mediaId}/view', [CandidateController::class, 'viewAttachment'])
             ->name('candidate.attachment.view');
+
         Route::get('/{id}/quick-view', [CandidateController::class, 'getCandidate'])->name('candidate.quick-view');
     });
 
     Route::prefix('candidate_status')->middleware('customcan:manage_candidate_status')->group(function () {
+
         Route::post('/store', [CandidateStatusController::class, 'store'])->name('candidate.status.store')->middleware('customcan:create_candidate_status');
+
         Route::put('/update/{id}', [CandidateStatusController::class, 'update'])->name('candidate.status.update')->middleware('customcan:edit_candidate_status');
+
         Route::delete('/destroy/{id}', [CandidateStatusController::class, 'destroy'])->name('candidate.status.destroy')->middleware('customcan:delete_candidate_status');
+
         Route::post('/reorder', [CandidateStatusController::class, 'reorder'])->name('candidate.status.reorder');
-        Route::get('/list', [CandidateStatusController::class, 'list'])->name('candidate.status.list');
+
+        Route::get('/list/{id?}', [CandidateStatusController::class, 'apiList'])->name('candidate.status.list');
     });
+
+
+    Route::post('/interviews/store', [InterviewController::class, 'store'])->name('interviews.store')->middleware(['customcan:create_interview', 'log.activity']);
+
+    Route::put('/interviews/update/{id}', [InterviewController::class, 'update'])->name('interviews.update')->middleware(['customcan:edit_interview', 'log.activity']);
+
+    Route::delete('/interviews/destroy/{id}', [InterviewController::class, 'destroy'])->name('interviews.destroy')->middleware(['customcan:delete_interview', 'log.activity']);
+
+    Route::get('/interviews/list/{id?}', [InterviewController::class, 'apiList'])->name('interviews.list')->middleware('customcan:manage_interview');
 });

@@ -32,6 +32,83 @@ class CandidateController extends Controller
     return view('candidate.show', compact('candidate', 'statuses', 'users', 'candidates'));
   }
 
+
+
+
+  /**
+   * Retrieve a candidate's details.
+   *
+   * This endpoint fetches detailed information about a specific candidate, including their status, interviews, and media attachments. The user must be authenticated to perform this action. The request can be made via API or non-API calls, with an optional `isApi` parameter to format the response accordingly.
+   *
+   * @authenticated
+   *
+   * @group Candidate Management
+   *
+   * @urlParam id integer required The ID of the candidate to retrieve. Must exist in the `candidates` table. Example: 101
+   * @queryParam isApi boolean optional Indicates if the response should be formatted for API use. Defaults to false. Example: true
+   *
+   * @response 200 {
+   *   "error": false,
+   *   "message": "Candidate details retrieved successfully!",
+   *   "data": {
+   *     "candidate": {
+   *       "id": 101,
+   *       "name": "John Doe",
+   *       "email": "john.doe@example.com",
+   *       "phone": "+1234567890",
+   *       "position": "Software Engineer",
+   *       "source": "LinkedIn",
+   *       "status": "Applied",
+   *       "created_at": "15 May 2025",
+   *       "avatar": "https://example.com/storage/candidate-media/avatar.jpg"
+   *     },
+   *     "attachments": [
+   *       {
+   *         "id": 1,
+   *         "name": "resume.pdf",
+   *         "type": "application/pdf",
+   *         "size": "512.34 KB",
+   *         "created_at": "15 May 2025",
+   *         "url": "https://example.com/storage/candidate-media/resume.pdf",
+   *         "is_image": false
+   *       }
+   *     ],
+   *     "interviews": [
+   *       {
+   *         "id": 1,
+   *         "candidate_name": "John Doe",
+   *         "interviewer": "Jane Smith",
+   *         "round": "Technical",
+   *         "scheduled_at": "2025-05-20 10:00:00",
+   *         "status": "Scheduled",
+   *         "location": "Online",
+   *         "mode": "Video",
+   *         "created_at": "15 May 2025",
+   *         "updated_at": "15 May 2025"
+   *       }
+   *     ]
+   *   }
+   * }
+   *
+   * @response 400 {
+   *   "error": true,
+   *   "message": "Candidate ID not found.",
+   *   "data": []
+   * }
+   *
+   * @response 404 {
+   *   "error": true,
+   *   "message": "Candidate not found!",
+   *   "data": []
+   * }
+   *
+   * @response 500 {
+   *   "error": true,
+   *   "message": "An error occurred",
+   *   "data": []
+   * }
+   */
+
   public function getCandidate($id)
   {
 
@@ -111,6 +188,57 @@ class CandidateController extends Controller
     }
   }
 
+
+
+  // Method: getInterviewDetails
+  /**
+   * Retrieve a candidate's interview details.
+   *
+   * This endpoint fetches the interview details for a specific candidate, including a rendered HTML partial for display. The user must be authenticated to perform this action. The request can be made via API or non-API calls, with an optional `isApi` parameter to format the response.
+   *
+   * @authenticated
+   *
+   * @group Candidate Management
+   *
+   * @urlParam id integer required The ID of the candidate whose interview details are to be retrieved. Must exist in the `candidates` table. Example: 101
+   * @queryParam isApi boolean optional Indicates if the response should be formatted for API use. Defaults to false. Example: true
+   *
+   * @response 200 {
+   *   "error": false,
+   *   "message": "Interview details retrieved successfully!",
+   *   "data": {
+   *     "candidate": {
+   *       "id": 101,
+   *       "name": "John Doe",
+   *       "email": "john.doe@example.com",
+   *       "phone": "+1234567890",
+   *       "position": "Software Engineer",
+   *       "source": "LinkedIn",
+   *       "status_id": 1
+   *     },
+   *     "html": "<div>...</div>"
+   *   }
+   * }
+   *
+   * @response 400 {
+   *   "error": true,
+   *   "message": "Invalid candidate ID!",
+   *   "data": []
+   * }
+   *
+   * @response 404 {
+   *   "error": true,
+   *   "message": "Candidate not found!",
+   *   "data": []
+   * }
+   *
+   * @response 500 {
+   *   "error": true,
+   *   "message": "An error occurred!",
+   *   "data": []
+   * }
+   */
+
   public function getInterviewDetails($id)
   {
 
@@ -159,6 +287,55 @@ class CandidateController extends Controller
       return $isApi ? formatApiResponse(true, 'An error occurred!', [], 500) : response()->json($response, 500);
     }
   }
+
+
+  // Method: uploadAttachment
+  /**
+   * Upload attachments for a candidate.
+   *
+   * This endpoint allows uploading one or more files as attachments for a specific candidate. The user must be authenticated to perform this action. The files must be of allowed types (PDF, DOC, DOCX, JPG, JPEG, PNG) and within the configured size limit.
+   *
+   * @authenticated
+   *
+   * @group Candidate Management
+   *
+   * @urlParam id integer required The ID of the candidate to associate the attachments with. Must exist in the `candidates` table. Example: 101
+   * @bodyParam attachments array required An array of files to upload. Each file must be a valid type (pdf, doc, docx, jpg, jpeg, png) and not exceed the maximum size (configured in media-library.max_file_size). Example: [resume.pdf]
+   * @queryParam isApi boolean optional Indicates if the response should be formatted for API use. Defaults to false. Example: true
+   *
+   * @response 200 {
+   *   "error": false,
+   *   "message": "Files uploaded successfully!",
+   *   "data": [
+   *     {
+   *       "id": 1,
+   *       "name": "resume-1623456789_1234.pdf",
+   *       "collection_name": "candidate-media",
+   *       "mime_type": "application/pdf",
+   *       "size": 512
+   *     }
+   *   ]
+   * }
+   *
+   * @response 404 {
+   *   "error": true,
+   *   "message": "Candidate not found",
+   *   "data": []
+   * }
+   *
+   * @response 422 {
+   *   "error": true,
+   *   "message": "Validation failed: The attachments must be a file of type: pdf, doc, docx, jpg, jpeg, png.",
+   *   "data": []
+   * }
+   *
+   * @response 500 {
+   *   "error": true,
+   *   "message": "An error occurred",
+   *   "data": []
+   * }
+   */
+
 
   public function uploadAttachment(Request $request, $id)
   {
@@ -244,6 +421,9 @@ class CandidateController extends Controller
       return $isApi ? formatApiResponse(true, 'An error occurred', [], 500) : response()->json(['error' => true, 'message' => 'An error occurred'], 500);
     }
   }
+
+
+
 
   public function attachmentsList($candidateId)
   {
@@ -332,6 +512,69 @@ class CandidateController extends Controller
       'rows' => $rows,
     ]);
   }
+
+
+
+
+
+  // Method: apiAttachmentsList
+  /**
+   * List attachments for a candidate.
+   *
+   * This endpoint retrieves a paginated list of media attachments for a specific candidate, with optional search, sorting, and pagination parameters. The user must be authenticated to perform this action. The response includes permission details for deletion.
+   *
+   * @authenticated
+   *
+   * @group Candidate Management
+   *
+   * @urlParam id integer required The ID of the candidate whose attachments are to be listed. Must exist in the `candidates` table. Example: 101
+   * @queryParam search string optional Filters attachments by name or mime type. Example: resume
+   * @queryParam sort string optional The field to sort by (id, name, mime_type, size, created_at). Defaults to id. Example: name
+   * @queryParam order string optional The sort order (ASC, DESC). Defaults to DESC. Example: ASC
+   * @queryParam limit integer optional The number of attachments per page (1-100). Defaults to 10. Example: 20
+   * @queryParam offset integer optional The number of attachments to skip. Defaults to 0. Example: 10
+   *
+   * @response 200 {
+   *   "error": false,
+   *   "message": "Attachments retrieved successfully.",
+   *   "data": {
+   *     "total": 2,
+   *     "data": [
+   *       {
+   *         "id": 1,
+   *         "name": "resume.pdf",
+   *         "mime_type": "application/pdf",
+   *         "size": "512.34 KB",
+   *         "created_at": "15 May 2025",
+   *         "download_url": "https://example.com/candidate/101/attachment/1/download",
+   *         "view_url": "https://example.com/candidate/101/attachment/1/view",
+   *         "can_delete": true
+   *       }
+   *     ],
+   *     "permissions": {
+   *       "can_delete": true
+   *     }
+   *   }
+   * }
+   *
+   * @response 404 {
+   *   "error": true,
+   *   "message": "Candidate not found.",
+   *   "data": []
+   * }
+   *
+   * @response 422 {
+   *   "error": true,
+   *   "message": "Validation failed: The search field must be a string.",
+   *   "data": []
+   * }
+   *
+   * @response 500 {
+   *   "error": true,
+   *   "message": "An error occurred.",
+   *   "data": []
+   * }
+   */
 
 
   public function apiAttachmentsList(Request $request, $id = null)
@@ -475,6 +718,41 @@ class CandidateController extends Controller
   }
 
 
+
+
+  // Method: downloadAttachment
+  /**
+   * Download a candidate's attachment.
+   *
+   * This endpoint allows downloading a specific media attachment associated with a candidate. The user must be authenticated to perform this action. The response is a file download stream.
+   *
+   * @authenticated
+   *
+   * @group Candidate Management
+   *
+   * @urlParam candidateId integer required The ID of the candidate associated with the attachment. Must exist in the `candidates` table. Example: 101
+   * @urlParam mediaId integer required The ID of the media attachment to download. Must exist in the `media` table. Example: 1
+   * @queryParam isApi boolean optional Indicates if the response should be formatted for API use (returns JSON error if applicable). Defaults to false. Example: true
+   *
+   * @response 200 {
+   *   "content_type": "application/pdf",
+   *   "disposition": "attachment; filename=resume.pdf"
+   * }
+   *
+   * @response 404 {
+   *   "error": true,
+   *   "message": "Candidate not found",
+   *   "data": []
+   * }
+   *
+   * @response 500 {
+   *   "error": true,
+   *   "message": "An error occurred",
+   *   "data": []
+   * }
+   */
+
+
   public function downloadAttachment($candidateId, $mediaId)
   {
     $isApi = request()->get('isApi', false);
@@ -513,6 +791,46 @@ class CandidateController extends Controller
     }
   }
 
+
+  // Method: viewAttachment
+  /**
+   * View a candidate's attachment.
+   *
+   * This endpoint allows viewing a specific media attachment associated with a candidate, if the file type is supported (PDF, DOC, DOCX, JPG, JPEG, PNG). The user must be authenticated to perform this action. The response is a file stream for viewable files or an error for unsupported types.
+   *
+   * @authenticated
+   *
+   * @group Candidate Management
+   *
+   * @urlParam candidateId integer required The ID of the candidate associated with the attachment. Must exist in the `candidates` table. Example: 101
+   * @urlParam mediaId integer required The ID of the media attachment to view. Must exist in the `media` table. Example: 1
+   * @queryParam isApi boolean optional Indicates if the response should be formatted for API use (returns JSON error if applicable). Defaults to false. Example: true
+   *
+   * @response 200 {
+   *   "content_type": "application/pdf",
+   *   "disposition": "inline"
+   * }
+   *
+   * @response 404 {
+   *   "error": true,
+   *   "message": "Candidate not found",
+   *   "data": []
+   * }
+   *
+   * @response 422 {
+   *   "error": true,
+   *   "message": "File type not supported for viewing",
+   *   "data": []
+   * }
+   *
+   * @response 500 {
+   *   "error": true,
+   *   "message": "An error occurred",
+   *   "data": []
+   * }
+   */
+
+
   public function viewAttachment($candidateId, $mediaId)
   {
 
@@ -526,7 +844,6 @@ class CandidateController extends Controller
 
       $candidate = Candidate::findOrFail($candidateId);
       $media = $candidate->getMedia('candidate-media')->find($mediaId);
-
       if (!$media) {
         abort(404, 'Media not found');
       }
@@ -565,6 +882,37 @@ class CandidateController extends Controller
   }
 
 
+
+
+  // Method: deleteAttachment
+  /**
+   * Delete a candidate's attachment.
+   *
+   * This endpoint deletes a specific media attachment associated with a candidate. The user must be authenticated and have appropriate permissions to perform this action.
+   *
+   * @authenticated
+   *
+   * @group Candidate Management
+   *
+   * @urlParam id integer required The ID of the media attachment to delete. Must exist in the `media` table. Example: 1
+   *
+   * @response 200 {
+   *   "error": false,
+   *   "message": "Attachment deleted successfully!"
+   * }
+   *
+   * @response 404 {
+   *   "error": true,
+   *   "message": "Attachment not found"
+   * }
+   *
+   * @response 500 {
+   *   "error": true,
+   *   "message": "An error occurred while deleting the attachment."
+   * }
+   */
+
+
   public function deleteAttachment($id)
   {
     $media = \Spatie\MediaLibrary\MediaCollections\Models\Media::findOrFail($id);
@@ -573,6 +921,45 @@ class CandidateController extends Controller
 
     return $response;
   }
+
+
+
+  // Method: update_status
+  /**
+   * Update a candidate's status.
+   *
+   * This endpoint updates the status of a specific candidate. The user must be authenticated to perform this action. The request requires a valid status ID.
+   *
+   * @authenticated
+   *
+   * @group Candidate Management
+   *
+   * @urlParam id integer required The ID of the candidate to update. Must exist in the `candidates` table. Example: 101
+   * @bodyParam status_id integer required The ID of the new status. Must exist in the `candidate_statuses` table. Example: 2
+   * @queryParam isApi boolean optional Indicates if the response should be formatted for API use. Defaults to false. Example: true
+   *
+   * @response 200 {
+   *   "error": false,
+   *   "message": "Candidate Status Updated Successfully!",
+   *   "data": []
+   * }
+   *
+   * @response 404 {
+   *   "error": true,
+   *   "message": "Candidate not found"
+   * }
+   *
+   * @response 422 {
+   *   "error": true,
+   *   "message": "The status_id field is required."
+   * }
+   *
+   * @response 500 {
+   *   "error": true,
+   *   "message": "An error occurred while updating the candidate status."
+   * }
+   */
+
 
 
   public function update_status(Request $request, $id)
@@ -599,6 +986,55 @@ class CandidateController extends Controller
       'message' => 'Candidate Status Updated Successfully!'
     ]);
   }
+
+
+
+
+  // Method: store
+  /**
+   * Create a new candidate.
+   *
+   * This endpoint creates a new candidate record with optional file attachments. The user must be authenticated to perform this action. The request validates candidate details and ensures the email is unique.
+   *
+   * @authenticated
+   *
+   * @group Candidate Management
+   *
+   * @bodyParam name string required The name of the candidate. Maximum length is 255 characters. Example: John Doe
+   * @bodyParam email string required The email address of the candidate. Must be a valid email and unique in the `candidates` table. Example: john.doe@example.com
+   * @bodyParam phone string nullable The phone number of the candidate. Maximum length is 15 characters. Example: +1234567890
+   * @bodyParam position string required The position the candidate is applying for. Maximum length is 255 characters. Example: Software Engineer
+   * @bodyParam source string required The source of the candidate (e.g., LinkedIn, Job Board). Maximum length is 255 characters. Example: LinkedIn
+   * @bodyParam status_id integer required The ID of the candidate's status. Must exist in the `candidate_statuses` table. Example: 1
+   * @bodyParam attachments array nullable An array of files to upload. Each file must be a valid type (pdf, doc, docx, jpg, jpeg, png) and not exceed the maximum size (configured in media-library.max_file_size). Example: [resume.pdf]
+   * @queryParam isApi boolean optional Indicates if the response should be formatted for API use. Defaults to false. Example: true
+   *
+   * @response 201 {
+   *   "error": false,
+   *   "message": "Candidate Created Successfully!",
+   *   "data": {
+   *     "id": 101,
+   *     "name": "John Doe",
+   *     "email": "john.doe@example.com",
+   *     "phone": "+1234567890",
+   *     "position": "Software Engineer",
+   *     "source": "LinkedIn",
+   *     "status_id": 1,
+   *     "created_at": "2025-05-15 15:55:00"
+   *   }
+   * }
+   *
+   * @response 422 {
+   *   "error": true,
+   *   "message": "A candidate with this email already exists."
+   * }
+   *
+   * @response 500 {
+   *   "error": true,
+   *   "message": "An error occurred while creating the candidate."
+   * }
+   */
+
 
   public function store(Request $request)
   {
@@ -664,6 +1100,61 @@ class CandidateController extends Controller
 
   }
 
+
+
+
+  // Method: update
+  /**
+   * Update a candidate's details.
+   *
+   * This endpoint updates the details of an existing candidate, with optional file attachments. The user must be authenticated to perform this action. The request validates candidate details and ensures the email remains unique.
+   *
+   * @authenticated
+   *
+   * @group Candidate Management
+   *
+   * @urlParam id integer required The ID of the candidate to update. Must exist in the `candidates` table. Example: 101
+   * @bodyParam name string required The name of the candidate. Maximum length is 255 characters. Example: John Doe
+   * @bodyParam email string required The email address of the candidate. Must be a valid email and unique in the `candidates` table (except for the current candidate). Example: john.doe@example.com
+   * @bodyParam phone string nullable The phone number of the candidate. Maximum length is 15 characters. Example: +1234567890
+   * @bodyParam position string required The position the candidate is applying for. Maximum length is 255 characters. Example: Software Engineer
+   * @bodyParam source string required The source of the candidate (e.g., LinkedIn, Job Board). Maximum length is 255 characters. Example: LinkedIn
+   * @bodyParam status_id integer required The ID of the candidate's status. Must exist in the `candidate_statuses` table. Example: 1
+   * @bodyParam attachments array nullable An array of files to upload. Each file must be a valid type (pdf, doc, docx, jpg, jpeg, png) and not exceed the maximum size (configured in media-library.max_file_size). Example: [resume.pdf]
+   * @queryParam isApi boolean optional Indicates if the response should be formatted for API use. Defaults to false. Example: true
+   *
+   * @response 200 {
+   *   "error": false,
+   *   "message": "Candidate Created Successfully!",
+   *   "data": {
+   *     "id": 101,
+   *     "name": "John Doe",
+   *     "email": "john.doe@example.com",
+   *     "phone": "+1234567890",
+   *     "position": "Software Engineer",
+   *     "source": "LinkedIn",
+   *     "status_id": 1,
+   *     "updated_at": "2025-05-15 16:00:00"
+   *   }
+   * }
+   *
+   * @response 404 {
+   *   "error": true,
+   *   "message": "Candidate not found"
+   * }
+   *
+   * @response 422 {
+   *   "error": true,
+   *   "message": "The email field must be a valid email address."
+   * }
+   *
+   * @response 500 {
+   *   "error": true,
+   *   "message": "An error occurred while updating the candidate."
+   * }
+   */
+
+
   public function update(Request $request, $id)
   {
 
@@ -686,9 +1177,19 @@ class CandidateController extends Controller
 
     $candidate->update($validatedData);
 
+    // Handle file attachments
     if ($request->hasFile('attachments')) {
       foreach ($request->file('attachments') as $file) {
-        $candidate->addMedia($file)->toMediaCollection('attachments');
+        // dd($file);
+        $mediaItem = $candidate->addMedia($file)
+          ->sanitizingFileName(function ($fileName) {
+            $sanitizedFileName = strtolower(str_replace(['#', '/', '\\', ' '], '-', $fileName));
+            $uniqueId = time() . '_' . mt_rand(1000, 9999);
+            $extension = pathinfo($sanitizedFileName, PATHINFO_EXTENSION);
+            $baseName = pathinfo($sanitizedFileName, PATHINFO_FILENAME);
+            return "{$baseName}-{$uniqueId}.{$extension}";
+          })
+          ->toMediaCollection('candidate-media');
       }
     }
 
@@ -709,6 +1210,37 @@ class CandidateController extends Controller
       ]);
     }
   }
+
+
+
+  // Method: destroy
+  /**
+   * Delete a candidate.
+   *
+   * This endpoint deletes a specific candidate record. The user must be authenticated and have appropriate permissions to perform this action.
+   *
+   * @authenticated
+   *
+   * @group Candidate Management
+   *
+   * @urlParam id integer required The ID of the candidate to delete. Must exist in the `candidates` table. Example: 101
+   *
+   * @response 200 {
+   *   "error": false,
+   *   "message": "Candidate deleted successfully!"
+   * }
+   *
+   * @response 404 {
+   *   "error": true,
+   *   "message": "Candidate not found"
+   * }
+   *
+   * @response 500 {
+   *   "error": true,
+   *   "message": "An error occurred while deleting the candidate."
+   * }
+   */
+
 
   public function destroy($id)
   {
@@ -789,7 +1321,9 @@ class CandidateController extends Controller
     $limit = request('limit', 10);
     $offset = request('offset', 0);
     $sort = request()->input('sort', 'id');
-
+    $startDate = request()->input('start_date');
+    $endDate = request()->input('end_date');
+    $candidateStatus = request('candidate_status');
     $order = 'desc';
     switch ($sort) {
       case 'newest':
@@ -814,10 +1348,6 @@ class CandidateController extends Controller
         break;
     }
 
-
-    $candidateStatus = request('candidate_status');
-    // dd($candidateStatus);
-
     $query = Candidate::query();
 
     if ($search) {
@@ -833,6 +1363,10 @@ class CandidateController extends Controller
 
     if ($candidateStatus) {
       $query->whereIn('status_id', $candidateStatus);
+    }
+
+    if ($startDate && $endDate) {
+      $query->whereBetween('created_at', [$startDate, $endDate]);
     }
 
     $total = $query->count();
@@ -911,6 +1445,74 @@ class CandidateController extends Controller
   }
 
 
+
+
+  // Method: apiList
+  /**
+   * List candidates or retrieve a single candidate.
+   *
+   * This endpoint retrieves a paginated list of candidates or a single candidate by ID, with optional search, sorting, and status filtering. The user must be authenticated to perform this action. The response includes permission details for editing and deletion.
+   *
+   * @authenticated
+   *
+   * @group Candidate Management
+   *
+   * @urlParam id integer optional The ID of the candidate to retrieve. If provided, returns a single candidate. Must exist in the `candidates` table. Example: 101
+   * @queryParam search string optional Filters candidates by name, position, source, or status name. Example: John
+   * @queryParam sort string optional The field to sort by (id, newest, oldest, recently-updated, earliest-updated). Defaults to id. Example: newest
+   * @queryParam limit integer optional The number of candidates per page (1-100). Defaults to 10. Example: 20
+   * @queryParam offset integer optional The number of candidates to skip. Defaults to 0. Example: 10
+   * @queryParam candidate_status array optional Filters candidates by status IDs. Each ID must exist in the `candidate_statuses` table. Example: [1, 2]
+   *
+   * @response 200 {
+   *   "error": false,
+   *   "message": "Candidates retrieved successfully.",
+   *
+   *     "total": 50,
+   *     "data": [
+   *       {
+   *         "id": 101,
+   *         "name": "John Doe",
+   *         "email": "john.doe@example.com",
+   *         "phone": "+1234567890",
+   *         "position": "Software Engineer",
+   *         "source": "LinkedIn",
+   *         "status": {
+   *           "id": 1,
+   *           "name": "Applied"
+   *         },
+   *         "can_edit": true,
+   *         "can_delete": true
+   *       }
+   *     ],
+   *     "permissions": {
+   *       "can_edit": true,
+   *       "can_delete": true
+   *     }
+   *   }
+   *
+   *
+   * @response 404 {
+   *   "error": true,
+   *   "message": "Candidate not found.",
+   *   "data": []
+   * }
+   *
+   * @response 422 {
+   *   "error": true,
+   *   "message": "Validation failed: The search field must be a string.",
+   *   "data": []
+   * }
+   *
+   * @response 500 {
+   *   "error": true,
+   *   "message": "An error occurred.",
+   *   "data": []
+   * }
+   */
+
+
+
   // list function for api
 
   public function apiList(Request $request, $id = null)
@@ -937,6 +1539,8 @@ class CandidateController extends Controller
       $limit = $validated['limit'] ?? config('pagination.default_limit', 10);
       $offset = $validated['offset'] ?? 0;
       $candidateStatus = $validated['candidate_status'] ?? [];
+      $startDate = request()->input('start_date');
+      $endDate = request()->input('end_date');
 
       // Determine sort and order
       $sort = 'id';
@@ -1006,10 +1610,14 @@ class CandidateController extends Controller
         });
       }
 
-      // Apply status filter
       if ($candidateStatus) {
         $query->whereIn('status_id', $candidateStatus);
       }
+
+      if ($startDate && $endDate) {
+        $query->whereBetween('created_at', [$startDate, $endDate]);
+      }
+
 
       // Get total count
       $total = $query->count();

@@ -357,7 +357,48 @@ INTRO,
                 'POST /estimates-invoices/update',
                 'DELETE /estimates-invoices/destroy/{id}',
                 'GET /estimates-invoices/pdf/{id}'
+            ],
+            'Human Resource Management' => [
+                // candidate
+                'POST /candidate/store',
+                'PUT /candidate/update/{id}',
+                'POST /candidate/update_status',
+                'DELETE /candidate/destroy/{id}',
+                'GET /candidate/list/{id?}',
+                'GET /candidate/{id}/interviews',
+                'POST /candidate/{id}/upload-attachment',
+                'DELETE /candidate/candidate-media/destroy/{id}',
+                'GET /candidate/{id}/attachments/list',
+                'GET /candidate/{candidateId}/attachment/{mediaId}/download',
+                'GET /candidate/{candidateId}/attachment/{mediaId}/view',
+                'GET /candidate/{id}/quick-view',
+                // candidate status
+                'POST /candidate_status/store',
+                'PUT /candidate_status/update/{id}',
+                'DELETE /candidate_status/destroy/{id}',
+                'POST /candidate_status/reorder',
+                'GET /candidate_status/list/{id?}',
+                // candidate interview
+                'POST /interviews/store',
+                'PUT /interviews/update/{id}',
+                'DELETE /interviews/destroy/{id}',
+                'GET /interviews/list/{id?}'
+            ],
+            'Email Management' => [
+                // Email Templates
+                'POST /email-templates/store',
+                'PUT /email-templates/update/{id}',
+                'DELETE /email-templates/destroy/{id}',
+                'GET /email-templates/list/{id?}',
+
+                // Email Sending
+                'POST /emails/preview',
+                'POST /emails/store',
+                'GET /emails/historyList/{id?}',
+                'DELETE /emails/history/destroy/{id}',
+                'GET /emails/template-data/{id}',
             ]
+
         ]
 
     ],

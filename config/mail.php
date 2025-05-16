@@ -35,7 +35,7 @@ return [
 
     'mailers' => [
         'smtp' => [
-            'transport' => 'smtp',
+            'transport' => env('MAIL_MAILER', 'smtp'),
             'host' => '',
             'port' => '',
             'encryption' => '',

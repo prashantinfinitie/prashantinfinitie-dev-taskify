@@ -23,7 +23,7 @@ class EmailTemplateController extends Controller
 
     /**
      * Extract dynamic placeholders from email body.
-     * Excludes system-wide constants like {COMPANY_LOGO}, {SUBJECT}, etc.
+     * Excludes system-wide constants like COMPANY_LOGO, SUBJECT, etc.
      */
     private function extractPlaceholders($body)
     {
@@ -37,9 +37,55 @@ class EmailTemplateController extends Controller
         }));
     }
 
+
+    // Method: store
     /**
-     * Store a new email template.
+     * Create a new email template.
+     *
+     * This endpoint creates a new email template with a specified name, subject, and body. The user must be authenticated to perform this action. The body can be base64-encoded if specified. Placeholders are automatically extracted from the body, excluding system constants like COMPANY_LOGO.
+     *
+     * @authenticated
+     *
+     * @group Email Template Management
+     *
+     * @bodyParam name string required The name of the email template. Maximum length is 255 characters. Example: Welcome Template
+     * @bodyParam subject string required The subject of the email template. Maximum length is 255 characters. Example: Welcome to Our Company
+     * @bodyParam body string nullable The body of the email template, optionally base64-encoded. Example: <p>Hello USER_NAME!</p>
+     * @bodyParam is_encoded string optional Indicates if the body is base64-encoded (value: '1'). Defaults to false. Example: 1
+     * @bodyParam content string optional The base64-encoded body content, used if is_encoded is '1'. Example: PGh0bWw+PHA+SGVsbG8ge1VTRVJfTkFNRX0hPC9wPjwvaHRtbD4=
+     * @queryParam isApi boolean optional Indicates if the response should be formatted for API use. Defaults to false. Example: true
+     *
+     * @response 201 {
+     *   "error": false,
+     *   "message": "Email Template Created Successfully!",
+     *   "data": {
+     *     "id": 1,
+     *     "name": "Welcome Template",
+     *     "subject": "Welcome to Our Company",
+     *     "body": "<p>Hello USER_NAME!</p>",
+     *     "placeholders": ["USER_NAME"],
+     *     "workspace_id": 1,
+     *     "created_at": "2025-05-15 17:00:00",
+     *     "updated_at": "2025-05-15 17:00:00"
+     *   }
+     * }
+     *
+     * @response 422 {
+     *   "error": true,
+     *   "message": "The name field is required."
+     * }
+     *
+     * @response 500 {
+     *   "error": true,
+     *   "message": "Failed to create email template",
+     *   "error": "Detailed error message",
+     *   "code": 0,
+     *   "file": "path/to/file.php",
+     *   "line": 123,
+     *   "trace": "Stack trace"
+     * }
      */
+
     public function store(Request $request)
     {
         $isApi = $request->get('isApi', false);
@@ -89,9 +135,57 @@ class EmailTemplateController extends Controller
         }
     }
 
+
+    // Method: update
     /**
      * Update an existing email template.
+     *
+     * This endpoint updates the name, subject, and body of an existing email template. The user must be authenticated to perform this action. The body can be base64-encoded if specified. Placeholders are automatically extracted from the body, excluding system constants like COMPANY_LOGO.
+     *
+     * @authenticated
+     *
+     * @group Email Template Management
+     *
+     * @urlParam id integer required The ID of the email template to update. Must exist in the `email_templates` table. Example: 1
+     * @bodyParam name string required The name of the email template. Maximum length is 255 characters. Example: Welcome Template
+     * @bodyParam subject string required The subject of the email template. Maximum length is 255 characters. Example: Welcome to Our Company
+     * @bodyParam body string required The body of the email template, optionally base64-encoded. Example: <p>Hello USER_NAME!</p>
+     * @bodyParam is_encoded string optional Indicates if the body is base64-encoded (value: '1'). Defaults to false. Example: 1
+     * @bodyParam content string optional The base64-encoded body content, used if is_encoded is '1'. Example: PGh0bWw+PHA+SGVsbG8ge1VTRVJfTkFNRX0hPC9wPjwvaHRtbD4=
+     * @queryParam isApi boolean optional Indicates if the response should be formatted for API use. Defaults to false. Example: true
+     *
+     * @response 200 {
+     *   "error": false,
+     *   "message": "Email Template Updated Successfully!",
+     *   "data": {
+     *     "id": 1,
+     *     "name": "Welcome Template",
+     *     "subject": "Welcome to Our Company",
+     *     "body": "<p>Hello USER_NAME!</p>",
+     *     "placeholders": ["USER_NAME"],
+     *     "workspace_id": 1,
+     *     "created_at": "2025-05-15 17:00:00",
+     *     "updated_at": "2025-05-15 17:05:00"
+     *   }
+     * }
+     *
+     * @response 404 {
+     *   "error": true,
+     *   "message": "Email template not found"
+     * }
+     *
+     * @response 422 {
+     *   "error": true,
+     *   "message": "The name field is required."
+     * }
+     *
+     * @response 500 {
+     *   "error": true,
+     *   "message": "Something went wrong."
+     * }
      */
+
+
     public function update(Request $request, $id)
     {
         $isApi = $request->get('isApi', false);
@@ -133,9 +227,37 @@ class EmailTemplateController extends Controller
         }
     }
 
+
+
+    // Method: destroy
     /**
-     * Delete a specific email template.
+     * Delete an email template.
+     *
+     * This endpoint deletes a specific email template. The user must be authenticated and have appropriate permissions to perform this action.
+     *
+     * @authenticated
+     *
+     * @group Email Template Management
+     *
+     * @urlParam id integer required The ID of the email template to delete. Must exist in the `email_templates` table. Example: 1
+     *
+     * @response 200 {
+     *   "error": false,
+     *   "message": "Email Template deleted successfully!"
+     * }
+     *
+     * @response 404 {
+     *   "error": true,
+     *   "message": "Email template not found"
+     * }
+     *
+     * @response 500 {
+     *   "error": true,
+     *   "message": "Something went wrong."
+     * }
      */
+
+
     public function destroy(Request $request, $id)
     {
         try {
@@ -259,6 +381,70 @@ class EmailTemplateController extends Controller
         }
     }
 
+
+
+
+    // Method: apiList
+    /**
+     * List email templates or retrieve a single template.
+     *
+     * This endpoint retrieves a paginated list of email templates or a single template by ID, with optional search, sorting, and pagination parameters. The user must be authenticated to perform this action. The response includes permission details for editing and deletion.
+     *
+     * @authenticated
+     *
+     * @group Email Template Management
+     *
+     * @urlParam id integer optional The ID of the email template to retrieve. If provided, returns a single template. Must exist in the `email_templates` table. Example: 1
+     * @queryParam search string optional Filters templates by name, subject, or body. Example: Welcome
+     * @queryParam sort string optional The field to sort by (id, name, subject, created_at, updated_at). Defaults to id. Example: name
+     * @queryParam order string optional The sort order (ASC, DESC). Defaults to DESC. Example: ASC
+     * @queryParam limit integer optional The number of templates per page (1-100). Defaults to 10. Example: 20
+     * @queryParam offset integer optional The number of templates to skip. Defaults to 0. Example: 10
+     *
+     * @response 200 {
+     *   "error": false,
+     *   "message": "Email templates retrieved successfully.",
+     *   "data": {
+     *     "total": 5,
+     *     "data": [
+     *       {
+     *         "id": 1,
+     *         "name": "Welcome Template",
+     *         "subject": "Welcome to Our Company",
+     *         "body": "<p>Hello USER_NAME!</p>",
+     *         "placeholders": ["USER_NAME"],
+     *         "workspace_id": 1,
+     *         "created_at": "2025-05-15 17:00:00",
+     *         "updated_at": "2025-05-15 17:00:00",
+     *         "can_edit": true,
+     *         "can_delete": true
+     *       }
+     *     ],
+     *     "permissions": {
+     *       "can_edit": true,
+     *       "can_delete": true
+     *     }
+     *   }
+     * }
+     *
+     * @response 404 {
+     *   "error": true,
+     *   "message": "Email template not found.",
+     *   "data": []
+     * }
+     *
+     * @response 422 {
+     *   "error": true,
+     *   "message": "Validation failed: The search field must be a string.",
+     *   "data": []
+     * }
+     *
+     * @response 500 {
+     *   "error": true,
+     *   "message": "An error occurred.",
+     *   "data": []
+     * }
+     */
 
     public function apiList(Request $request, $id = null)
     {

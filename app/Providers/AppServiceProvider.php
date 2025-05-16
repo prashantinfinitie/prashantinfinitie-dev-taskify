@@ -218,9 +218,11 @@ class AppServiceProvider extends ServiceProvider
             'options' => ['cluster' => $pusherSettings['pusher_app_cluster']],
         ]);
         // Mail
+        config()->set('mail.default', 'smtp');
         config()->set('mail.mailers.smtp', [
             'host' => $emailSettings['smtp_host'],
             'port' => $emailSettings['smtp_port'],
+            'transport' => 'smtp',
             'encryption' => $emailSettings['smtp_encryption'],
             'username' => $emailSettings['email'],
             'password' => $emailSettings['password'],

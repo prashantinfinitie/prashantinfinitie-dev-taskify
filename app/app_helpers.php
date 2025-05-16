@@ -165,6 +165,7 @@ if (!function_exists('create_label')) {
     }
 }
 
+
 function get_label($label, $default, $locale = '')
 {
     // Check if the database connection is available
@@ -2763,6 +2764,22 @@ if (!function_exists('formatCandidateStuses')) {
             'updated_at' => format_date($status->updated_at),
             'can_edit' => checkPermission('edit_candidate_status'),
             'can_delete' => checkPermission('delete_candidate_status'),
+        ];
+    }
+}
+
+if (!function_exists('formatInterview')) {
+    function formatInterview($interview)
+    {
+        return [
+            'id' => $interview->id,
+            'candidate_id' => $interview->candidate->id,
+            'interviewer_id' => $interview->interviewer->id,
+            'round' => $interview->round,
+            'scheduled_at' => $interview->scheduled_at,
+            'mode' => $interview->mode,
+            'location' => $interview->location,
+            'status' => $interview->status,
         ];
     }
 }

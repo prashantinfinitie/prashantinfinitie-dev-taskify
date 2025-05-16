@@ -118,6 +118,7 @@ class DynamicTemplateMail extends Mailable
         // Uncomment this line for one-time debugging
         // Log::info('Mail object: ' . print_r($mail, true));
 
+        // dd($mail);
         return $mail;
     }
 }
