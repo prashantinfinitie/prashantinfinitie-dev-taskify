@@ -1239,4 +1239,144 @@ class SettingsController extends Controller
         }
         return response()->json(['error' => false, 'message' => 'Settings saved successfully.']);
     }
+
+    // Displaying the AI Model Settings
+    public function ai_model_settings()
+    {
+        return view('settings.ai_model_settings');
+    }
+
+    // Storing AI Models Settings
+    public function store_ai_model_settings(Request $request)
+    {
+        // Validate the incoming request data
+        $request->validate([
+            'openrouter_api_key' => ['required_if:is_active,openrouter', 'string'],
+            'gemini_api_key' => ['required_if:is_active,gemini', 'string'],
+            'is_active' => ['required', 'in:gemini,openrouter'],
+
+            // OpenRouter specific settings
+            'openrouter_model' => ['required_if:is_active,openrouter', 'string'],
+            'openrouter_endpoint' => ['nullable', 'url'],
+            'openrouter_system_prompt' => ['nullable', 'string'],
+            'openrouter_temperature' => ['nullable', 'numeric', 'min:0', 'max:2'],
+            'openrouter_max_tokens' => ['nullable', 'integer', 'min:1'],
+            'openrouter_top_p' => ['nullable', 'numeric', 'min:0', 'max:1'],
+            'openrouter_frequency_penalty' => ['nullable', 'numeric', 'min:-2', 'max:2'],
+            'openrouter_presence_penalty' => ['nullable', 'numeric', 'min:-2', 'max:2'],
+
+            // Gemini specific settings
+            'gemini_model' => ['required_if:is_active,gemini', 'string'],
+            'gemini_endpoint' => ['nullable', 'url'],
+            'gemini_temperature' => ['nullable', 'numeric', 'min:0', 'max:2'],
+            'gemini_top_k' => ['nullable', 'integer', 'min:1'],
+            'gemini_top_p' => ['nullable', 'numeric', 'min:0', 'max:1'],
+            'gemini_max_output_tokens' => ['nullable', 'integer', 'min:1'],
+
+            // Rate limiting settings
+            'rate_limit_per_minute' => ['nullable', 'integer', 'min:1'],
+            'rate_limit_per_day' => ['nullable', 'integer', 'min:1'],
+            'max_retries' => ['nullable', 'integer', 'min:0', 'max:10'],
+            'retry_delay' => ['nullable', 'integer', 'min:1'],
+
+            // Timeout settings
+            'request_timeout' => ['nullable', 'integer', 'min:1'],
+
+            // Prompt customization
+            'default_prompt_prefix' => ['nullable', 'string'],
+            'default_prompt_suffix' => ['nullable', 'string'],
+            'max_prompt_length' => ['nullable', 'integer', 'min:1'],
+
+            // Fallback configuration
+            'enable_fallback' => ['nullable', 'boolean'],
+            'fallback_provider' => ['nullable', 'in:gemini,openrouter'],
+        ]);
+
+        // Fetch the existing AI model settings, if they exist
+        $fetched_data = Setting::where('variable', 'ai_model_settings')->first();
+
+        // Get all available form values
+        $form_val = $request->only([
+            'openrouter_api_key',
+            'gemini_api_key',
+            'is_active',
+
+            'openrouter_model',
+            'openrouter_endpoint',
+            'openrouter_system_prompt',
+            'openrouter_temperature',
+            'openrouter_max_tokens',
+            'openrouter_top_p',
+            'openrouter_frequency_penalty',
+            'openrouter_presence_penalty',
+
+            'gemini_model',
+            'gemini_endpoint',
+            'gemini_temperature',
+            'gemini_top_k',
+            'gemini_top_p',
+            'gemini_max_output_tokens',
+
+            'rate_limit_per_minute',
+            'rate_limit_per_day',
+            'max_retries',
+            'retry_delay',
+            'request_timeout',
+            'default_prompt_prefix',
+            'default_prompt_suffix',
+            'max_prompt_length',
+            'enable_fallback',
+            'fallback_provider'
+        ]);
+
+        // Set default values if not provided
+        $defaults = [
+            'openrouter_endpoint' => 'https://openrouter.ai/api/v1/chat/completions',
+            'openrouter_system_prompt' => 'You are a helpful assistant that writes concise, professional project or task descriptions.',
+            'openrouter_temperature' => 0.7,
+            'openrouter_max_tokens' => 1024,
+            'openrouter_top_p' => 0.95,
+
+            'gemini_endpoint' => 'https://generativelanguage.googleapis.com/v1beta/models/%s:generateContent',
+            'gemini_temperature' => 0.7,
+            'gemini_top_k' => 40,
+            'gemini_top_p' => 0.95,
+            'gemini_max_output_tokens' => 1024,
+
+            'rate_limit_per_minute' => 15,
+            'rate_limit_per_day' => 1500,
+            'max_retries' => 2,
+            'retry_delay' => 1,
+            'request_timeout' => 15,
+            'max_prompt_length' => 1000,
+            'enable_fallback' => true,
+            'fallback_provider' => $request->input('is_active') === 'gemini' ? 'openrouter' : 'gemini',
+        ];
+
+        // Merge defaults with provided values
+        $form_val = array_merge($defaults, array_filter($form_val, function ($value) {
+            return $value !== null;
+        }));
+
+        // Add metadata
+        $form_val['last_updated'] = now()->toDateTimeString();
+        $form_val['updated_by'] = auth()->id() ?? 'system';
+
+        $data = [
+            'variable' => 'ai_model_settings',
+            'value' => json_encode($form_val),
+        ];
+
+        // Check if the settings already exist, and create or update accordingly
+        if ($fetched_data == null) {
+            Setting::create($data);
+        } else {
+            $fetched_data->update($data);
+        }
+
+        return response()->json([
+            'error' => false,
+            'message' => 'AI model settings saved successfully.'
+        ]);
+    }
 }

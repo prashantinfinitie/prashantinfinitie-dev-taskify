@@ -269,7 +269,7 @@ class CandidateController extends Controller
           [
             'data' => [
               'candidate' => $candidate,
-              'html' => $html
+              // 'interviews' => $candidate->interviews
             ]
           ]
         );
@@ -656,7 +656,7 @@ class CandidateController extends Controller
           'mime_type' => $media->mime_type,
           'size' => round($media->size / 1024, 2) . ' KB',
           'created_at' => format_date($media->created_at),
-          'download_url' => route('candidate.attachment.download', ['mediaId' => $media->id, 'candidateId' => $candidate->id]),
+          'download_url' => asset('/storage/candidate-media/' . $media->file_name),
           'view_url' => $viewUrl,
           'can_delete' => $canDelete,
         ];
@@ -1039,8 +1039,7 @@ class CandidateController extends Controller
   public function store(Request $request)
   {
 
-    $isApi = request()->get('isApi',false) || $request->expectsjson();
-
+    $isApi = request()->get('isApi', false);
     $maxFileSizeBytes = config('media-library.max_file_size');
     $maxFileSizeKb = (int) ($maxFileSizeBytes / 1024);
 

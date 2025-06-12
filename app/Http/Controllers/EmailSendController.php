@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use App\Notifications\DynamicTemplateMail;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class EmailSendController extends Controller
@@ -251,7 +250,7 @@ class EmailSendController extends Controller
 
     public function store(Request $request)
     {
-        $isApi = request()->get('isApi', false);
+        // $isApi = request()->get('isApi', false);
         try {
             $general_settings = get_settings('general_settings');
             $maxFileSizeBytes = config('media-library.max_file_size');
@@ -359,8 +358,6 @@ class EmailSendController extends Controller
                     }
                 }
 
-                // dd($email);
-
                 if (!$isScheduled) {
                     try {
                         Mail::to($email->to_email)->send(new DynamicTemplateMail($email));
@@ -374,47 +371,23 @@ class EmailSendController extends Controller
                 $createdEmails[] = formatEmailSend($email); // Add formatted email
             }
             $message = $isScheduled ? 'Emails scheduled successfully!' : 'Emails sent successfully.';
-            if ($isApi) {
-                return formatApiResponse(false, $message, []);
-            } else {
+            // if ($isApi) {
+            //     return formatApiResponse(false, $message, []);
+            // } else {
             return response()->json([
-                    'error' => false,
-                    'message' => $message
-                ]);
-            }
-        } catch (ValidationException $e) {
-            return response()->json([
-                'error' => true,
-                'message' => 'Validation error',
-                'errors' => $e->errors()
-            ], 422);
-        } catch (AuthorizationException $e) {
-            return response()->json([
-                'error' => true,
-                'message' => 'You are not authorized to perform this action'
-            ], 403);
-        } catch (Exception $e) {
-            // Always log the full error details for debugging
-            Log::error('Failed to send or schedule emails: ' . $e->getMessage(), [
-                'file' => $e->getFile(),
-                'line' => $e->getLine(),
-                'trace' => $e->getTraceAsString()
+                'error' => false,
+                'message' => $message
             ]);
-
-            // For API responses, only show details in non-production environments
-            $errorResponse = [
+            // }
+        } catch (Exception $e) {
+            Log::error('Failed to send or schedule emails: ' . $e->getMessage());
+            return response()->json([
                 'error' => true,
-                'message' => 'An unexpected error occurred while sending/scheduling the emails.'
-            ];
-
-            // Only include detailed error info in development
-            if (app()->environment('local', 'development', 'testing')) {
-                $errorResponse['details'] = $e->getMessage();
-                $errorResponse['line'] = $e->getLine();
-                $errorResponse['file'] = $e->getFile();
-            }
-
-            return response()->json($errorResponse, 500);
+                'message' => 'An unexpected error occurred while sending/scheduling the emails.',
+                'details' => $e->getMessage(),
+                'line' => $e->getLine(),
+                'file' => $e->getFile(),
+            ], 500);
         }
     }
 

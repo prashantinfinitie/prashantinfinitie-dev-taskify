@@ -53,15 +53,16 @@ document.addEventListener('DOMContentLoaded', function () {
     const drake = dragula(columns, {
         direction: 'vertical',
         moves: function (el, container, handle) {
-            return !el.classList.contains('create-project-btn');
+            return !el.classList.contains('create-project-btn') && !el.classList.contains('create-candidate-btn');
         },
         accepts: function (el, target) {
-            return !el.classList.contains('create-project-btn');
+            return !el.classList.contains('create-project-btn') && !el.classList.contains('create-candidate-btn');
         },
         invalid: function (el, handle) {
-            return el.classList.contains('create-project-btn');
+            return el.classList.contains('create-project-btn') || el.classList.contains('create-candidate-btn');
         }
     });
+
 
     // Add class on drag start
     drake.on('drag', function (el) {

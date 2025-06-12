@@ -123,6 +123,11 @@ $(document).on("click", ".delete-selected", function (e) {
                 $("#confirmDeleteSelections")
                     .html(label_please_wait)
                     .attr("disabled", true);
+
+                console.log("Selected IDs:", selectedIds); // Debugging line to check selected IDs
+                console.log("Type:", type); // Debugging line to check type
+                console.log("Destroy action:", destroy); // Debugging line to check destroy action
+
                 $.ajax({
                     url: baseUrl + "/" + type + "/" + destroy,
                     data: {
@@ -2970,7 +2975,7 @@ if (
     // setInterval(updateUnreadNotifications, 30000);
 }
 $(
-    "textarea#email_verify_email,textarea#email_account_creation,textarea#email_forgot_password,textarea#email_project_assignment,textarea#email_task_assignment,textarea#email_workspace_assignment,textarea#email_meeting_assignment,textarea#email_leave_request_creation,textarea#email_leave_request_status_updation,textarea#email_project_status_updation,textarea#email_task_status_updation,textarea#email_team_member_on_leave_alert,textarea#email_birthday_wish,#email_work_anniversary_wish,textarea#email_task_reminder,textarea#email_recurring_task,textarea#template-body,textarea#editBody"
+    "textarea#email_verify_email,textarea#email_account_creation,textarea#email_forgot_password,textarea#email_project_assignment,textarea#email_task_assignment,textarea#email_workspace_assignment,textarea#email_meeting_assignment,textarea#email_leave_request_creation,textarea#email_leave_request_status_updation,textarea#email_project_status_updation,textarea#email_task_status_updation,textarea#email_team_member_on_leave_alert,textarea#email_birthday_wish,#email_work_anniversary_wish,textarea#email_task_reminder,textarea#email_recurring_task,textarea#template-body,textarea#editBody,textarea#email_interview_assignment,textarea#email_interview_status_update"
 ).tinymce({
     height: 821,
     menubar: true,
@@ -7247,5 +7252,117 @@ $(document).ready(function () {
     }
 });
 
+
+
+function setupScopedAIGenerator(generateBtnSelector, options = {}) {
+    const defaultOptions = {
+        promptSelector: '.ai-title',
+        customPromptSelector: '.ai-custom-prompt',
+        outputSelector: '.ai-output',
+        loaderSelector: '.ai-loader',
+        customPromptSwitchSelector: '.enableCustomPrompt',
+        customPromptContainerSelector: '.customPromptContainer',
+        endpoint: '/ai/generate-description'
+    };
+    const settings = { ...defaultOptions, ...options };
+    // Toggle custom prompt textarea visibility using Bootstrap's d-none
+    $(document).on('change', settings.customPromptSwitchSelector, function () {
+        const isChecked = $(this).is(':checked');
+        const $container = $(settings.customPromptContainerSelector);
+
+        if (isChecked) {
+            $container.removeClass('d-none');
+        } else {
+            $container.addClass('d-none');
+        }
+    });
+
+
+    $(document).on('click', generateBtnSelector, function () {
+        const $btn = $(this);
+        const $scope = $btn.closest('.ai-wrapper');
+
+        const useCustomPrompt = $scope.find(settings.customPromptSwitchSelector).is(':checked');
+        let prompt;
+
+        if (useCustomPrompt) {
+            prompt = $scope.find(settings.customPromptSelector).val();
+            if (!prompt) {
+                toastr.error(label_enter_custom_prompt_first);
+                return;
+            }
+        } else {
+            prompt = $scope.find(settings.promptSelector).val();
+            if (!prompt) {
+                toastr.error(label_enter_project_title_first);
+                return;
+            }
+        }
+
+        const $output = $scope.find(settings.outputSelector);
+        const existingDescription = $output.val(); // Get the existing description
+        const $loader = $scope.find(settings.loaderSelector);
+
+        $btn.prop('disabled', true);
+        if ($loader.length) $loader.removeClass('d-none');
+
+        $.ajax({
+            url: settings.endpoint,
+            method: 'POST',
+            data: {
+                _token: $('meta[name="csrf-token"]').attr('content'),
+                prompt: prompt,
+                isCustomPrompt: useCustomPrompt,
+                existingDescription: existingDescription // Send existing description to backend
+            },
+            success: function (response) {
+                if (response.error) {
+                    toastr.error(response.message);
+                } else {
+                    toastr.success(response.message);
+                    $output.val(response.description);
+                }
+            },
+            error: function (xhr) {
+                if (xhr.status === 422) {
+                    let errors = xhr.responseJSON.errors;
+                    $.each(errors, function (key, value) {
+                        toastr.error(value[0]);
+                    });
+                } else {
+                    toastr.error(label_something_went_wrong);
+                }
+            },
+            complete: function () {
+                $btn.prop('disabled', false);
+                if ($loader.length) $loader.addClass('d-none');
+            }
+        });
+    });
+}
+// Initialize
+$(document).ready(function () {
+    setupScopedAIGenerator('.generate-ai');
+});
+$(document).ready(function () {
+    // Listen for change events on the radio buttons with the class 'is_active_ai_model'
+    $('.is_active_ai_model').on('change', function () {
+        // When a radio button is selected, uncheck all others
+        $('.is_active_ai_model').not(this).prop('checked', false);
+    });
+});
+$(document).ready(function () {
+    // Update temperature value displays when sliders change
+    $('#openrouter_temperature').on('input', function () {
+        $('#openrouter_temperature_value').text($(this).val());
+    });
+
+    $('#gemini_temperature').on('input', function () {
+        $('#gemini_temperature_value').text($(this).val());
+    });
+
+    // Initialize Bootstrap tooltips
+    $('[data-bs-toggle="tooltip"]').tooltip();
+});
 
 

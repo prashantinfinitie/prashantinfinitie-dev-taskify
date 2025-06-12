@@ -63,9 +63,9 @@ class CandidateStatusController extends Controller
     {
 
         $isApi = request()->get('isApi', false);
-
+        try {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|unique:candidate_statuses,name',
             'color' => 'required'
         ]);
 
@@ -77,10 +77,10 @@ class CandidateStatusController extends Controller
             'color' => $request->color
         ]);
 
-        if (!$isApi) {
+            if ($isApi) {
             return formatApiResponse(
                 false,
-                'Candidate status retrieved successfully!',
+                'Candidate status Created successfully!',
                 [
                     'data' => formatCandidateStatus($candidate_status)
                 ],
@@ -93,6 +93,19 @@ class CandidateStatusController extends Controller
             'message' => 'Status Created Successfully!',
             'candidate_statuses' => $candidate_status
         ]);
+        } catch (ValidationException $e) {
+            return formatApiValidationError($isApi, $e->errors(), 'Validation failed while creating candidate status.');
+        } catch (\Exception $e) {
+            Log::error('Error creating candidate status', [
+                'exception' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+                'input' => $request->all(),
+            ]);
+            return response()->json([
+                'error' => true,
+                'message' => 'An error occurred while creating the candidate status.'
+            ], 500);
+        }
     }
 
 
@@ -220,7 +233,7 @@ class CandidateStatusController extends Controller
 
         if ($candidateCount > 0) {
             return response()->json([
-                'error' => 'false',
+                'error' => false,
                 'message' => ' Cannot delete . This status is assigned to one or more candidates . '
             ]);
         }
@@ -454,7 +467,7 @@ class CandidateStatusController extends Controller
             // Validate query parameters
             $validated = $request->validate([
                 'search' => 'nullable|string|max:255',
-                'sort' => 'nullable|string|in:id,to_email,subject,scheduled_at,created_at,updated_at',
+                'sort' => 'nullable|string|in:id,name,to_email,subject,scheduled_at,created_at,updated_at',
                 'order' => 'nullable|string|in:ASC,DESC',
                 'limit' => 'nullable|integer|min:1|max:100',
                 'offset' => 'nullable|integer|min:0',

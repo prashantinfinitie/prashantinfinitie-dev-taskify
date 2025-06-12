@@ -68,6 +68,10 @@ return [
         'Expense types' =>  array('create_expense_types', 'manage_expense_types', 'edit_expense_types', 'delete_expense_types'),
         'Milestones' =>  array('create_milestones', 'manage_milestones', 'edit_milestones', 'delete_milestones'),
         'Leads' =>  array('create_leads', 'manage_leads', 'edit_leads', 'delete_leads'),
+        'Emails and Email Template' => array('send_email', 'create_email_template', 'manage_email_template', 'delete_email_template'),
+        'Candidates' => array('create_candidate',  'manage_candidate', 'edit_candidate', 'delete_candidate'),
+        'Candidate Statuses' => array('create_candidate_status',   'manage_candidate_status', 'edit_candidate_status', 'delete_candidate_status'),
+        'Interviews' => array('create_interview',  'manage_interview', 'edit_interview', 'delete_interview'),
         'System Notifications' =>  array('manage_system_notifications', 'delete_system_notifications')
     ]
 ];

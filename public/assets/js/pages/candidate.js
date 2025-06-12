@@ -121,7 +121,6 @@ $(document).ready(function () {
     $(document).on('click', '.view-interviews-btn', function () {
 
         const candidateId = $(this).data('id');
-
         const modal = $('#interviewDetailsModal');
 
         if (!candidateId) {
