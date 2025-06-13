@@ -748,7 +748,8 @@ class ContractsController extends Controller
                     $formattedDates = format_date($contract->start_date, false) . ' ' . get_label('to', 'To') . ' ' . format_date($contract->end_date, false);
 
 
-                    $data = formatContract($contract);
+
+                $data = formatContract($contract);
                     $data['duration'] = $formattedDates;
 
                     return $data;

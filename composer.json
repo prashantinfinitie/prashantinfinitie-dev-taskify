@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
+        "anhskohbo/no-captcha": "^3.7",
         "aws/aws-sdk-php": "^3.296",
         "barryvdh/laravel-dompdf": "^2.0",
         "dedoc/scramble": "*",

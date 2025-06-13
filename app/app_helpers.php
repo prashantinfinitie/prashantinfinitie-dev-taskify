@@ -5083,26 +5083,82 @@ if (!function_exists('formatLeadUserHtml')) {
     }
 
 
-    if (!function_exists('formatContract')) {
-        function formatContract($contract)
-        {
-            return [
-                'id' => $contract->id,
-                'title' => $contract->title,
-                'value' => format_currency($contract->value),
-                'start_date' => format_date($contract->start_date),
-                'end_date' => format_date($contract->end_date),
-                'client_id' => $contract->client_id,
-                'project_id' => $contract->project_id,
-                'contract_type_id' => $contract->contract_type_id,
-                'description' => $contract->description,
-                'workspace_id' => $contract->workspace_id,
-                'created_by' => $contract->created_by,
-                'created_at' => format_date($contract->created_at, true),
-                'updated_at' => format_date($contract->updated_at, true)
-            ];
+    function formatContract($contract)
+    {
+        // Determine sign statuses
+        $promisorSign = $contract->promisor_sign;
+        $promiseeSign = $contract->promisee_sign;
+
+        $promisor_sign_status = !is_null($promisorSign) ? 'signed' : 'not_signed';
+        $promisee_sign_status = !is_null($promiseeSign) ? 'signed' : 'not_signed';
+
+        if (!is_null($promisorSign) && !is_null($promiseeSign)) {
+            $status = 'signed';
+        } elseif (!is_null($promisorSign) || !is_null($promiseeSign)) {
+            $status = 'partially_signed';
+        } else {
+            $status = 'not_signed';
         }
+
+        if (strpos($contract->created_by, 'u_') === 0) {
+            $userId = substr($contract->created_by, 2);
+            $user = \App\Models\User::find($userId);
+
+            $createdBy = $user ? [
+                'type' => 'user',
+                'id' => $user->id,
+                'name' => $user->first_name . ' ' . $user->last_name,
+                'email' => $user->email,
+                'profile_picture' => $user->photo ? asset('storage/' . $user->photo) : asset('/photos/1.png'),
+
+            ] : null;
+        } else {
+            $clientId = substr($contract->created_by, 2);
+            $client = \App\Models\Client::find($clientId);
+
+            $createdBy = $client ? [
+                'type' => 'client',
+                'id' => $client->id,
+                'name' => $client->name,
+                'email' => $client->email,
+                'profile_picture' => $client->photo ? asset('storage/' . $client->photo) : asset('/photos/1.png'),
+            ] : null;
+        }
+
+
+
+        return [
+            'id' => $contract->id,
+            'title' => $contract->title,
+            'value' => format_currency($contract->value),
+            'start_date' => format_date($contract->start_date),
+            'end_date' => format_date($contract->end_date),
+            'client_id' => $contract->client_id,
+            'client' => [
+                'id' => $contract->client->id,
+                'name' => $contract->client->first_name . " " . $contract->client->last_name,
+                'email' => $contract->client->email,
+                'profile_picture' => $contract->client->photo ? asset('storage/' . $contract->client->photo) : asset('storage/photos/no-image.jpg')
+            ],
+            'created_by' => $createdBy,
+            'project' => [
+                'id' => $contract->project_id,
+                'title' => $contract->project_title
+            ],
+            'contract_type' => [
+                'id' => $contract->contract_type_id,
+                'name' => $contract->contract_type
+            ],
+            'description' => $contract->description,
+            'workspace_id' => $contract->workspace_id,
+            'created_at' => format_date($contract->created_at, true),
+            'updated_at' => format_date($contract->updated_at, true),
+            'status' => $status,
+            'promisor_sign_status' => $promisor_sign_status,
+            'promisee_sign_status' => $promisee_sign_status,
+        ];
     }
+
 
     if (!function_exists('formatContractType')) {
         function formatContractType($contract_type)
