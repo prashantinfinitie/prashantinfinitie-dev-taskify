@@ -32,6 +32,7 @@ use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\UpdaterController;
 use App\Http\Controllers\ExpensesController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\LeadFormController;
 use App\Http\Controllers\MeetingsController;
 use App\Http\Controllers\PaymentsController;
 use App\Http\Controllers\PayslipsController;
@@ -105,7 +106,7 @@ Route::get('/generate-api-doc', function () {
     return response()->json(['message' => 'API Documentation generated successfully!']);
 });
 Route::get('/migrate', function () {
-    Artisan::call('migrate', ['--path' => 'database/migrations/2025_04_17_125219_create_lead_stages_table.php']);
+    Artisan::call('migrate', ['--path' => 'database/migrations/2025_06_13_102308_add_custom_fields_to_leads_table.php']);
     return redirect('/home')->with('message', 'Database Migrated Successfully.');
 });
 
@@ -1024,5 +1025,9 @@ Route::middleware(['CheckInstallation'])->group(function () {
 
         Route::post('/ai/generate-description', [AIController::class, 'generateDescription'])
             ->name('generate.description');
+
+        Route::get('/lead-forms', [LeadFormController::class, 'index'])->name('lead-forms.index');
+        Route::get('/lead-forms/create', [LeadFormController::class, 'create'])->name('lead-forms.create');
+        Route::get('/lead-forms/list', [LeadFormController::class, 'list'])->name('lead-forms.list');
     });
 });

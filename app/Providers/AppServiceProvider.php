@@ -144,9 +144,9 @@ class AppServiceProvider extends ServiceProvider
         // Register PHP date format singleton
         $this->registerDateFormatSingleton();
 
-        $settings = get_settings('general_settings');
+        // $settings = get_settings('general_settings');
         // Load general settings from DB
-        $this->configureRecaptcha($settings);
+        // $this->configureRecaptcha($settings);
     }
 
     /**

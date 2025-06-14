@@ -37,6 +37,11 @@ class Lead extends Model
         'country',
         'is_converted',
         'converted_at',
+        'custom_fields' // JSON field for custom form fields
+    ];
+
+    protected $casts = [
+        'custom_fields' => 'array'
     ];
 
     // Relationships
@@ -45,9 +50,6 @@ class Lead extends Model
     {
         return $this->belongsTo(Workspace::class);
     }
-
-
-
 
     public function assigned_user()
     {

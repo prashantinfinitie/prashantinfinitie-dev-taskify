@@ -805,7 +805,7 @@ class UserController extends Controller
                 ], ['g-recaptcha-response.required' => 'google captcha required.']);
             }
         } catch (ValidationException $e) {
-            dd($e);
+            // dd($e);
             return formatApiValidationError($isApi, $e->errors());
         }
 
