@@ -37,7 +37,8 @@ class Lead extends Model
         'country',
         'is_converted',
         'converted_at',
-        'custom_fields' // JSON field for custom form fields
+        'custom_fields', // JSON field for custom form fields
+        'lead_form_id'
     ];
 
     protected $casts = [
@@ -73,5 +74,10 @@ class Lead extends Model
     public function follow_ups()
     {
         return $this->hasMany(LeadFollowUp::class);
+    }
+
+    public function form()
+    {
+        return $this->belongsTo(LeadForm::class, 'lead_form_id');
     }
 }

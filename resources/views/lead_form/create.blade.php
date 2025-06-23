@@ -1,172 +1,216 @@
-?>
 @extends('layout')
 
+@section('title')
+    {{ get_label('create_lead_form', 'Create Lead Form') }}
+@endsection
+
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <h4>Create New Lead Form</h4>
-                </div>
-                <div class="card-body">
-                    <form action="" method="POST" id="leadFormCreate">
-                        @csrf
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between mb-2 mt-4">
+            <div>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb breadcrumb-style1">
+                        <li class="breadcrumb-item">
+                            <a href="{{ url('home') }}">{{ get_label('home', 'Home') }}</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            {{ get_label('leads_management', 'Leads Management') }}
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('lead-forms.index') }}">{{ get_label('lead_forms', 'Lead Forms') }}</a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            {{ get_label('create', 'Create') }}
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
 
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label for="title">Form Title</label>
-                                    <input type="text" class="form-control" id="title" name="title" required>
-                                </div>
+        <div class="card">
+            <div class="card-body">
+                <form id="leadFormCreate" action="{{ route('lead-forms.store') }}" method="POST" class="form-submit-event">
+                    @csrf
+                    <input type="hidden" name="redirect_url" value="{{ route('lead-forms.index') }}">
+                    <div class="row">
+                        <!-- Form Configuration -->
+                        <div class="col-md-12">
+                            <h5>{{ get_label('form_configuration', 'Form Configuration') }}</h5>
+                            <hr>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="title" class="form-label">{{ get_label('title', 'Form Title') }} <span
+                                    class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="title" name="title" required
+                                placeholder="{{ get_label('enter_form_title', 'Enter a descriptive title for your form') }}"
+                                value="{{ old('title') }}">
+                            @error('title')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="source_id" class="form-label">{{ get_label('source', 'Lead Source') }} <span
+                                    class="text-danger">*</span></label>
+                            <select class="form-select select2" id="select_lead_source" name="source_id"
+                                data-single-select="true" data-allow-clear="false" data-consider-workspace="true" required>
+                                <option value="">{{ get_label('select_source', 'Select Source') }}</option>
+                                @foreach ($sources as $source)
+                                    <option value="{{ $source->id }}">{{ $source->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('source_id')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="stage_id" class="form-label">{{ get_label('stage', 'Initial Stage') }} <span
+                                    class="text-danger">*</span></label>
+                            <select class="form-select select2" id="select_lead_stage" name="stage_id"
+                                data-single-select="true" data-allow-clear="false" data-consider-workspace="true" required>
+                                <option value="">{{ get_label('select_stage', 'Select Stage') }}</option>
+                                @foreach ($stages as $stage)
+                                    <option value="{{ $stage->id }}">{{ $stage->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('stage_id')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="assigned_to" class="form-label">{{ get_label('assigned_to', 'Assign To') }} <span
+                                    class="text-danger">*</span></label>
+                            <select class="form-select select2" id="select_lead_assignee" name="assigned_to"
+                                data-single-select="true" data-allow-clear="false" data-consider-workspace="true" required>
+                                <option value="">{{ get_label('select_user', 'Select User') }}</option>
+                                @foreach ($users as $user)
+                                    <option value="{{ $user->id }}">{{ $user->first_name }} {{ $user->last_name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('assigned_to')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <label for="description"
+                                class="form-label">{{ get_label('description', 'Description') }}</label>
+                            <textarea class="form-control" id="description" name="description" rows="3"
+                                placeholder="{{ get_label('enter_description', 'Provide a brief description of the form\'s purpose (optional)') }}">{{ old('description') }}</textarea>
+                            @error('description')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <!-- Form Fields Configuration -->
+                        <div class="col-md-12 mt-4">
+                            <h5>{{ get_label('form_fields', 'Form Fields') }}</h5>
+                            <hr>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <div class="alert alert-info">
+                                <strong>{{ get_label('note', 'Note') }}:</strong>
+                                {{ get_label('mandatory_fields', 'The following fields are mandatory and automatically included:') }}
+                                {{ implode(',   ', array_map(fn($field) => \App\Models\LeadFormField::MAPPABLE_FIELDS[$field], \App\Models\LeadFormField::REQUIRED_FIELDS)) }}
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label for="source_id">Lead Source</label>
-                                    <select class="form-control" id="source_id" name="source_id" required>
-                                        <option value="">Select Source</option>
-                                        @foreach($sources as $source)
-                                            <option value="{{ $source->id }}">{{ $source->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+
+
+                        </div>
+
+                        <div class="col-md-12">
+                            <div id="mandatoryFields">
+                                @foreach (\App\Models\LeadFormField::REQUIRED_FIELDS as $index => $field)
+                                    <div class="field-row bg-light mb-3 rounded border p-3" data-id="{{ $index }}">
+                                        <div class="row align-items-center">
+                                            <div class="col-md-4">
+                                                <strong>{{ \App\Models\LeadFormField::MAPPABLE_FIELDS[$field] }}</strong>
+                                                <input type="hidden" name="fields[{{ $index }}][label]"
+                                                    value="{{ \App\Models\LeadFormField::MAPPABLE_FIELDS[$field] }}">
+                                                <input type="hidden" name="fields[{{ $index }}][name]"
+                                                    value="{{ $field }}">
+                                                <input type="hidden" name="fields[{{ $index }}][type]"
+                                                    value="{{ $field == 'email' ? 'email' : ($field == 'phone' ? 'tel' : 'text') }}">
+                                                <input type="hidden" name="fields[{{ $index }}][is_required]"
+                                                    value="1">
+                                                <input type="hidden" name="fields[{{ $index }}][is_mapped]"
+                                                    value="1">
+                                                <input type="hidden" name="fields[{{ $index }}][options][]"
+                                                    value="">
+                                            </div>
+                                            <div class="col-md-8">
+                                                <small
+                                                    class="text-muted">{{ get_label('required_field', 'Required field (automatically included)') }}</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label for="stage_id">Initial Stage</label>
-                                    <select class="form-control" id="stage_id" name="stage_id" required>
-                                        <option value="">Select Stage</option>
-                                        @foreach($stages as $stage)
-                                            <option value="{{ $stage->id }}">{{ $stage->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label for="assigned_to">Assign To</label>
-                                    <select class="form-control" id="assigned_to" name="assigned_to" required>
-                                        <option value="">Select User</option>
-                                        @foreach($users as $user)
-                                            <option value="{{ $user->id }}">{{ $user->first_name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
+                        <div class="col-md-12">
+                            <div id="fieldsContainer" class="sortable"></div>
                         </div>
 
-                        <div class="form-group mb-3">
-                            <label for="description">Description</label>
-                            <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+                        <div class="col-md-12 mb-3">
+                            <button type="button" class="btn btn-outline-primary" onclick="addField()">
+                                <i class="bx bx-plus"></i> {{ get_label('add_field', 'Add Field') }}
+                            </button>
                         </div>
 
-                        <div class="card">
-                            <div class="card-header d-flex justify-content-between align-items-center">
-                                <h5>Additional Form Fields</h5>
-                                <button type="button" class="btn btn-primary btn-sm" onclick="addField()">Add Field</button>
-                            </div>
-                            <div class="card-body">
-                                <div class="alert alert-info">
-                                    <strong>Note:</strong> The following fields are mandatory and will be automatically added: First Name, Last Name, Email, Phone, Company
-                                </div>
-                                <div id="fieldsContainer">
-                                    <!-- Dynamic fields will be added here -->
-                                </div>
-                            </div>
+                        <div class="mt-4 text-start">
+                            <button type="submit" class="btn btn-primary me-2"
+                                id="submit_btn">{{ get_label('create', 'Create') }}</button>
+                            <button type="reset"
+                                class="btn btn-outline-secondary">{{ get_label('cancel', 'Cancel') }}</button>
                         </div>
-
-                        <div class="form-group mt-3">
-                            <button type="submit" class="btn btn-success">Create Form</button>
-                            <a href="{{ route('lead-forms.index') }}" class="btn btn-secondary">Cancel</a>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-</div>
 
-<script>
-let fieldIndex = 0;
-
-function addField() {
-    const container = document.getElementById('fieldsContainer');
-    const fieldHtml = `
-        <div class="field-row border p-3 mb-3" id="field-${fieldIndex}">
-            <div class="row">
-                <div class="col-md-3">
-                    <label>Field Label</label>
-                    <input type="text" class="form-control" name="fields[${fieldIndex}][label]" required>
-                </div>
-                <div class="col-md-2">
-                    <label>Field Type</label>
-                    <select class="form-control" name="fields[${fieldIndex}][type]" onchange="toggleOptions(${fieldIndex})" required>
-                        <option value="text">Text</option>
-                        <option value="textarea">Textarea</option>
-                        <option value="select">Select</option>
-                        <option value="checkbox">Checkbox</option>
-                        <option value="radio">Radio</option>
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <label>Map to Lead Field</label>
-                    <select class="form-control" name="fields[${fieldIndex}][name]" onchange="toggleMapping(${fieldIndex})">
-                        <option value="">Custom Field</option>
-                        <option value="website">Website</option>
-                        <option value="job_title">Job Title</option>
-                    </select>
-                    <input type="hidden" name="fields[${fieldIndex}][is_mapped]" value="0" id="is_mapped_${fieldIndex}">
-                </div>
-                <div class="col-md-2">
-                    <label>Required</label>
-                    <select class="form-control" name="fields[${fieldIndex}][is_required]">
-                        <option value="0">No</option>
-                        <option value="1">Yes</option>
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <label>Options (for select/radio)</label>
-                    <textarea class="form-control" name="fields[${fieldIndex}][options]" placeholder="Option 1, Option 2, Option 3" style="display:none;" id="options_${fieldIndex}"></textarea>
-                </div>
-                <div class="col-md-1">
-                    <label>&nbsp;</label>
-                    <button type="button" class="btn btn-danger btn-sm d-block" onclick="removeField(${fieldIndex})">Remove</button>
-                </div>
-            </div>
-        </div>
-    `;
-
-    container.insertAdjacentHTML('beforeend', fieldHtml);
-    fieldIndex++;
-}
-
-function removeField(index) {
-    document.getElementById(`field-${index}`).remove();
-}
-
-function toggleOptions(index) {
-    const typeSelect = document.querySelector(`select[name="fields[${index}][type]"]`);
-    const optionsTextarea = document.getElementById(`options_${index}`);
-
-    if (typeSelect.value === 'select' || typeSelect.value === 'radio') {
-        optionsTextarea.style.display = 'block';
-    } else {
-        optionsTextarea.style.display = 'none';
-    }
-}
-
-function toggleMapping(index) {
-    const nameSelect = document.querySelector(`select[name="fields[${index}][name]"]`);
-    const isMappedInput = document.getElementById(`is_mapped_${index}`);
-
-    if (nameSelect.value) {
-        isMappedInput.value = '1';
-    } else {
-        isMappedInput.value = '0';
-    }
-}
-</script>
+    <!-- Include external scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.4.0/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    <script>
+        window.appConfig = {
+            fieldIndex: {{ count(\App\Models\LeadFormField::REQUIRED_FIELDS) }},
+            labels: {
+                field_label: "{{ get_label('label', 'Field Label') }}",
+                enter_field_label: "{{ get_label('enter_field_label', 'Enter a clear label for this field') }}",
+                field_type: "{{ get_label('type', 'Field Type') }}",
+                select_type: "{{ get_label('select_type', 'Select Type') }}",
+                map_to: "{{ get_label('map_to', 'Map to Lead Field') }}",
+                custom_field: "{{ get_label('custom_field', 'Custom Field') }}",
+                required: "{{ get_label('required', 'Required') }}",
+                no: "{{ get_label('no', 'No') }}",
+                yes: "{{ get_label('yes', 'Yes') }}",
+                options: "{{ get_label('options', 'Options') }}",
+                add_option: "{{ get_label('add_option', 'Add option') }}",
+                add: "{{ get_label('add', 'Add') }}"
+            },
+            fieldTypes: [
+                @foreach (\App\Models\LeadFormField::FIELD_TYPES as $value => $label)
+                    {
+                        value: "{{ $value }}",
+                        label: "{{ $label }}"
+                    },
+                @endforeach
+            ],
+            mappableFields: [
+                @foreach (\App\Models\LeadFormField::MAPPABLE_FIELDS as $value => $label)
+                    @if (!in_array($value, \App\Models\LeadFormField::REQUIRED_FIELDS))
+                        {
+                            value: "{{ $value }}",
+                            label: "{{ $label }}"
+                        },
+                    @endif
+                @endforeach
+            ]
+        };
+    </script>
+    <script src="{{ asset('assets/js/pages/lead-form.js') }}"></script>
 @endsection

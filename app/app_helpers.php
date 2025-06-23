@@ -34,6 +34,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Storage;
 use Twilio\Rest\Client as TwilioClient;
 use GuzzleHttp\Client as GuzzleHttpClient;
 use GuzzleHttp\Exception\RequestException;
@@ -2828,8 +2829,8 @@ if (!function_exists('formatCandidate')) {
                     'status' => $interview->status,
                     'location' => $interview->location,
                     'mode' => $interview->mode,
-                    'created_at' => format_date($interview->created_at),
-                    'updated_at' => format_date($interview->updated_at),
+                    'created_at' => format_date($interview->created_at, to_format: 'Y-m-d'),
+                    'updated_at' => format_date($interview->updated_at, to_format: 'Y-m-d'),
                 ];
             }),
             'created_at' => format_date($candidate->created_at, to_format: 'Y-m-d'),
@@ -2846,8 +2847,8 @@ if (!function_exists('formatCandidateStuses')) {
             'name' => $status->name,
             'order' => $status->order,
             'color' => $status->color,
-            'created_at' => format_date($status->created_at),
-            'updated_at' => format_date($status->updated_at),
+            'created_at' => format_date($status->created_at, to_format: 'Y-m-d'),
+            'updated_at' => format_date($status->updated_at, to_format: 'Y-m-d'),
             'can_edit' => checkPermission('edit_candidate_status'),
             'can_delete' => checkPermission('delete_candidate_status'),
         ];
@@ -3613,8 +3614,14 @@ if (!function_exists('getMenus')) {
                         'id' => 'lead_bulk_upload',
                         'label' => get_label('bulk_upload', 'Bulk Upload'),
                         'url' => route('leads.upload'),
-
                         'class' => 'menu-item' . (Request::is('leads/bulk-upload') ? ' active' : ''),
+                        'show' => ($user->can('manage_leads') && $user->can('create_leads')) ? 1 : 0
+                    ],
+                    [
+                        'id' => 'lead_forms',
+                        'label' => get_label('lead_forms', 'Lead Forms'),
+                        'url' => route('lead-forms.index'),
+                        'class' => 'menu-item' . (Request::is('/lead-forms') ? ' active' : ''),
                         'show' => ($user->can('manage_leads') && $user->can('create_leads')) ? 1 : 0
                     ],
                 ],
@@ -4938,6 +4945,32 @@ if (!function_exists('formatLead')) {
             'zip' => $lead->zip,
             'country' => $lead->country,
             'isConverted' => $lead->is_converted == 1 ? true : false,
+            'Assigned_to' => [
+                'id' => $lead->assigned_user->id,
+                'name' => $lead->assigned_user->first_name . "" . $lead->assigned_user->last_name,
+                'email' => $lead->assigned_user->email,
+                'profile_picture' => $lead->assigned_user ? asset('storage/' . $lead->assigned_user->photo) : asset('/photos/1.png'),
+            ],
+
+            'follow_ups' => $lead->follow_ups->map(function ($followUp) {
+                return [
+                    'id' => $followUp->id,
+                    // 'follow_up_at' => format_date($followUp->follow_up_at, false, 'Y-m-d H:', 'Y-m-d'),
+                    'follow_up_at' => $followUp->follow_up_at,
+                    'type' => $followUp->type,
+                    'status' => $followUp->status,
+                    'note' => $followUp->note, // Strip HTML
+                    // 'note' => $followUp->note ? strip_tags($followUp->note) : null, // Strip HTML
+                    'assigned_to' => [
+                        'id' => $followUp->assignedTo->id,
+                        'name' => $followUp->assignedTo->first_name . " " . $followUp->assignedTo->last_name
+                    ],
+                    'created_at' => format_date($followUp->created_at, to_format: 'Y-m-d'),
+                    'updated_at' => format_date($followUp->updated_at, to_format: 'Y-m-d'),
+                ];
+            })->toArray(),
+
+            // 'assignedTo' => $lead->assigned_user,
             'created_at' => format_date($lead->created_at, to_format: 'Y-m-d'),
             'updated_at' => format_date($lead->updated_at, to_format: 'Y-m-d'),
         ];
@@ -5021,7 +5054,7 @@ if (!function_exists('formatLeadUserHtml')) {
                 'id' => $payslip->id,
                 'user_id' => $payslip->user_id,
                 'user_name' => $payslip->user ? ($payslip->user->full_name ?? ($payslip->user->first_name . ' ' . $payslip->user->last_name)) : '-',
-                'month' => Carbon::parse($payslip->month),
+                'month' => $payslip->month,
                 'basic_salary' => $payslip->basic_salary,
                 'working_days' => $payslip->working_days,
                 'lop_days' => $payslip->lop_days,
@@ -5058,9 +5091,9 @@ if (!function_exists('formatLeadUserHtml')) {
             return [
                 'id' => $allowance->id,
                 'title' => $allowance->title,
-                'amount' => format_currency($allowance->amount),
-                'created_at' => format_date($allowance->created_at, true),
-                'updated_at' => format_date($allowance->updated_at, 'H:i:s'),
+                'amount' => format_currency($allowance->amount, false),
+                'created_at' => format_date($allowance->created_at, to_format: 'Y-m-d'),
+                'updated_at' => format_date($allowance->updated_at, to_format: 'Y-m-d'),
             ];
         }
     }
@@ -5074,9 +5107,9 @@ if (!function_exists('formatLeadUserHtml')) {
                 'title' => $deduction->title,
                 'type' => ucfirst($deduction->type),
                 'percentage' => $deduction->percentage,
-                'amount' => format_currency($deduction->amount),
-                'created_at' => format_date($deduction->created_at),
-                'updated_at' => format_date($deduction->updated_at)
+                'amount' => format_currency($deduction->amount, false),
+                'created_at' => format_date($deduction->created_at, to_format: 'Y-m-d'),
+                'updated_at' => format_date($deduction->updated_at, to_format: 'Y-m-d')
 
             ];
         }
@@ -5087,6 +5120,7 @@ if (!function_exists('formatLeadUserHtml')) {
     {
         // Determine sign statuses
         $promisorSign = $contract->promisor_sign;
+
         $promiseeSign = $contract->promisee_sign;
 
         $promisor_sign_status = !is_null($promisorSign) ? 'signed' : 'not_signed';
@@ -5110,7 +5144,6 @@ if (!function_exists('formatLeadUserHtml')) {
                 'name' => $user->first_name . ' ' . $user->last_name,
                 'email' => $user->email,
                 'profile_picture' => $user->photo ? asset('storage/' . $user->photo) : asset('/photos/1.png'),
-
             ] : null;
         } else {
             $clientId = substr($contract->created_by, 2);
@@ -5125,15 +5158,12 @@ if (!function_exists('formatLeadUserHtml')) {
             ] : null;
         }
 
-
-
         return [
             'id' => $contract->id,
             'title' => $contract->title,
             'value' => format_currency($contract->value),
-            'start_date' => format_date($contract->start_date),
-            'end_date' => format_date($contract->end_date),
-            'client_id' => $contract->client_id,
+            'start_date' => format_date($contract->start_date, to_format: 'Y-m-d'),
+            'end_date' => format_date($contract->end_date, to_format: 'Y-m-d'),
             'client' => [
                 'id' => $contract->client->id,
                 'name' => $contract->client->first_name . " " . $contract->client->last_name,
@@ -5151,14 +5181,23 @@ if (!function_exists('formatLeadUserHtml')) {
             ],
             'description' => $contract->description,
             'workspace_id' => $contract->workspace_id,
-            'created_at' => format_date($contract->created_at, true),
-            'updated_at' => format_date($contract->updated_at, true),
+            'created_at' => format_date($contract->created_at, to_format: 'Y-m-d'),
+            'updated_at' => format_date($contract->updated_at, to_format: 'Y-m-d'),
             'status' => $status,
-            'promisor_sign_status' => $promisor_sign_status,
-            'promisee_sign_status' => $promisee_sign_status,
+            'signatures' => [
+                'promisor' => [
+                    'status' => $promisor_sign_status,
+                    'url' => $promisorSign && Storage::disk('public')->exists('signatures/' . $promisorSign) ? asset('storage/signatures/' . $promisorSign) : null, // CHANGED: Use asset() for consistency with profile_picture and added exists() check
+                ],
+                'promisee' => [
+                    'status' => $promisee_sign_status,
+                    'url' => $promiseeSign && Storage::disk('public')->exists('signatures/' . $promiseeSign) ? asset('storage/signatures/' . $promiseeSign) : null, // CHANGED: Use asset() for consistency with profile_picture and added exists() check
+                ],
+            ],
+
+            'signed_pdf_url' => $contract->signed_pdf ? asset('storage/contracts/' . $contract->signed_pdf) : null,
         ];
     }
-
 
     if (!function_exists('formatContractType')) {
         function formatContractType($contract_type)
@@ -5166,8 +5205,8 @@ if (!function_exists('formatLeadUserHtml')) {
             return [
                 'id' => $contract_type->id,
                 'type' => $contract_type->type,
-                'created_at' => format_date($contract_type->created_at, true),
-                'updated_at' => format_date($contract_type->updated_at, true),
+                'created_at' => format_date($contract_type->created_at, to_format: 'Y-m-d'),
+                'updated_at' => format_date($contract_type->updated_at, to_format: 'Y-m-d'),
             ];
         }
     }

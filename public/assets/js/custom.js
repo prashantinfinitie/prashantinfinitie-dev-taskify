@@ -1457,6 +1457,7 @@ $(document).on("submit", ".form-submit-event", function (e) {
     }
 
     var formData = new FormData(this);
+    console.log(formData);
     // NEW CODE: Check if this is an HTML template and encode it if needed
     if ($(this).attr("action").includes("store_template") ||
         $(this).attr("action").includes("/email-templates/store") ||

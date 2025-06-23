@@ -52,6 +52,7 @@ use App\Http\Controllers\DeductionsController;
 use App\Http\Controllers\LeadImportController;
 use App\Http\Controllers\LeadSourceController;
 use App\Http\Controllers\PreferenceController;
+use App\Http\Controllers\PublicFormController;
 use App\Http\Controllers\WorkspacesController;
 use App\Http\Controllers\ActivityLogController;
 use App\Http\Controllers\Auth\SignUpController;
@@ -106,7 +107,7 @@ Route::get('/generate-api-doc', function () {
     return response()->json(['message' => 'API Documentation generated successfully!']);
 });
 Route::get('/migrate', function () {
-    Artisan::call('migrate', ['--path' => 'database/migrations/2025_06_13_102308_add_custom_fields_to_leads_table.php']);
+    Artisan::call('migrate', ['--path' => 'database/migrations/2025_06_18_090751_add_lead_form_id_to_leads_table.php']);
     return redirect('/home')->with('message', 'Database Migrated Successfully.');
 });
 
@@ -173,6 +174,13 @@ Route::middleware(['CheckInstallation'])->group(function () {
     Route::post('/logout', [UserController::class, 'logout'])->middleware(['multiguard']);
 
     Route::get("settings/languages/switch/{code}", [LanguageController::class, 'switch'])->middleware(['multiguard']);
+
+    Route::prefix('forms')->group(function () {
+        Route::get('{slug}', [PublicFormController::class, 'show'])->name('public.form');
+        Route::post('{slug}', [PublicFormController::class, 'submit'])->name('public.form.submit');
+        Route::get('{slug}/json', [PublicFormController::class, 'json'])->name('public.form.json');
+        // Route::get('{slug}/embed', [LeadFormController::class, 'embedForm'])->name('public.form.embed');
+    });
 
     // ,'custom-verified'
     Route::middleware(['multiguard', 'custom-verified'])->group(function () {
@@ -1026,8 +1034,37 @@ Route::middleware(['CheckInstallation'])->group(function () {
         Route::post('/ai/generate-description', [AIController::class, 'generateDescription'])
             ->name('generate.description');
 
-        Route::get('/lead-forms', [LeadFormController::class, 'index'])->name('lead-forms.index');
-        Route::get('/lead-forms/create', [LeadFormController::class, 'create'])->name('lead-forms.create');
-        Route::get('/lead-forms/list', [LeadFormController::class, 'list'])->name('lead-forms.list');
+        // Route::get('lead-forms', [LeadFormController::class, 'index'])->name('lead-forms.index');
+
+
+
+
+        // List all lead forms
+        Route::get('lead-forms', [LeadFormController::class, 'index'])->name('lead-forms.index');
+
+        // Show create form
+        Route::get('lead-forms/create', [LeadFormController::class, 'create'])->name('lead-forms.create');
+
+        // Store new form
+        Route::post('lead-forms/store', [LeadFormController::class, 'store'])->name('lead-forms.store');
+
+        // Show a specific form
+        Route::get('lead-forms/show/{id}', [LeadFormController::class, 'show'])->name('lead-forms.show');
+
+        // Show edit form
+        Route::get('lead-forms/edit/{id}', [LeadFormController::class, 'edit'])->name('lead-forms.edit');
+
+        // Update a form
+        Route::post('lead-forms/update/{id}', [LeadFormController::class, 'update'])->name('lead-forms.update');
+
+        // Delete a form
+        Route::delete('lead-forms/destroy/{id}', [LeadFormController::class, 'destroy'])->name('lead-forms.destroy');
+        Route::post('lead-forms/destroy_multiple', [LeadFormController::class, 'destroy_multiple'])->name('lead-forms.destroy_multiple');
+        Route::get('lead-forms/list', [LeadFormController::class, 'list'])->name('lead-forms.list');
+        Route::post('lead-forms/{leadForm}/toggle', [LeadFormController::class, 'toggleStatus'])->name('lead-forms.toggle');
+        // In your routes/web.php
+        Route::get('lead-forms/{leadForm}/embed', [LeadFormController::class, 'embed'])->name('lead-forms.embed');
+        Route::get('lead-forms/{id}/responses', [LeadFormController::class, 'responses'])->name('lead-forms.responses');
+        Route::get('lead-forms/responses/list/{id}', [LeadFormController::class, 'responseList'])->name('lead-forms.responses.list');
     });
 });
