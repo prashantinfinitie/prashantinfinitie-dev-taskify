@@ -311,7 +311,25 @@
     /* Adding transition for smooth animation */
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
 }
+.embed-icon {
+    width: 54px !important;
+    border-radius: 50px;
+    cursor: pointer;
+    position: fixed;
+    bottom: 0.7rem;
+     right: 11.625rem;;
+    padding: 10px;
+    background-color: #ffffff;
+    z-index: 999999;
+    transition: transform 0.3s ease;
+    /* Adding transition for smooth animation */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
 
+.embed-icon:hover {
+    transform: translateY(-5px);
+    /* Lift the image slightly on hover */
+}
 .chat-img:hover {
     transform: translateY(-5px);
     /* Lift the image slightly on hover */
@@ -372,6 +390,9 @@
     font-size: 12px;
     color: #666;
 }
+
+
+
 
 /* Buttons */
 .selectgroup {

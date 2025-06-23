@@ -5050,10 +5050,15 @@ if (!function_exists('formatLeadUserHtml')) {
     if (!function_exists('formatPayslip')) {
         function formatPayslip($payslip)
         {
+
+            // dd(format_date($payslip->payment_date, true, to_format: 'Y-m-d'));
             return [
                 'id' => $payslip->id,
-                'user_id' => $payslip->user_id,
-                'user_name' => $payslip->user ? ($payslip->user->full_name ?? ($payslip->user->first_name . ' ' . $payslip->user->last_name)) : '-',
+                'user' => [
+                    'id' => $payslip->user_id,
+                    'name' => $payslip->user ? ($payslip->user->full_name ?? ($payslip->user->first_name . ' ' . $payslip->user->last_name)) : '-',
+                    'email' => $payslip->user->email
+                ],
                 'month' => $payslip->month,
                 'basic_salary' => $payslip->basic_salary,
                 'working_days' => $payslip->working_days,
@@ -5065,7 +5070,22 @@ if (!function_exists('formatLeadUserHtml')) {
                 'ot_hours' => $payslip->ot_hours,
                 'ot_rate' => $payslip->ot_rate,
                 'ot_payment' => $payslip->ot_payment,
+                'allowances' => $payslip->allowances->map(function ($allowance) {
+                    return [
+                        'id' => $allowance->id,
+                        'title' => $allowance->title,
+                        'amount' => $allowance->amount ?? 0, // assuming `amount` is on pivot
+                    ];
+                }),
                 'total_allowance' => $payslip->total_allowance,
+
+                'deductions' => $payslip->deductions->map(function ($deduction) {
+                    return [
+                        'id' => $deduction->id,
+                        'title' => $deduction->title,
+                        'amount' => $deduction->amount ?? 0, // assuming `amount` is on pivot
+                    ];
+                }),
                 'total_deductions' => $payslip->total_deductions,
                 'total_earnings' => $payslip->total_earnings,
                 'net_pay' => $payslip->net_pay,
@@ -5077,10 +5097,18 @@ if (!function_exists('formatLeadUserHtml')) {
                 },
                 'payment_method_id' => $payslip->payment_method_id,
                 'payment_method' => $payslip->paymentMethod->name ?? '-',
-                'payment_date' =>  $payslip->payment_date !== null ? Carbon::parse($payslip->payment_date) : '',
+                'payment_date' =>  $payslip->payment_date !== null ? format_date($payslip->payment_date, true, to_format: 'Y-m-d') : '',
                 'note' => $payslip->note,
-                'created_at' => format_date($payslip->created_at, to_format: 'Y-m-d'),
-                'updated_at' => format_date($payslip->updated_at, to_format: 'Y-m-d'),
+                'created_at_date' => format_date($payslip->created_at, false, to_format: 'Y-m-d'),
+                'created_at_time' => format_date($payslip->created_at, false, to_format: 'H:i:s'),
+
+                'updated_at_date' => format_date($payslip->updated_at, false, to_format: 'Y-m-d'),
+                'updated_at_time' => format_date($payslip->updated_at, false, to_format: 'H:i:s'),
+
+
+                'current_date' => format_date(Carbon::now(), false, to_format: 'Y-m-d'),
+                'current_time' => format_date(Carbon::now(), false, to_format: 'H:i:s'),
+
             ];
         }
     }

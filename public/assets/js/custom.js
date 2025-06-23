@@ -4887,6 +4887,7 @@ function toggleChatIframe() {
         iframeContainer.style.display = "none";
     }
 }
+
 $(document).ready(function () {
     if ($("#selectAllPreferences").length) {
         // Check initial state of checkboxes and update selectAllPreferences checkbox

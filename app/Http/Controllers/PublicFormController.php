@@ -130,14 +130,8 @@ class PublicFormController extends Controller
 
             DB::commit();
 
-            $response = [
-                'success' => true,
-                'message' => $form->success_message ?: 'Form submitted successfully!'
-            ];
+            return redirect()->route('lead_form.submitted');
 
-            if ($form->redirect_url) {
-                $response['redirect_url'] = $form->redirect_url;
-            }
 
             return response()->json($response);
         } catch (\Exception $e) {

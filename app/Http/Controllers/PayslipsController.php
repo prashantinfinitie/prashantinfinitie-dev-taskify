@@ -174,7 +174,7 @@ class PayslipsController extends Controller
                 $formFields['payment_date'] = null;
                 $formFields['payment_method_id'] = null;
             } elseif (!empty($payment_date)) {
-                $formFields['payment_date'] = format_date($payment_date, false, app('php_date_format'), 'Y-m-d');
+                $formFields['payment_date'] = format_date($payment_date, false, $isApi ? 'Y-m-d' : app('php_date_format'), 'Y-m-d');
             }
 
             $formFields['workspace_id'] = $this->workspace->id;
@@ -209,6 +209,7 @@ class PayslipsController extends Controller
                 return response()->json(['error' => true, 'message' => 'Payslip couldn\'t created.']);
             }
         } catch (\Exception $e) {
+            dd($e);
             return formatApiResponse(
                 true,
                 config('app.debug') ? $e->getMessage() : 'An error occurred.',
@@ -521,7 +522,7 @@ class PayslipsController extends Controller
                 $formFields['payment_date'] = null;
                 $formFields['payment_method_id'] = null;
             } elseif (!empty($payment_date)) {
-                $formFields['payment_date'] = format_date($payment_date, false, app('php_date_format'), 'Y-m-d');
+                $formFields['payment_date'] = format_date($payment_date, false,  $isApi ? 'Y-m-d' : app('php_date_format'), 'Y-m-d');
             }
 
             $formFields['workspace_id'] = $this->workspace->id;
@@ -829,6 +830,7 @@ class PayslipsController extends Controller
                 ]
             );
         } catch (\Exception $e) {
+            dd($e);
             return formatApiResponse(
                 true,
                 config('app.debug') ? $e->getMessage() : 'An error occurred'

@@ -354,29 +354,16 @@ class LeadFormController extends Controller
             if ($canEdit) {
                 $actions .= '
                     <a href="' . route('lead-forms.edit', $leadForm->id) . '"
-                       class="get-embed-code-btn"
+                       class="mx-1"
                        title="' . get_label('update', 'Update') . '">
-                        <i class="bx bx-edit mx-1 text-primary"></i>
+                        <i class="bx bx-edit text-primary"></i>
                     </a>
-                    <a href="javascript:void(0);"
-                       class="embed-options-btn mx-1"
-                       data-form-id="' . $leadForm->id . '"
-                       data-embed-code="' . htmlspecialchars($leadForm->embed_code, ENT_QUOTES) . '"
-                       data-embed-url="' . route('lead-forms.embed', $leadForm->id) . '"
-                       data-action="preview"
-                       title="' . get_label('quick_preview', 'Quick Preview') . '">
-                        <i class="bx bx-show text-info"></i>
-                    </a>
-                    <a href="javascript:void(0);"
-                       class="embed-options-btn mx-1"
-                       data-form-id="' . $leadForm->id . '"
-                       data-embed-code="' . htmlspecialchars($leadForm->embed_code, ENT_QUOTES) . '"
-                       data-embed-url="' . route('lead-forms.embed', $leadForm->id) . '"
-                       data-action="visit"
-                       title="' . get_label('full_embed_page', 'Full Embed Page') . '">
-                        <i class="bx bx-link-external text-warning"></i>
+                    <a href="' . route('lead-forms.embed', $leadForm->id) . '"
+                       class="mx-1"
+                       title="' . get_label('embed_code', 'Embed Code') . '">
+                        <i class="bx bx-code-alt text-info"></i>
                     </a>';
-                }
+            }
 
                 if ($canDelete) {
                 $actions .= '

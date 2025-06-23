@@ -156,6 +156,8 @@
         </span>
     </div>
 @endif
+
+
 <!-- Core JS -->
 <!-- build:js assets/vendor/js/core.js -->
 <script src="{{ asset('assets/vendor/libs/popper/popper.js') }}"></script>

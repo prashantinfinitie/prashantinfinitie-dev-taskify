@@ -107,7 +107,7 @@ Route::get('/generate-api-doc', function () {
     return response()->json(['message' => 'API Documentation generated successfully!']);
 });
 Route::get('/migrate', function () {
-    Artisan::call('migrate', ['--path' => 'database/migrations/2025_06_18_090751_add_lead_form_id_to_leads_table.php']);
+    Artisan::call('migrate', ['--path' => 'database/migrations/2025_06_13_102308_add_custom_fields_to_leads_table.php']);
     return redirect('/home')->with('message', 'Database Migrated Successfully.');
 });
 
@@ -179,7 +179,9 @@ Route::middleware(['CheckInstallation'])->group(function () {
         Route::get('{slug}', [PublicFormController::class, 'show'])->name('public.form');
         Route::post('{slug}', [PublicFormController::class, 'submit'])->name('public.form.submit');
         Route::get('{slug}/json', [PublicFormController::class, 'json'])->name('public.form.json');
-        // Route::get('{slug}/embed', [LeadFormController::class, 'embedForm'])->name('public.form.embed');
+        Route::get('/form/submitted', function () {
+            return view('lead_form.submitted');
+        })->name('lead_form.submitted');
     });
 
     // ,'custom-verified'

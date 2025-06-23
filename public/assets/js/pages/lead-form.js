@@ -9,43 +9,33 @@ function queryParamsLeadForms(params) {
     };
 }
 
-// For index
-let currentEmbedCode = '';
+// Copy embed code function for the dedicated embed page
+function copyEmbedCode() {
+    const textarea = document.getElementById("embedCode");
+    if (textarea) {
+        textarea.select();
+        navigator.clipboard.writeText(textarea.value);
 
-// Toggle embed form container
-function toggleEmbedForm() {
-    const container = document.getElementById("embedFormContainer");
-    container.classList.toggle('d-none');
+        const btn = event.target.closest('button');
+        const originalText = btn.innerHTML;
+        btn.innerHTML = `<i class="bx bx-check fs-5"></i><span class="d-none d-md-inline">${window.appConfig?.labels?.copied || 'Copied'}</span>`;
+        btn.classList.replace('btn-primary', 'btn-success');
+
+        setTimeout(() => {
+            btn.innerHTML = originalText;
+            btn.classList.replace('btn-success', 'btn-primary');
+        }, 2000);
+    }
 }
 
-// Show specific tab
-function showEmbedTab(tabName) {
-    document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('d-none'));
-    document.querySelectorAll('.nav-link').forEach(btn => btn.classList.remove('active'));
-
-    document.getElementById('embed' + tabName.charAt(0).toUpperCase() + tabName.slice(1) + 'Tab').classList.remove('d-none');
-    event.target.classList.add('active');
-}
-
-// Copy current embed code
-function copyCurrentEmbedCode() {
-    const textarea = document.getElementById("embedFormCode");
-    textarea.select();
-    navigator.clipboard.writeText(textarea.value);
-
-    const btn = event.target.closest('button');
-    const originalText = btn.innerHTML;
-    btn.innerHTML = `<i class="bx bx-check"></i> ${window.appConfig.labels.copied}`;
-    btn.classList.replace('btn-primary', 'btn-success');
-
-    setTimeout(() => {
-        btn.innerHTML = originalText;
-        btn.classList.replace('btn-success', 'btn-primary');
-    }, 2000);
-}
+// Initialize any other lead form specific functionality
+document.addEventListener('DOMContentLoaded', function () {
+    console.log('Lead form page initialized');
+});
 
 // Handle embed options button click
 $(document).on('click', '.embed-options-btn', function () {
+    console.log("here");
     const formId = $(this).data('form-id');
     const embedCode = $(this).data('embed-code');
     const embedUrl = $(this).data('embed-url');
