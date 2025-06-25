@@ -17,7 +17,7 @@
                         <span>{{ get_label('leads_management', 'Leads Management') }}</span>
                     </li>
                     <li class="breadcrumb-item">
-                        {{ get_label('lead_forms', 'Lead Forms') }}
+                        <a href="{{ url('lead-forms') }}">{{ get_label('lead_forms', 'Lead Forms') }}</a>
                     </li>
                     <li class="breadcrumb-item active">
                         {{ get_label('embed_code', 'Embed code') }}
@@ -182,7 +182,7 @@
 
 .lead-form-header {
     padding: 15px 20px;
-    background: #007bff;
+
     color: white;
     display: flex;
     justify-content: space-between;
@@ -256,49 +256,46 @@
                                                 <i class="bx bx-copy me-1"></i>{{ get_label('copy', 'Copy') }}
                                             </button>
                                         </div>
-                                        <textarea class="form-control bg-light rounded-3 border" id="floatingJsCode" rows="8" readonly>
+                                        <textarea class="form-control bg-light rounded-3 border" id="floatingJsCode" rows="8" readonly><script>
+function toggleLeadForm() {
+    const container = document.getElementById('leadFormContainer');
 
+    if (container.classList.contains('active')) {
+        container.classList.remove('active');
+        console.log('Lead form closed');
+    } else {
+        container.classList.add('active');
+        console.log('Lead form opened');
+    }
+}
 
-                                            <script>
-                                            function toggleLeadForm() {
-                                                const container = document.getElementById('leadFormContainer');
+// Close form when clicking outside
+document.addEventListener('click', function(event) {
+    const container = document.getElementById('leadFormContainer');
+    const icon = document.querySelector('.lead-form-icon');
 
-                                                if (container.classList.contains('active')) {
-                                                    container.classList.remove('active');
-                                                    console.log('Lead form closed');
-                                                } else {
-                                                    container.classList.add('active');
-                                                    console.log('Lead form opened');
-                                                }
-                                            }
+    if (container && container.classList.contains('active')) {
+        if (!container.contains(event.target) && !icon.contains(event.target)) {
+            container.classList.remove('active');
+        }
+    }
+});
 
-                                            // Close form when clicking outside
-                                            document.addEventListener('click', function(event) {
-                                                const container = document.getElementById('leadFormContainer');
-                                                const icon = document.querySelector('.lead-form-icon');
-
-                                                if (container && container.classList.contains('active')) {
-                                                    if (!container.contains(event.target) && !icon.contains(event.target)) {
-                                                        container.classList.remove('active');
-                                                    }
-                                                }
-                                            });
-
-                                            // Optional: Close with Escape key
-                                            document.addEventListener('keydown', function(event) {
-                                                if (event.key === 'Escape') {
-                                                    const container = document.getElementById('leadFormContainer');
-                                                    if (container && container.classList.contains('active')) {
-                                                        container.classList.remove('active');
-                                                    }
-                                                }
-                                            });
-                                        </script></textarea>
+// Optional: Close with Escape key
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        const container = document.getElementById('leadFormContainer');
+        if (container && container.classList.contains('active')) {
+            container.classList.remove('active');
+        }
+    }
+});
+</script></textarea>
                                     </div>
 
                                     <!-- Copy All Button -->
                                     <div class="text-center">
-                                        <button class="btn btn-success" onclick="copyAllFloatingCode()">
+                                        <button class="btn btn-success" onclick="copyAllFloatingCode(event)">
                                             <i
                                                 class="bx bx-copy-alt me-2"></i>{{ get_label('copy_all_code', 'Copy All Code') }}
                                         </button>
@@ -312,15 +309,47 @@
                                         {{ get_label('preview', 'Preview') }}
                                     </label>
                                     <div class="mb-3 text-center">
-                                        <button type="button" class="btn btn-primary" onclick="previewFloatingWidget()">
+                                        <button type="button" class="btn btn-primary" onclick="previewFloatingWidget(event)">
                                             <i
                                                 class="bx bx-show me-2"></i>{{ get_label('preview_widget', 'Preview Widget') }}
                                         </button>
                                     </div>
+
+                                    <!-- Preview Box Container -->
+                                    <div class="preview-box bg-light border rounded-3 p-3 mb-3" style="height: 300px; position: relative; overflow: hidden;">
+                                        <div class="text-center text-muted mb-2">
+                                            <small>Widget Preview Area</small>
+                                        </div>
+                                        <!-- Preview Floating Widget inside the box -->
+                                        <div id="previewFloatingWidget" style="display: none; position: relative; height: 100%;">
+                                            <div onclick="togglePreviewLeadForm()" style="position: absolute; bottom: 20px; right: 20px;">
+                                                <span>
+                                                    <a href="javascript:void(0);">
+                                                        <img src="https://upload.wikimedia.org/wikipedia/commons/9/9c/Forms.png" class="preview-embed-icon"
+                                                            alt="{{ $leadForm->title }}">
+                                                    </a>
+                                                </span>
+                                            </div>
+                                            <div id="previewLeadFormContainer" class="preview-lead-form-container">
+                                                <div class="lead-form-header">
+                                                    <h5>{{ $leadForm->title }}</h5>
+                                                    <button onclick="togglePreviewLeadForm()" class="close-btn">&times;</button>
+                                                </div>
+                                                <div class="lead-form-body">
+                                                    {!! str_replace(
+                                                        ['<iframe', '</iframe>'],
+                                                        ['<iframe class="lead-form-iframe"', '</iframe>'],
+                                                        $leadForm->embed_code,
+                                                    ) !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div class="alert alert-info">
                                         <i class="bx bx-info-circle me-2"></i>
                                         <strong>{{ get_label('widget_info', 'Widget Information') }}:</strong><br>
-                                        {{ get_label('widget_description', 'This creates a floating button (like a chat widget) that toggles a form container. Perfect for non-intrusive lead capture.') }}
+                                        {{ get_label('widget_description', 'This creates a floating button that toggles a form container. Perfect for non-intrusive lead capture.') }}
                                     </div>
                                     <div class="card bg-light">
                                         <div class="card-body">
@@ -353,299 +382,17 @@
         </div>
     </div>
 
-    <!-- Preview Floating Widget -->
-    <div id="previewFloatingWidget" style="display: none;">
-        <div onclick="togglePreviewLeadForm()">
-            <span>
-                <a href="javascript:void(0);">
-                    <img src="{{ asset('assets/img/form.png') }}" class="embed-icon"
-                        alt="{{ $leadForm->title }}">
-                </a>
-            </span>
-        </div>
-        <div id="previewLeadFormContainer" class="preview-lead-form-container">
-            <div class="lead-form-header">
-                <h5>{{ $leadForm->title }}</h5>
-                <button onclick="togglePreviewLeadForm()" class="close-btn">&times;</button>
-            </div>
-            <div class="lead-form-body">
-                {!! str_replace(
-                    ['<iframe', '</iframe>'],
-                    ['<iframe class="lead-form-iframe"', '</iframe>'],
-                    $leadForm->embed_code,
-                ) !!}
-            </div>
-        </div>
-    </div>
 
-    <style>
-        .embed-container {
-            position: relative;
-            width: 100%;
-            height: 500px;
-            overflow: hidden;
+   <script>
+    window.appConfig = {
+        AppLabels: {
+            copied: "{{ get_label('copied', 'Copied') }}",
+            all_code_copied: "{{ get_label('copy_all_code', 'Copy All Code') }}",
+            hide_preview: "{{ get_label('hide_preview', 'Hide Preview') }}",
+            preview_widget: "{{ get_label('preview_widget', 'Preview Widget') }}",
         }
-
-        .modal-iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            border-radius: 0.375rem;
-        }
-
-        .modal-lg {
-            max-width: 800px;
-        }
-
-        /* Preview Floating Widget Styles */
-        .preview-lead-form-icon {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
-            transition: all 0.3s ease;
-            z-index: 1050;
-        }
-
-        .preview-lead-form-icon:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
-        }
-
-        .preview-lead-form-container {
-            position: fixed;
-            bottom: 90px;
-            right: 20px;
-            width: 400px;
-            height: 500px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-            display: none;
-            flex-direction: column;
-            z-index: 1051;
-            overflow: hidden;
-        }
-
-        .preview-lead-form-container.active {
-            display: flex;
-        }
-
-        .lead-form-header {
-            padding: 15px 20px;
-            /* background: #007bff; */
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .lead-form-header h5 {
-            margin: 0;
-            font-size: 16px;
-        }
-
-        .close-btn {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            padding: 0;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            transition: background-color 0.2s;
-        }
-
-        .close-btn:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-        }
-
-        .lead-form-body {
-            flex: 1;
-            overflow: hidden;
-        }
-
-        .lead-form-iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        @media (max-width: 768px) {
-            .embed-container {
-                height: 400px;
-            }
-
-            .preview-lead-form-container {
-                width: calc(100vw - 40px);
-                height: 70vh;
-                bottom: 90px;
-                right: 20px;
-                left: 20px;
-            }
-
-            .preview-lead-form-icon {
-                width: 50px;
-                height: 50px;
-                bottom: 15px;
-                right: 15px;
-            }
-        }
-
-        .nav-tabs .nav-link {
-            border: none;
-            border-bottom: 2px solid transparent;
-            background: none;
-            color: #6c757d;
-            padding: 0.75rem 1.5rem;
-        }
-
-        .nav-tabs .nav-link:hover {
-            border-color: transparent;
-            color: #495057;
-            background-color: #f8f9fa;
-        }
-
-        .nav-tabs .nav-link.active {
-            color: #0d6efd;
-            border-bottom-color: #0d6efd;
-            background-color: transparent;
-        }
-
-        /* .tab-content {
-            padding-top: 1rem;
-        } */
-    </style>
-
-    <script>
-        // Copy to clipboard function
-        function copyToClipboard(elementId, button) {
-            const textarea = document.getElementById(elementId);
-            textarea.select();
-            textarea.setSelectionRange(0, 99999); // For mobile devices
-
-            navigator.clipboard.writeText(textarea.value).then(function() {
-                // Store original button content
-                const originalContent = button.innerHTML;
-
-                // Change button to show success
-                button.innerHTML = '<i class="bx bx-check me-1"></i>{{ get_label('copied', 'Copied') }}';
-                button.classList.remove('btn-primary', 'btn-outline-danger', 'btn-outline-info',
-                    'btn-outline-warning');
-                button.classList.add('btn-success');
-
-                // Reset button after 2 seconds
-                setTimeout(() => {
-                    button.innerHTML = originalContent;
-                    button.classList.remove('btn-success');
-
-                    // Add back the appropriate class based on the button type
-                    if (elementId.includes('Html')) {
-                        button.classList.add('btn-outline-danger');
-                    } else if (elementId.includes('Css')) {
-                        button.classList.add('btn-outline-info');
-                    } else if (elementId.includes('Js')) {
-                        button.classList.add('btn-outline-warning');
-                    } else {
-                        button.classList.add('btn-primary');
-                    }
-                }, 2000);
-            }).catch(function(err) {
-                console.error('Failed to copy text: ', err);
-
-                // Fallback for older browsers
-                textarea.select();
-                document.execCommand('copy');
-
-                const originalContent = button.innerHTML;
-                button.innerHTML = '<i class="bx bx-check me-1"></i>{{ get_label('copied', 'Copied') }}';
-                button.classList.add('btn-success');
-
-                setTimeout(() => {
-                    button.innerHTML = originalContent;
-                    button.classList.remove('btn-success');
-                    button.classList.add('btn-primary');
-                }, 2000);
-            });
-        }
-
-        // Copy all floating code
-        function copyAllFloatingCode() {
-            const htmlCode = document.getElementById('floatingHtmlCode').value;
-            const cssCode = document.getElementById('floatingCssCode').value;
-            const jsCode = document.getElementById('floatingJsCode').value;
-
-            const allCode = `${htmlCode}\n\n${cssCode}\n\n${jsCode}`;
-
-            navigator.clipboard.writeText(allCode).then(function() {
-                const button = event.target.closest('button');
-                const originalContent = button.innerHTML;
-
-                button.innerHTML =
-                    '<i class="bx bx-check me-2"></i>{{ get_label('all_code_copied', 'All Code Copied') }}';
-                button.classList.remove('btn-success');
-                button.classList.add('btn-success');
-
-                setTimeout(() => {
-                    button.innerHTML = originalContent;
-                }, 2000);
-            }).catch(function(err) {
-                console.error('Failed to copy all code: ', err);
-            });
-        }
-
-        // Preview floating widget
-        function previewFloatingWidget() {
-            const previewWidget = document.getElementById('previewFloatingWidget');
-            if (previewWidget.style.display === 'none') {
-                previewWidget.style.display = 'block';
-                event.target.innerHTML = '<i class="bx bx-hide me-2"></i>{{ get_label('hide_preview', 'Hide Preview') }}';
-                event.target.classList.remove('btn-primary');
-                event.target.classList.add('btn-secondary');
-            } else {
-                previewWidget.style.display = 'none';
-                // Close the form if it's open
-                const container = document.getElementById('previewLeadFormContainer');
-                if (container) {
-                    container.classList.remove('active');
-                }
-                event.target.innerHTML =
-                    '<i class="bx bx-show me-2"></i>{{ get_label('preview_widget', 'Preview Widget') }}';
-                event.target.classList.remove('btn-secondary');
-                event.target.classList.add('btn-primary');
-            }
-        }
-
-        // Toggle preview lead form
-        function togglePreviewLeadForm() {
-            const container = document.getElementById('previewLeadFormContainer');
-
-            if (container.classList.contains('active')) {
-                container.classList.remove('active');
-            } else {
-                container.classList.add('active');
-            }
-        }
-
-        // Initialize tooltips if Bootstrap is available
-        document.addEventListener('DOMContentLoaded', function() {
-            if (typeof bootstrap !== 'undefined') {
-                var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-                var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
-                    return new bootstrap.Tooltip(tooltipTriggerEl);
-                });
-            }
-        });
-    </script>
+    };
+</script>
 
     <script src="{{ asset('assets/js/pages/lead-form.js') }}"></script>
 @endsection

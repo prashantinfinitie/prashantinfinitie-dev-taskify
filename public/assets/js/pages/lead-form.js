@@ -418,3 +418,165 @@ function copyEmbedCode() {
         toastr.success("Embed code copied to clipboard!");
     }
 }
+
+
+
+
+// embed
+
+
+
+
+
+
+
+
+
+
+//
+// Copy to clipboard function
+function copyToClipboard(elementId, button) {
+    const textarea = document.getElementById(elementId);
+
+    navigator.clipboard.writeText(textarea.value).then(function () {
+        // Store original button content
+        const originalContent = button.innerHTML;
+
+        // Change button to show success
+        button.innerHTML = '<i class="bx bx-check me-1"></i>' + window.appConfig.AppLabels.copied;
+        button.classList.remove('btn-primary', 'btn-outline-danger', 'btn-outline-info',
+            'btn-outline-warning');
+        button.classList.add('btn-success');
+
+        // Reset button after 2 seconds
+        setTimeout(() => {
+            button.innerHTML = originalContent;
+            button.classList.remove('btn-success');
+
+            // Add back the appropriate class based on the button type
+            if (elementId.includes('Html')) {
+                button.classList.add('btn-outline-danger');
+            } else if (elementId.includes('Css')) {
+                button.classList.add('btn-outline-info');
+            } else if (elementId.includes('Js')) {
+                button.classList.add('btn-outline-warning');
+            } else {
+                button.classList.add('btn-primary');
+            }
+        }, 2000);
+    }).catch(function (err) {
+        console.error('Failed to copy text: ', err);
+
+        // Fallback for older browsers
+        textarea.select();
+        document.execCommand('copy');
+
+        const originalContent = button.innerHTML;
+        button.innerHTML = '<i class="bx bx-check me-1"></i>' + window.appConfig.AppLabels.copied;
+        button.classList.add('btn-success');
+
+        setTimeout(() => {
+            button.innerHTML = originalContent;
+            button.classList.remove('btn-success');
+            button.classList.add('btn-primary');
+        }, 2000);
+    });
+}
+
+// Copy all floating code
+function copyAllFloatingCode(event) {
+    const htmlCode = document.getElementById('floatingHtmlCode').value;
+    const cssCode = document.getElementById('floatingCssCode').value;
+    const jsCode = document.getElementById('floatingJsCode').value;
+
+    const allCode = `${htmlCode}\n\n${cssCode}\n\n${jsCode}`;
+
+    navigator.clipboard.writeText(allCode).then(function () {
+        const button = event.target.closest('button');
+        const originalContent = button.innerHTML;
+
+        button.innerHTML =
+            '<i class="bx bx-check me-2"></i>' + window.appConfig.AppLabels.all_code_copied;
+        button.classList.remove('btn-success');
+        button.classList.add('btn-success');
+
+        setTimeout(() => {
+            button.innerHTML = originalContent;
+        }, 2000);
+    }).catch(function (err) {
+        console.error('Failed to copy all code: ', err);
+    });
+}
+
+// Preview floating widget - Modified to show in preview box
+function previewFloatingWidget(event) {
+    const previewWidget = document.getElementById('previewFloatingWidget');
+    const button = event.currentTarget;
+
+    if (previewWidget.style.display === 'none') {
+        previewWidget.style.display = 'block';
+        button.innerHTML = '<i class="bx bx-hide me-2"></i>' + window.appConfig.AppLabels.hide_preview;
+        button.classList.remove('btn-primary');
+        button.classList.add('btn-secondary');
+    } else {
+        previewWidget.style.display = 'none';
+
+        const container = document.getElementById('previewLeadFormContainer');
+        if (container) {
+            container.classList.remove('active');
+        }
+
+        button.innerHTML = '<i class="bx bx-show me-2"></i>' + window.appConfig.AppLabels.preview_widget;
+        button.classList.remove('btn-secondary');
+        button.classList.add('btn-primary');
+    }
+}
+
+// Toggle preview lead form
+function togglePreviewLeadForm() {
+    const container = document.getElementById('previewLeadFormContainer');
+
+    if (container.classList.contains('active')) {
+        container.classList.remove('active');
+    } else {
+        container.classList.add('active');
+    }
+}
+
+// Initialize tooltips if Bootstrap is available
+document.addEventListener('DOMContentLoaded', function () {
+    if (typeof bootstrap !== 'undefined') {
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+    }
+});
+
+// Close preview form when clicking outside the preview box
+document.addEventListener('click', function (event) {
+    const container = document.getElementById('previewLeadFormContainer');
+    const icon = document.querySelector('.preview-embed-icon');
+    const previewBox = document.querySelector('.preview-box');
+
+    if (container && container.classList.contains('active')) {
+        // Only close if clicking outside the preview box entirely
+        if (!previewBox.contains(event.target)) {
+            container.classList.remove('active');
+        }
+        // Close if clicking inside preview box but not on container or icon
+        else if (previewBox.contains(event.target) && !container.contains(event.target) && !icon.contains(event.target)) {
+            container.classList.remove('active');
+        }
+    }
+});
+
+// Close preview form with Escape key
+document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') {
+        const container = document.getElementById('previewLeadFormContainer');
+        if (container && container.classList.contains('active')) {
+            container.classList.remove('active');
+        }
+    }
+});
