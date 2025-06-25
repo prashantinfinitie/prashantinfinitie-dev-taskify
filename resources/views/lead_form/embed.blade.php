@@ -104,29 +104,30 @@
                                                 <i class="bx bx-copy me-1"></i>{{ get_label('copy', 'Copy') }}
                                             </button>
                                         </div>
-                                        <textarea class="form-control bg-light rounded-3 border" id="floatingHtmlCode" rows="8" readonly><!-- Floating Form Button -->
-<div onclick="toggleLeadForm()">
+                                        <textarea class="form-control bg-light rounded-3 border" id="floatingHtmlCode" rows="8" readonly>
+<div onclick="toggleLeadFormWidget()">
     <span>
         <a href="javascript:void(0);">
-            <img src="https://via.placeholder.com/60x60/007bff/ffffff?text=📝" class="lead-form-icon" alt="{{ $leadForm->title }}">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/9/9c/Forms.png" class="leadform-embed-icon" alt="{{ $leadForm->title }}">
         </a>
     </span>
 </div>
 
 <!-- Floating Form Container -->
-<div id="leadFormContainer" class="lead-form-container">
-    <div class="lead-form-header">
+<div id="leadFormWidgetContainer" class="leadform-widget-container">
+    <div class="leadform-widget-header">
         <h5>{{ $leadForm->title }}</h5>
-        <button onclick="toggleLeadForm()" class="close-btn">&times;</button>
+        <button onclick="toggleLeadFormWidget()" class="leadform-close-btn">×</button>
     </div>
-    <div class="lead-form-body">
+    <div class="leadform-widget-body">
         {!! str_replace(
             ['<iframe', '</iframe>'],
-            ['<iframe class="lead-form-iframe"', '</iframe>'],
+            ['<iframe class="leadform-widget-iframe"', '</iframe>'],
             $leadForm->embed_code,
         ) !!}
     </div>
-</div></textarea>
+</div>
+</textarea>
                                     </div>
 
                                     <!-- CSS Section -->
@@ -140,28 +141,29 @@
                                                 <i class="bx bx-copy me-1"></i>{{ get_label('copy', 'Copy') }}
                                             </button>
                                         </div>
-                                        <textarea class="form-control bg-light rounded-3 border" id="floatingCssCode" rows="12" readonly><style>
+                                        <textarea class="form-control bg-light rounded-3 border" id="floatingCssCode" rows="12" readonly>
+<style>
 /* Floating Form Button */
-.lead-form-icon {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
+.leadform-embed-icon {
+    width: 54px !important;
+    border-radius: 50px;
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
-    transition: all 0.3s ease;
-    z-index: 1000;
+    position: fixed;
+    bottom: 0.7rem;
+    right: 11.625rem;
+    padding: 10px;
+    background-color: #ffffff;
+    z-index: 999999;
+    transition: transform 0.3s ease;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-.lead-form-icon:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+.leadform-embed-icon:hover {
+    transform: translateY(-5px);
 }
 
 /* Floating Form Container */
-.lead-form-container {
+.leadform-widget-container {
     position: fixed;
     bottom: 90px;
     right: 20px;
@@ -172,29 +174,28 @@
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
     display: none;
     flex-direction: column;
-    z-index: 1001;
+    z-index: 1000001;
     overflow: hidden;
 }
 
-.lead-form-container.active {
+.leadform-widget-container.active {
     display: flex;
 }
 
-.lead-form-header {
+.leadform-widget-header {
     padding: 15px 20px;
-
     color: white;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.lead-form-header h5 {
+.leadform-widget-header h5 {
     margin: 0;
     font-size: 16px;
 }
 
-.close-btn {
+.leadform-close-btn {
     background: none;
     border: none;
     color: white;
@@ -210,16 +211,16 @@
     transition: background-color 0.2s;
 }
 
-.close-btn:hover {
+.leadform-close-btn:hover {
     background-color: rgba(255, 255, 255, 0.2);
 }
 
-.lead-form-body {
+.leadform-widget-body {
     flex: 1;
     overflow: hidden;
 }
 
-.lead-form-iframe {
+.leadform-widget-iframe {
     width: 100%;
     height: 100%;
     border: none;
@@ -227,7 +228,7 @@
 
 /* Mobile Responsive */
 @media (max-width: 768px) {
-    .lead-form-container {
+    .leadform-widget-container {
         width: calc(100vw - 40px);
         height: 70vh;
         bottom: 90px;
@@ -235,14 +236,15 @@
         left: 20px;
     }
 
-    .lead-form-icon {
+    .leadform-embed-icon {
         width: 50px;
         height: 50px;
         bottom: 15px;
         right: 15px;
     }
 }
-</style></textarea>
+</style>
+</textarea>
                                     </div>
 
                                     <!-- JavaScript Section -->
@@ -256,24 +258,23 @@
                                                 <i class="bx bx-copy me-1"></i>{{ get_label('copy', 'Copy') }}
                                             </button>
                                         </div>
-                                        <textarea class="form-control bg-light rounded-3 border" id="floatingJsCode" rows="8" readonly><script>
-function toggleLeadForm() {
-    const container = document.getElementById('leadFormContainer');
-
+                                        <textarea class="form-control bg-light rounded-3 border" id="floatingJsCode" rows="8" readonly>
+<script>
+function toggleLeadFormWidget() {
+    const container = document.getElementById('leadFormWidgetContainer');
     if (container.classList.contains('active')) {
         container.classList.remove('active');
-        console.log('Lead form closed');
+        console.log('Lead form widget closed');
     } else {
         container.classList.add('active');
-        console.log('Lead form opened');
+        console.log('Lead form widget opened');
     }
 }
 
 // Close form when clicking outside
 document.addEventListener('click', function(event) {
-    const container = document.getElementById('leadFormContainer');
-    const icon = document.querySelector('.lead-form-icon');
-
+    const container = document.getElementById('leadFormWidgetContainer');
+    const icon = document.querySelector('.leadform-embed-icon');
     if (container && container.classList.contains('active')) {
         if (!container.contains(event.target) && !icon.contains(event.target)) {
             container.classList.remove('active');
@@ -284,13 +285,14 @@ document.addEventListener('click', function(event) {
 // Optional: Close with Escape key
 document.addEventListener('keydown', function(event) {
     if (event.key === 'Escape') {
-        const container = document.getElementById('leadFormContainer');
+        const container = document.getElementById('leadFormWidgetContainer');
         if (container && container.classList.contains('active')) {
             container.classList.remove('active');
         }
     }
 });
-</script></textarea>
+</script>
+</textarea>
                                     </div>
 
                                     <!-- Copy All Button -->
@@ -309,31 +311,36 @@ document.addEventListener('keydown', function(event) {
                                         {{ get_label('preview', 'Preview') }}
                                     </label>
                                     <div class="mb-3 text-center">
-                                        <button type="button" class="btn btn-primary" onclick="previewFloatingWidget(event)">
+                                        <button type="button" class="btn btn-primary"
+                                            onclick="previewFloatingWidget(event)">
                                             <i
                                                 class="bx bx-show me-2"></i>{{ get_label('preview_widget', 'Preview Widget') }}
                                         </button>
                                     </div>
 
                                     <!-- Preview Box Container -->
-                                    <div class="preview-box bg-light border rounded-3 p-3 mb-3" style="height: 300px; position: relative; overflow: hidden;">
-                                        <div class="text-center text-muted mb-2">
+                                    <div class="preview-box bg-light rounded-3 mb-3 border p-3"
+                                        style="height: 300px; position: relative; overflow: hidden;">
+                                        <div class="text-muted mb-2 text-center">
                                             <small>Widget Preview Area</small>
                                         </div>
                                         <!-- Preview Floating Widget inside the box -->
-                                        <div id="previewFloatingWidget" style="display: none; position: relative; height: 100%;">
-                                            <div onclick="togglePreviewLeadForm()" style="position: absolute; bottom: 20px; right: 20px;">
+                                        <div id="previewFloatingWidget"
+                                            style="display: none; position: relative; height: 100%;">
+                                            <div onclick="togglePreviewLeadForm()"
+                                                style="position: absolute; bottom: 20px; right: 20px;">
                                                 <span>
                                                     <a href="javascript:void(0);">
-                                                        <img src="https://upload.wikimedia.org/wikipedia/commons/9/9c/Forms.png" class="preview-embed-icon"
-                                                            alt="{{ $leadForm->title }}">
+                                                        <img src="https://upload.wikimedia.org/wikipedia/commons/9/9c/Forms.png"
+                                                            class="preview-embed-icon" alt="{{ $leadForm->title }}">
                                                     </a>
                                                 </span>
                                             </div>
                                             <div id="previewLeadFormContainer" class="preview-lead-form-container">
                                                 <div class="lead-form-header">
                                                     <h5>{{ $leadForm->title }}</h5>
-                                                    <button onclick="togglePreviewLeadForm()" class="close-btn">&times;</button>
+                                                    <button onclick="togglePreviewLeadForm()"
+                                                        class="close-btn">×</button>
                                                 </div>
                                                 <div class="lead-form-body">
                                                     {!! str_replace(
@@ -382,17 +389,19 @@ document.addEventListener('keydown', function(event) {
         </div>
     </div>
 
-
-   <script>
-    window.appConfig = {
-        AppLabels: {
-            copied: "{{ get_label('copied', 'Copied') }}",
-            all_code_copied: "{{ get_label('copy_all_code', 'Copy All Code') }}",
-            hide_preview: "{{ get_label('hide_preview', 'Hide Preview') }}",
-            preview_widget: "{{ get_label('preview_widget', 'Preview Widget') }}",
-        }
-    };
-</script>
+    <script>
+        window.appConfig = {
+            AppLabels: {
+                copied: "{{ get_label('copied', 'Copied') }}",
+                all_code_copied: "{{ get_label('copy_all_code', 'Copy All Code') }}",
+                hide_preview: "{{ get_label('hide_preview', 'Hide Preview') }}",
+                preview_widget: "{{ get_label('preview_widget', 'Preview Widget') }}",
+            }
+        };
+    </script>
 
     <script src="{{ asset('assets/js/pages/lead-form.js') }}"></script>
+
+
+
 @endsection

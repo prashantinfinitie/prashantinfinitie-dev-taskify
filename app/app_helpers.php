@@ -3941,6 +3941,15 @@ if (!function_exists('getMenus')) {
                 ]
             ],
             [
+                'id' => 'general_file_manager',
+                'label' => get_label('general_file_manager', 'General File Manager'),
+                'url' => route('file-manager.index'),
+                'icon' => 'bx bx-folder-open',
+                'class' => 'menu-item' . (Request::is('file-manager') || Request::is('file-manager/*') ? ' active' : ''),
+                'show' => isAdminOrHasAllDataAccess() ? 1 : 0,
+                'category' => 'utilities',
+            ],
+            [
                 'id' => 'settings',
                 'label' => get_label('settings', 'Settings'),
                 'icon' => 'bx bx-box',
@@ -4945,7 +4954,7 @@ if (!function_exists('formatLead')) {
             'zip' => $lead->zip,
             'country' => $lead->country,
             'isConverted' => $lead->is_converted == 1 ? true : false,
-            'Assigned_to' => [
+            'assigned_user' => [
                 'id' => $lead->assigned_user->id,
                 'name' => $lead->assigned_user->first_name . "" . $lead->assigned_user->last_name,
                 'email' => $lead->assigned_user->email,
@@ -5050,14 +5059,16 @@ if (!function_exists('formatLeadUserHtml')) {
     if (!function_exists('formatPayslip')) {
         function formatPayslip($payslip)
         {
-
+            
+            
             // dd(format_date($payslip->payment_date, true, to_format: 'Y-m-d'));
             return [
                 'id' => $payslip->id,
                 'user' => [
                     'id' => $payslip->user_id,
                     'name' => $payslip->user ? ($payslip->user->full_name ?? ($payslip->user->first_name . ' ' . $payslip->user->last_name)) : '-',
-                    'email' => $payslip->user->email
+                    'email' => $payslip->user->email,
+                    'profile_picture' =>  $payslip->user ? asset('storage/' .$payslip->user->photo) : asset('/photos/1.png'),
                 ],
                 'month' => $payslip->month,
                 'basic_salary' => $payslip->basic_salary,
@@ -5096,7 +5107,7 @@ if (!function_exists('formatLeadUserHtml')) {
                     default => 'Unknown',
                 },
                 'payment_method_id' => $payslip->payment_method_id,
-                'payment_method' => $payslip->paymentMethod->name ?? '-',
+                'payment_method' => $payslip->paymentMethod->title ?? '-',
                 'payment_date' =>  $payslip->payment_date !== null ? format_date($payslip->payment_date, true, to_format: 'Y-m-d') : '',
                 'note' => $payslip->note,
                 'created_at_date' => format_date($payslip->created_at, false, to_format: 'Y-m-d'),

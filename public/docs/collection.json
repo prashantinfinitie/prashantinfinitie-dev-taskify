@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "Taskify API Documentation",
-        "_postman_id": "627b12c1-2d1f-42c9-8392-b4057651e1d3",
+        "_postman_id": "7c5fd5c0-b01c-45ac-962d-99d7df1f7dc9",
         "description": "This is the API documentation for the taskify.",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -121,7 +121,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "odit",
+                                    "value": "et",
                                     "description": "The ID of the pdf."
                                 }
                             ]
@@ -160,7 +160,7 @@
                                 }
                             ],
                             "code": 404,
-                            "body": "{\n    \"message\": \"The route api\/estimates-invoices\/pdf\/odit could not be found.\"\n}",
+                            "body": "{\n    \"message\": \"The route api\/estimates-invoices\/pdf\/et could not be found.\"\n}",
                             "name": ""
                         }
                     ]
@@ -223,154 +223,6 @@
                             "name": ""
                         }
                     ]
-                },
-                {
-                    "name": "Store a newly created resource in storage.",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/leads\/follow-up\/store",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/leads\/follow-up\/store"
-                        },
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "workspace_id",
-                                "value": "1"
-                            }
-                        ],
-                        "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Show the form for editing the specified resource.",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/leads\/follow-up\/get\/:id",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/leads\/follow-up\/get\/:id",
-                            "variable": [
-                                {
-                                    "id": "id",
-                                    "key": "id",
-                                    "value": "quod",
-                                    "description": "The ID of the get."
-                                }
-                            ]
-                        },
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "workspace_id",
-                                "value": "1"
-                            }
-                        ],
-                        "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
-                    },
-                    "response": [
-                        {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "vary",
-                                    "value": "Origin"
-                                }
-                            ],
-                            "code": 404,
-                            "body": "{\n    \"message\": \"The route api\/leads\/follow-up\/get\/quod could not be found.\"\n}",
-                            "name": ""
-                        }
-                    ]
-                },
-                {
-                    "name": "Update the specified resource in storage.",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/leads\/follow-up\/update",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/leads\/follow-up\/update"
-                        },
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "workspace_id",
-                                "value": "1"
-                            }
-                        ],
-                        "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Remove the specified resource from storage.",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/leads\/follow-up\/destroy\/:id",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/leads\/follow-up\/destroy\/:id",
-                            "variable": [
-                                {
-                                    "id": "id",
-                                    "key": "id",
-                                    "value": "earum",
-                                    "description": "The ID of the destroy."
-                                }
-                            ]
-                        },
-                        "method": "DELETE",
-                        "header": [
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "workspace_id",
-                                "value": "1"
-                            }
-                        ],
-                        "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
-                    },
-                    "response": []
                 },
                 {
                     "name": "GET api\/custom-fields\/{id}\/edit",
@@ -717,7 +569,7 @@
                             "formdata": [
                                 {
                                     "key": "id",
-                                    "value": 1,
+                                    "value": "1",
                                     "type": "text",
                                     "description": "The ID of the user or client whose profile picture is being updated. Required if `type` is provided."
                                 },
@@ -775,7 +627,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "20",
+                                    "value": "6",
                                     "description": "The ID of the user whose profile is being updated."
                                 }
                             ]
@@ -905,13 +757,13 @@
                                 },
                                 {
                                     "key": "user_ids[0]",
-                                    "value": 123,
+                                    "value": "123",
                                     "description": "Optional. The specific user IDs to filter the results.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "user_ids[1]",
-                                    "value": 456,
+                                    "value": "456",
                                     "description": "Optional. The specific user IDs to filter the results.",
                                     "disabled": false
                                 },
@@ -986,13 +838,13 @@
                                 },
                                 {
                                     "key": "user_ids[0]",
-                                    "value": 123,
+                                    "value": "123",
                                     "description": "Optional. The specific user IDs to filter the results.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "user_ids[1]",
-                                    "value": 456,
+                                    "value": "456",
                                     "description": "Optional. The specific user IDs to filter the results.",
                                     "disabled": false
                                 },
@@ -1073,13 +925,13 @@
                                 },
                                 {
                                     "key": "user_ids[0]",
-                                    "value": 123,
+                                    "value": "123",
                                     "description": "Optional. The specific user IDs to filter the results.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "user_ids[1]",
-                                    "value": 456,
+                                    "value": "456",
                                     "description": "Optional. The specific user IDs to filter the results.",
                                     "disabled": false
                                 },
@@ -1198,67 +1050,67 @@
                                 },
                                 {
                                     "key": "status_ids[0]",
-                                    "value": 2,
+                                    "value": "2",
                                     "description": "optional An array of status IDs to filter projects by.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "status_ids[1]",
-                                    "value": 3,
+                                    "value": "3",
                                     "description": "optional An array of status IDs to filter projects by.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "user_ids[0]",
-                                    "value": 1,
+                                    "value": "1",
                                     "description": "optional An array of user IDs to filter projects by.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "user_ids[1]",
-                                    "value": 2,
+                                    "value": "2",
                                     "description": "optional An array of user IDs to filter projects by.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "user_ids[2]",
-                                    "value": 3,
+                                    "value": "3",
                                     "description": "optional An array of user IDs to filter projects by.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "client_ids[0]",
-                                    "value": 5,
+                                    "value": "5",
                                     "description": "optional An array of client IDs to filter projects by.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "client_ids[1]",
-                                    "value": 6,
+                                    "value": "6",
                                     "description": "optional An array of client IDs to filter projects by.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "priority_ids[0]",
-                                    "value": 1,
+                                    "value": "1",
                                     "description": "optional An array of priority IDs to filter projects by.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "priority_ids[1]",
-                                    "value": 2,
+                                    "value": "2",
                                     "description": "optional An array of priority IDs to filter projects by.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "tag_ids[0]",
-                                    "value": 1,
+                                    "value": "1",
                                     "description": "optional An array of tag IDs to filter projects by.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "tag_ids[1]",
-                                    "value": 2,
+                                    "value": "2",
                                     "description": "optional An array of tag IDs to filter projects by.",
                                     "disabled": false
                                 },
@@ -1332,7 +1184,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"user_ids\":[7],\"client_ids\":[3],\"priority_ids\":[7],\"tag_ids\":[9],\"status_ids\":[15]}"
+                            "raw": "{\"user_ids\":[15],\"client_ids\":[18],\"priority_ids\":[7],\"tag_ids\":[14],\"status_ids\":[5]}"
                         },
                         "description": "This endpoint retrieves a list of projects based on various filters. The user must be authenticated to perform this action. The request allows filtering by status, user, client, priority, tag, date ranges, and other parameters."
                     },
@@ -1483,7 +1335,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "7",
+                                    "value": "4",
                                     "description": "The ID of the project to update."
                                 }
                             ]
@@ -1548,7 +1400,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "18",
+                                    "value": "1",
                                     "description": "The ID of the project to update."
                                 }
                             ]
@@ -1570,7 +1422,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"is_pinned\":20}"
+                            "raw": "{\"is_pinned\":3}"
                         },
                         "description": "This endpoint updates whether a project is marked as pinned or not. The user must be authenticated to perform this action."
                     },
@@ -1613,7 +1465,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "14",
+                                    "value": "16",
                                     "description": "The ID of the project whose status is to be updated."
                                 }
                             ]
@@ -1635,7 +1487,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"statusId\":5,\"note\":\"perferendis\"}"
+                            "raw": "{\"statusId\":15,\"note\":\"laborum\"}"
                         },
                         "description": "This endpoint updates the status of a specified project. The user must be authenticated and have permission to set the new status. A notification will be sent to all users and clients associated with the project."
                     },
@@ -1678,7 +1530,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "17",
+                                    "value": "10",
                                     "description": "The ID of the project whose priority is to be updated."
                                 }
                             ]
@@ -1700,7 +1552,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"priorityId\":20}"
+                            "raw": "{\"priorityId\":14}"
                         },
                         "description": "This endpoint updates the priority of a specified project. The user must be authenticated and have permission to set the new priority."
                     },
@@ -1789,7 +1641,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "14",
+                                    "value": "17",
                                     "description": "The ID of the project whose status timeline is to be retrieved."
                                 }
                             ]
@@ -1841,7 +1693,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "18",
+                                    "value": "8",
                                     "description": "The ID of the data to retrieve."
                                 }
                             ]
@@ -1907,7 +1759,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"project_id\":2,\"title\":\"consequatur\",\"status\":\"quis\",\"start_date\":\"dolores\",\"end_date\":\"ab\",\"cost\":\"nostrum\",\"description\":\"Dolor molestiae fuga sapiente voluptas doloribus.\"}"
+                            "raw": "{\"project_id\":13,\"title\":\"commodi\",\"status\":\"quis\",\"start_date\":\"et\",\"end_date\":\"unde\",\"cost\":\"placeat\",\"description\":\"Accusamus doloribus eum accusamus aliquid.\"}"
                         },
                         "description": "This endpoint creates a new milestone for a specified project. The user must be authenticated and have permission to create milestones."
                     },
@@ -1941,77 +1793,77 @@
                             "query": [
                                 {
                                     "key": "search",
-                                    "value": "sit",
+                                    "value": "nesciunt",
                                     "description": "optional Search for milestones by title, ID, cost, or description.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "sort",
-                                    "value": "similique",
+                                    "value": "dolor",
                                     "description": "optional Field to sort by (default: \"id\").",
                                     "disabled": false
                                 },
                                 {
                                     "key": "order",
-                                    "value": "debitis",
+                                    "value": "aperiam",
                                     "description": "optional Sorting order (ASC\/DESC, default: \"DESC\").",
                                     "disabled": false
                                 },
                                 {
                                     "key": "statuses[0]",
-                                    "value": "placeat",
+                                    "value": "sunt",
                                     "description": "optional Filter by milestone statuses.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "date_between_from",
-                                    "value": "et",
+                                    "value": "nostrum",
                                     "description": "date optional Filter milestones starting from this date.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "date_between_to",
-                                    "value": "nulla",
+                                    "value": "molestiae",
                                     "description": "date optional Filter milestones ending at this date.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "start_date_from",
-                                    "value": "ipsam",
+                                    "value": "est",
                                     "description": "date optional Filter milestones with a start date after this date.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "start_date_to",
-                                    "value": "omnis",
+                                    "value": "molestiae",
                                     "description": "date optional Filter milestones with a start date before this date.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "end_date_from",
-                                    "value": "adipisci",
+                                    "value": "soluta",
                                     "description": "date optional Filter milestones with an end date after this date.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "end_date_to",
-                                    "value": "dolorem",
+                                    "value": "expedita",
                                     "description": "date optional Filter milestones with an end date before this date.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "limit",
-                                    "value": "15",
+                                    "value": "5",
                                     "description": "optional Number of records per page.",
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/milestones\/:id?search=sit&sort=similique&order=debitis&statuses[0]=placeat&date_between_from=et&date_between_to=nulla&start_date_from=ipsam&start_date_to=omnis&end_date_from=adipisci&end_date_to=dolorem&limit=15",
+                            "raw": "{{baseUrl}}\/api\/milestones\/:id?search=nesciunt&sort=dolor&order=aperiam&statuses[0]=sunt&date_between_from=nostrum&date_between_to=molestiae&start_date_from=est&start_date_to=molestiae&end_date_from=soluta&end_date_to=expedita&limit=5",
                             "variable": [
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "13",
+                                    "value": "12",
                                     "description": "The ID of the project whose milestones are to be retrieved."
                                 }
                             ]
@@ -2057,7 +1909,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "18",
+                                    "value": "2",
                                     "description": "The ID of the milestone to retrieve."
                                 }
                             ]
@@ -2103,7 +1955,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "13",
+                                    "value": "12",
                                     "description": "The ID of the milestone to be updated."
                                 }
                             ]
@@ -2125,7 +1977,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"title\":\"aliquid\",\"status\":\"rerum\",\"start_date\":\"et\",\"end_date\":\"dolores\",\"cost\":\"nulla\",\"progress\":9,\"description\":\"Quod enim debitis corporis molestias vitae omnis.\"}"
+                            "raw": "{\"title\":\"beatae\",\"status\":\"ut\",\"start_date\":\"nobis\",\"end_date\":\"tempora\",\"cost\":\"magni\",\"progress\":15,\"description\":\"Nihil est assumenda sapiente itaque et.\"}"
                         },
                         "description": "This endpoint updates a specified milestone. The user must be authenticated and have permission to modify the milestone."
                     },
@@ -2168,7 +2020,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "11",
+                                    "value": "8",
                                     "description": "The ID of the milestone to delete."
                                 }
                             ]
@@ -2226,7 +2078,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "1",
+                                    "value": "14",
                                     "description": "The ID of the project to add a comment to."
                                 }
                             ]
@@ -2251,25 +2103,25 @@
                             "formdata": [
                                 {
                                     "key": "model_type",
-                                    "value": "voluptatem",
+                                    "value": "qui",
                                     "type": "text",
                                     "description": "The type of model being commented on (e.g., \"Task\", \"Project\")."
                                 },
                                 {
                                     "key": "model_id",
-                                    "value": 20,
+                                    "value": "6",
                                     "type": "text",
                                     "description": "The ID of the model being commented on."
                                 },
                                 {
                                     "key": "content",
-                                    "value": "voluptatem",
+                                    "value": "iste",
                                     "type": "text",
                                     "description": "The comment text."
                                 },
                                 {
                                     "key": "parent_id",
-                                    "value": 13,
+                                    "value": "16",
                                     "type": "text",
                                     "description": "optional The ID of the parent comment (for replies)."
                                 },
@@ -2315,7 +2167,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "10",
+                                    "value": "3",
                                     "description": "The ID of the comment to retrieve."
                                 }
                             ]
@@ -2375,7 +2227,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"comment_id\":3,\"content\":\"aliquid\"}"
+                            "raw": "{\"comment_id\":16,\"content\":\"autem\"}"
                         },
                         "description": "This endpoint updates a specified comment. The user must be authenticated and have permission to modify the comment."
                     },
@@ -2415,12 +2267,12 @@
                             "query": [
                                 {
                                     "key": "comment_id",
-                                    "value": "9",
+                                    "value": "6",
                                     "description": "The ID of the comment to delete.",
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/projects\/comments\/destroy?comment_id=9"
+                            "raw": "{{baseUrl}}\/api\/projects\/comments\/destroy?comment_id=6"
                         },
                         "method": "DELETE",
                         "header": [
@@ -2498,7 +2350,7 @@
                             "formdata": [
                                 {
                                     "key": "id",
-                                    "value": 2,
+                                    "value": "5",
                                     "type": "text",
                                     "description": "The ID of the project to which media files are being uploaded."
                                 },
@@ -2547,29 +2399,29 @@
                             "query": [
                                 {
                                     "key": "search",
-                                    "value": "magnam",
+                                    "value": "et",
                                     "description": "optional A search query to filter media files by name, ID, or upload date.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "sort",
-                                    "value": "harum",
+                                    "value": "sed",
                                     "description": "optional The column to sort by (default: \"id\").",
                                     "disabled": false
                                 },
                                 {
                                     "key": "order",
-                                    "value": "officia",
+                                    "value": "dolore",
                                     "description": "optional The sorting order: \"ASC\" or \"DESC\" (default: \"DESC\").",
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/projects\/get-media\/:id?search=magnam&sort=harum&order=officia",
+                            "raw": "{{baseUrl}}\/api\/projects\/get-media\/:id?search=et&sort=sed&order=dolore",
                             "variable": [
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "20",
+                                    "value": "11",
                                     "description": "The ID of the project whose media files are to be retrieved."
                                 }
                             ]
@@ -2621,7 +2473,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "eveniet",
+                                    "value": "sunt",
                                     "description": "The ID of the delete medium."
                                 },
                                 {
@@ -2751,67 +2603,67 @@
                                 },
                                 {
                                     "key": "status_ids[0]",
-                                    "value": 2,
+                                    "value": "2",
                                     "description": "optional An array of status IDs to filter tasks by.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "status_ids[1]",
-                                    "value": 3,
+                                    "value": "3",
                                     "description": "optional An array of status IDs to filter tasks by.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "user_ids[0]",
-                                    "value": 1,
+                                    "value": "1",
                                     "description": "optional An array of user IDs to filter tasks by.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "user_ids[1]",
-                                    "value": 2,
+                                    "value": "2",
                                     "description": "optional An array of user IDs to filter tasks by.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "user_ids[2]",
-                                    "value": 3,
+                                    "value": "3",
                                     "description": "optional An array of user IDs to filter tasks by.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "client_ids[0]",
-                                    "value": 5,
+                                    "value": "5",
                                     "description": "optional An array of client IDs to filter tasks by.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "client_ids[1]",
-                                    "value": 6,
+                                    "value": "6",
                                     "description": "optional An array of client IDs to filter tasks by.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "priority_ids[0]",
-                                    "value": 1,
+                                    "value": "1",
                                     "description": "optional An array of priority IDs to filter tasks by.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "priority_ids[1]",
-                                    "value": 2,
+                                    "value": "2",
                                     "description": "optional An array of priority IDs to filter tasks by.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "project_ids[0]",
-                                    "value": 1,
+                                    "value": "1",
                                     "description": "optional An array of project IDs to filter tasks by.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "project_ids[1]",
-                                    "value": 2,
+                                    "value": "2",
                                     "description": "optional An array of project IDs to filter tasks by.",
                                     "disabled": false
                                 },
@@ -2885,7 +2737,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"user_ids\":[6],\"client_ids\":[10],\"priority_ids\":[7],\"project_ids\":[8],\"status_ids\":[6]}"
+                            "raw": "{\"user_ids\":[17],\"client_ids\":[8],\"priority_ids\":[19],\"project_ids\":[9],\"status_ids\":[19]}"
                         },
                         "description": "This endpoint retrieves a list of tasks based on various filters. The user must be authenticated to perform this action. The request allows filtering by multiple statuses, users, clients, projects, date ranges, and other parameters."
                     },
@@ -2973,7 +2825,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "10",
+                                    "value": "12",
                                     "description": "The ID of the task to update."
                                 }
                             ]
@@ -2995,7 +2847,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"is_favorite\":14}"
+                            "raw": "{\"is_favorite\":16}"
                         },
                         "description": "This endpoint updates whether a task is marked as a favorite or not. The user must be authenticated to perform this action."
                     },
@@ -3038,7 +2890,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "15",
+                                    "value": "17",
                                     "description": "The ID of the task to update."
                                 }
                             ]
@@ -3060,7 +2912,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"is_pinned\":10}"
+                            "raw": "{\"is_pinned\":20}"
                         },
                         "description": "This endpoint updates whether a task is marked as pinned or not. The user must be authenticated to perform this action."
                     },
@@ -3279,7 +3131,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "9",
+                                    "value": "18",
                                     "description": "The ID of the task whose status timeline is to be retrieved."
                                 }
                             ]
@@ -3337,7 +3189,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "ullam",
+                                    "value": "dolorem",
                                     "description": "The ID of the information."
                                 }
                             ]
@@ -3362,25 +3214,25 @@
                             "formdata": [
                                 {
                                     "key": "model_type",
-                                    "value": "numquam",
+                                    "value": "eius",
                                     "type": "text",
                                     "description": "The type of model being commented on (e.g., \"Task\", \"Project\")."
                                 },
                                 {
                                     "key": "model_id",
-                                    "value": 17,
+                                    "value": "13",
                                     "type": "text",
                                     "description": "The ID of the model being commented on."
                                 },
                                 {
                                     "key": "content",
-                                    "value": "quibusdam",
+                                    "value": "recusandae",
                                     "type": "text",
                                     "description": "The comment text."
                                 },
                                 {
                                     "key": "parent_id",
-                                    "value": 2,
+                                    "value": "1",
                                     "type": "text",
                                     "description": "optional The ID of the parent comment (for replies)."
                                 },
@@ -3426,7 +3278,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "9",
+                                    "value": "2",
                                     "description": "The ID of the comment to retrieve."
                                 }
                             ]
@@ -3492,7 +3344,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"comment_id\":6,\"content\":\"eveniet\"}"
+                            "raw": "{\"comment_id\":16,\"content\":\"excepturi\"}"
                         },
                         "description": "This endpoint updates a specified comment. The user must be authenticated and have permission to modify the comment."
                     },
@@ -3532,12 +3384,12 @@
                             "query": [
                                 {
                                     "key": "comment_id",
-                                    "value": "20",
+                                    "value": "19",
                                     "description": "The ID of the comment to delete.",
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/tasks\/comments\/destroy?comment_id=20"
+                            "raw": "{{baseUrl}}\/api\/tasks\/comments\/destroy?comment_id=19"
                         },
                         "method": "DELETE",
                         "header": [
@@ -3615,7 +3467,7 @@
                             "formdata": [
                                 {
                                     "key": "id",
-                                    "value": 11,
+                                    "value": "10",
                                     "type": "text",
                                     "description": "The ID of the task where the media will be uploaded."
                                 },
@@ -3658,29 +3510,29 @@
                             "query": [
                                 {
                                     "key": "search",
-                                    "value": "facilis",
+                                    "value": "quisquam",
                                     "description": "optional A search query to filter media files by name, ID, or upload date.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "sort",
-                                    "value": "odio",
+                                    "value": "ducimus",
                                     "description": "optional The column to sort by (default: \"id\").",
                                     "disabled": false
                                 },
                                 {
                                     "key": "order",
-                                    "value": "voluptas",
+                                    "value": "quo",
                                     "description": "optional The sorting order: \"ASC\" or \"DESC\" (default: \"DESC\").",
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/tasks\/get-media\/:id?search=facilis&sort=odio&order=voluptas",
+                            "raw": "{{baseUrl}}\/api\/tasks\/get-media\/:id?search=quisquam&sort=ducimus&order=quo",
                             "variable": [
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "5",
+                                    "value": "4",
                                     "description": "The ID of the project whose media files are to be retrieved."
                                 }
                             ]
@@ -3732,13 +3584,13 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "itaque",
+                                    "value": "nobis",
                                     "description": "The ID of the delete medium."
                                 },
                                 {
                                     "id": "mediaId",
                                     "key": "mediaId",
-                                    "value": "19",
+                                    "value": "18",
                                     "description": "The ID of the media file to delete."
                                 }
                             ]
@@ -3937,7 +3789,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"title\":\"rerum\",\"color\":\"qui\",\"role_ids\":[\"repellat\"]}"
+                            "raw": "{\"title\":\"qui\",\"color\":\"doloribus\",\"role_ids\":[\"et\"]}"
                         },
                         "description": "This endpoint allows authenticated users to create a new status with a unique slug and assign roles to it."
                     },
@@ -3988,7 +3840,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"id\":10,\"title\":\"ut\",\"color\":\"quis\",\"role_ids\":[\"et\"]}"
+                            "raw": "{\"id\":1,\"title\":\"quia\",\"color\":\"quam\",\"role_ids\":[\"harum\"]}"
                         },
                         "description": "This endpoint allows authenticated users to update a status, including modifying the title, color, and associated roles."
                     },
@@ -4031,7 +3883,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "5",
+                                    "value": "18",
                                     "description": "The ID of the status to retrieve."
                                 }
                             ]
@@ -4083,7 +3935,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "20",
+                                    "value": "15",
                                     "description": "The ID of the status to delete."
                                 }
                             ]
@@ -4238,7 +4090,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"title\":\"illum\",\"color\":\"possimus\"}"
+                            "raw": "{\"title\":\"est\",\"color\":\"deleniti\"}"
                         },
                         "description": "This endpoint allows authenticated users to create a new priority with a unique slug."
                     },
@@ -4289,7 +4141,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"id\":19,\"title\":\"eum\",\"color\":\"cum\"}"
+                            "raw": "{\"id\":6,\"title\":\"dolor\",\"color\":\"dicta\"}"
                         },
                         "description": "This endpoint allows authenticated users to update a priority, including modifying the title and color."
                     },
@@ -4332,7 +4184,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "3",
+                                    "value": "16",
                                     "description": "The ID of the priority to retrieve."
                                 }
                             ]
@@ -4384,7 +4236,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "15",
+                                    "value": "20",
                                     "description": "The ID of the priority to delete."
                                 }
                             ]
@@ -4706,13 +4558,13 @@
                                 },
                                 {
                                     "key": "role_ids[0]",
-                                    "value": 1,
+                                    "value": "1",
                                     "description": "optional The role IDs to filter users by.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "role_ids[1]",
-                                    "value": 2,
+                                    "value": "2",
                                     "description": "optional The role IDs to filter users by.",
                                     "disabled": false
                                 },
@@ -4917,19 +4769,19 @@
                                 },
                                 {
                                     "key": "role",
-                                    "value": 1,
+                                    "value": "1",
                                     "type": "text",
                                     "description": "The ID of the role for the user."
                                 },
                                 {
                                     "key": "status",
-                                    "value": true,
+                                    "value": "1",
                                     "type": "text",
                                     "description": "0 or 1. If Deactivated (0), the user won't be able to log in to their account.\nCan only specify if `is_admin_or_has_all_data_access` is true for the logged-in user, else 0 will be considered by default."
                                 },
                                 {
                                     "key": "require_ev",
-                                    "value": true,
+                                    "value": "1",
                                     "type": "text",
                                     "description": "0 or 1. If Yes (1) is selected, the user will receive a verification link via email.\nCan only specify if `is_admin_or_has_all_data_access` is true for the logged-in user, else 1 will be considered by default."
                                 },
@@ -4992,7 +4844,7 @@
                             "formdata": [
                                 {
                                     "key": "id",
-                                    "value": 1,
+                                    "value": "1",
                                     "type": "text",
                                     "description": "The ID of the user to be updated."
                                 },
@@ -5088,13 +4940,13 @@
                                 },
                                 {
                                     "key": "role",
-                                    "value": 1,
+                                    "value": "1",
                                     "type": "text",
                                     "description": "The ID of the role for the user."
                                 },
                                 {
                                     "key": "status",
-                                    "value": true,
+                                    "value": "1",
                                     "type": "text",
                                     "description": "0 or 1. If Deactivated (0), the user won't be able to log in to their account.\nCan only specify status if `is_admin_or_has_all_data_access` is true for the logged-in user, else the current status will be considered by default."
                                 },
@@ -5430,13 +5282,13 @@
                                 },
                                 {
                                     "key": "status",
-                                    "value": true,
+                                    "value": "1",
                                     "type": "text",
                                     "description": "0 or 1. If Deactivated (0), the client won't be able to log in to their account.\nCan only specify if `is_admin_or_has_all_data_access` is true for the logged-in user, else 0 will be considered by default."
                                 },
                                 {
                                     "key": "require_ev",
-                                    "value": true,
+                                    "value": "1",
                                     "type": "text",
                                     "description": "0 or 1. If Yes (1) is selected, the client will receive a verification link via email.\nCan only specify if `is_admin_or_has_all_data_access` is true for the logged-in user, else 1 will be considered by default."
                                 },
@@ -5499,7 +5351,7 @@
                             "formdata": [
                                 {
                                     "key": "id",
-                                    "value": 1,
+                                    "value": "1",
                                     "type": "text",
                                     "description": "The ID of the client to be updated."
                                 },
@@ -5607,13 +5459,13 @@
                                 },
                                 {
                                     "key": "status",
-                                    "value": true,
+                                    "value": "1",
                                     "type": "text",
                                     "description": "0 or 1. If Deactivated (0), the client won't be able to log in to their account.\nCan only specify if `is_admin_or_has_all_data_access` is true for the logged-in user, else the current status will be considered by default."
                                 },
                                 {
                                     "key": "require_ev",
-                                    "value": true,
+                                    "value": "1",
                                     "type": "text",
                                     "description": "0 or 1. If Yes (1) is selected, the client will receive a verification link via email.\nCan only specify if `is_admin_or_has_all_data_access` is true for the logged-in user, else the current require_ev will be considered by default."
                                 },
@@ -5966,7 +5818,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "3",
+                                    "value": "5",
                                     "description": "The ID of the workspace to update."
                                 }
                             ]
@@ -7939,7 +7791,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "7",
+                                    "value": "17",
                                     "description": "The ID of the role to delete."
                                 }
                             ]
@@ -7997,7 +7849,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "5",
+                                    "value": "7",
                                     "description": "The ID of the role to retrieve."
                                 }
                             ]
@@ -8279,25 +8131,25 @@
                                 },
                                 {
                                     "key": "type_ids[][0]",
-                                    "value": 1,
+                                    "value": "1",
                                     "description": "optional Filter by expense type IDs.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "type_ids[][1]",
-                                    "value": 2,
+                                    "value": "2",
                                     "description": "optional Filter by expense type IDs.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "user_ids[][0]",
-                                    "value": 3,
+                                    "value": "3",
                                     "description": "optional Filter by user IDs.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "user_ids[][1]",
-                                    "value": 5,
+                                    "value": "5",
                                     "description": "optional Filter by user IDs.",
                                     "disabled": false
                                 },
@@ -8859,7 +8711,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"id\":\"necessitatibus\",\"user_id\":\"1\",\"invoice_id\":\"1\",\"payment_method_id\":\"1\",\"amount\":\"100\",\"payment_date\":\"2024-08-07\",\"note\":\"Finish report\"}"
+                            "raw": "{\"id\":\"quam\",\"user_id\":\"1\",\"invoice_id\":\"1\",\"payment_method_id\":\"1\",\"amount\":\"100\",\"payment_date\":\"2024-08-07\",\"note\":\"Finish report\"}"
                         },
                         "description": "This endpoint updates an existing payment with the specified user_id, invoice_id,payment_method_id,amount,payment_date,note. The user must be authenticated to perform this action."
                     },
@@ -9102,7 +8954,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"id\":\"repellendus\",\"title\":\"Title\"}"
+                            "raw": "{\"id\":\"quas\",\"title\":\"Title\"}"
                         },
                         "description": "This endpoint updates an existing payment method with the specified id. The user must be authenticated to perform this action."
                     },
@@ -9704,19 +9556,19 @@
                                 },
                                 {
                                     "key": "unit_ids[0]",
-                                    "value": 1,
+                                    "value": "1",
                                     "description": "optional Filter items by one or more unit IDs.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "unit_ids[1]",
-                                    "value": 2,
+                                    "value": "2",
                                     "description": "optional Filter items by one or more unit IDs.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "unit_ids[2]",
-                                    "value": 3,
+                                    "value": "3",
                                     "description": "optional Filter items by one or more unit IDs.",
                                     "disabled": false
                                 },
@@ -10633,25 +10485,25 @@
                                 },
                                 {
                                     "key": "source_ids[0]",
-                                    "value": 1,
+                                    "value": "1",
                                     "description": "optional Filters leads by one or more source IDs.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "source_ids[1]",
-                                    "value": 2,
+                                    "value": "2",
                                     "description": "optional Filters leads by one or more source IDs.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "stage_ids[0]",
-                                    "value": 3,
+                                    "value": "3",
                                     "description": "optional Filters leads by one or more stage IDs.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "stage_ids[1]",
-                                    "value": 4,
+                                    "value": "4",
                                     "description": "optional Filters leads by one or more stage IDs.",
                                     "disabled": false
                                 },
@@ -10831,6 +10683,206 @@
                             "header": [],
                             "code": 500,
                             "body": "{\n  \"error\": true,\n  \"message\": \"An error occurred while deleting the lead.\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Create a new lead follow-up.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/leads\/follow-up\/store",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/leads\/follow-up\/store"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "workspace_id",
+                                "value": "1"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"lead_id\":12,\"assigned_to\":5,\"type\":\"call\",\"status\":\"pending\",\"follow_up_at\":\"2025-06-20T14:30\",\"note\":\"Call scheduled with client to discuss proposal.\"}"
+                        },
+                        "description": "This endpoint creates a follow-up activity (such as call, email, or meeting) for a specific lead. The date and time are converted to UTC before storing."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"error\": false,\n  \"message\": \"Follow Up Created Successfully\",\n  \"data\": {\n    \"id\": 101,\n    \"type\": \"lead_follow_up\"\n  }\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 422,
+                            "body": "{\n  \"error\": true,\n  \"message\": \"The given data was invalid.\",\n  \"errors\": {\n    \"lead_id\": [\"The lead id field is required.\"]\n  }\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\n  \"error\": true,\n  \"message\": \"Follow Up Couldn't Created.\",\n  \"data\": {\n    \"error\": \"...\",\n    \"line\": 123,\n    \"file\": \"\/app\/Http\/Controllers\/LeadFollowUpController.php\"\n  }\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Retrieve a specific lead follow-up.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/leads\/follow-up\/get\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/leads\/follow-up\/get\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "101",
+                                    "description": "The ID of the follow-up to retrieve."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "workspace_id",
+                                "value": "1"
+                            }
+                        ],
+                        "body": null,
+                        "description": "This endpoint fetches the details of a lead follow-up for editing or displaying, including the related lead and assigned user."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"error\": false,\n  \"message\": \"Follow Up Retrived Successfully\",\n  \"follow_up\": {\n    \"id\": 101,\n    \"lead_id\": 12,\n    \"assigned_to\": 5,\n    \"type\": \"call\",\n    \"status\": \"pending\",\n    \"follow_up_at\": \"2025-06-20T09:00:00.000000Z\",\n    \"note\": \"Discuss proposal\",\n    \"lead\": {\n      \"id\": 12,\n      \"first_name\": \"John\",\n      \"last_name\": \"Doe\"\n    },\n    \"assigned_to_user\": {\n      \"id\": 5,\n      \"name\": \"Jane Smith\"\n    }\n  }\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n  \"message\": \"No query results for model [App\\\\Models\\\\LeadFollowUp] 101\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Update an existing lead follow-up.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/leads\/follow-up\/update",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/leads\/follow-up\/update"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "workspace_id",
+                                "value": "1"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"id\":101,\"assigned_to\":6,\"type\":\"email\",\"status\":\"completed\",\"follow_up_at\":\"2025-06-21T16:00\",\"note\":\"Follow-up completed.\"}"
+                        },
+                        "description": "This endpoint updates the details of an existing follow-up activity for a lead, including reassignment, type, and follow-up date."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"error\": false,\n  \"message\": \"Follow Up Updated Successfully\",\n  \"data\": {\n    \"id\": 101,\n    \"type\": \"lead_follow_up\"\n  }\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 422,
+                            "body": "{\n  \"error\": true,\n  \"message\": \"The given data was invalid.\",\n  \"errors\": {\n    \"follow_up_at\": [\"The follow up at must be a valid date.\"]\n  }\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\n  \"error\": true,\n  \"message\": \"Follow Up Couldn't Be Updated.\",\n  \"data\": {\n    \"error\": \"...\",\n    \"line\": 123,\n    \"file\": \"\/app\/Http\/Controllers\/LeadFollowUpController.php\"\n  }\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Delete a lead follow-up.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/leads\/follow-up\/destroy\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/leads\/follow-up\/destroy\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "101",
+                                    "description": "The ID of the follow-up to delete."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "workspace_id",
+                                "value": "1"
+                            }
+                        ],
+                        "body": null,
+                        "description": "This endpoint deletes a follow-up record permanently from the system."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"error\": false,\n  \"message\": \"Lead Follow Up deleted successfully\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n  \"error\": true,\n  \"message\": \"Lead Follow Up not found\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\n  \"error\": true,\n  \"message\": \"An error occurred while deleting Lead Follow Up.\",\n  \"data\": {\n    \"error\": \"...\",\n    \"line\": 123,\n    \"file\": \"\/app\/Services\/DeletionService.php\"\n  }\n}",
                             "name": ""
                         }
                     ]
@@ -12104,37 +12156,37 @@
                                 },
                                 {
                                     "key": "statuses[0]",
-                                    "value": 0,
+                                    "value": "0",
                                     "description": "optional Filter by status values (0 = Unpaid, 1 = Paid).",
                                     "disabled": false
                                 },
                                 {
                                     "key": "statuses[1]",
-                                    "value": 1,
+                                    "value": "1",
                                     "description": "optional Filter by status values (0 = Unpaid, 1 = Paid).",
                                     "disabled": false
                                 },
                                 {
                                     "key": "user_ids[0]",
-                                    "value": 3,
+                                    "value": "3",
                                     "description": "optional Filter by user IDs.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "user_ids[1]",
-                                    "value": 4,
+                                    "value": "4",
                                     "description": "optional Filter by user IDs.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "created_by_user_ids[0]",
-                                    "value": 2,
+                                    "value": "2",
                                     "description": "optional Filter by user IDs who created the payslip.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "created_by_client_ids[0]",
-                                    "value": 1,
+                                    "value": "1",
                                     "description": "optional Filter by client IDs who created the payslip.",
                                     "disabled": false
                                 },
@@ -13691,13 +13743,13 @@
                                 },
                                 {
                                     "key": "candidate_status[0]",
-                                    "value": 1,
+                                    "value": "1",
                                     "description": "optional Filters candidates by status IDs. Each ID must exist in the `candidate_statuses` table.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "candidate_status[1]",
-                                    "value": 2,
+                                    "value": "2",
                                     "description": "optional Filters candidates by status IDs. Each ID must exist in the `candidate_statuses` table.",
                                     "disabled": false
                                 }
@@ -14652,7 +14704,7 @@
                             "formdata": [
                                 {
                                     "key": "id",
-                                    "value": 15,
+                                    "value": "15",
                                     "type": "text",
                                     "description": "The ID of the contract to update. Must exist in the contracts table."
                                 },
@@ -14682,19 +14734,19 @@
                                 },
                                 {
                                     "key": "client_id",
-                                    "value": 5,
+                                    "value": "5",
                                     "type": "text",
                                     "description": "The ID of the client. Must exist in the clients table."
                                 },
                                 {
                                     "key": "project_id",
-                                    "value": 12,
+                                    "value": "12",
                                     "type": "text",
                                     "description": "The ID of the project. Must exist in the projects table."
                                 },
                                 {
                                     "key": "contract_type_id",
-                                    "value": 3,
+                                    "value": "3",
                                     "type": "text",
                                     "description": "The ID of the contract type. Must exist in the contract_types table."
                                 },
@@ -14706,7 +14758,7 @@
                                 },
                                 {
                                     "key": "isApi",
-                                    "value": true,
+                                    "value": "1",
                                     "type": "text",
                                     "description": "optional Set to true for API requests to handle date format properly."
                                 },
@@ -14791,49 +14843,49 @@
                                 },
                                 {
                                     "key": "type_ids[0]",
-                                    "value": 1,
+                                    "value": "1",
                                     "description": "optional Filters contracts by contract type IDs. Each ID must exist in contract_types table.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "type_ids[1]",
-                                    "value": 3,
+                                    "value": "3",
                                     "description": "optional Filters contracts by contract type IDs. Each ID must exist in contract_types table.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "type_ids[2]",
-                                    "value": 5,
+                                    "value": "5",
                                     "description": "optional Filters contracts by contract type IDs. Each ID must exist in contract_types table.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "project_ids[0]",
-                                    "value": 12,
+                                    "value": "12",
                                     "description": "optional Filters contracts by project IDs. Each ID must exist in projects table.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "project_ids[1]",
-                                    "value": 15,
+                                    "value": "15",
                                     "description": "optional Filters contracts by project IDs. Each ID must exist in projects table.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "project_ids[2]",
-                                    "value": 18,
+                                    "value": "18",
                                     "description": "optional Filters contracts by project IDs. Each ID must exist in projects table.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "client_ids[0]",
-                                    "value": 5,
+                                    "value": "5",
                                     "description": "optional Filters contracts by client IDs. Each ID must exist in clients table.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "client_ids[1]",
-                                    "value": 8,
+                                    "value": "8",
                                     "description": "optional Filters contracts by client IDs. Each ID must exist in clients table.",
                                     "disabled": false
                                 },

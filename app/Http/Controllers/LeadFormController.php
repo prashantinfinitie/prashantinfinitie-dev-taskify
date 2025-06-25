@@ -351,6 +351,12 @@ class LeadFormController extends Controller
             ->map(function ($leadForm) use ($canDelete, $canEdit) {
                 $actions = '';
 
+            if ($leadForm->leadStage) {
+                $stage = '<span class="badge bg-' . $leadForm->leadStage->color . '">' . $leadForm->leadStage->name . '</span>';
+            } else {
+                $stage = "-";
+            }
+
             if ($canEdit) {
                 $actions .= '
                     <a href="' . route('lead-forms.edit', $leadForm->id) . '"
@@ -390,7 +396,9 @@ class LeadFormController extends Controller
                 'description' => $leadForm->description ? (strlen($leadForm->description) > 50 ? substr($leadForm->description, 0, 50) . '...' : $leadForm->description) : '-',
                     'source' => $leadForm->leadSource->name ?? '-',
                     'stage' => $leadForm->leadStage->name ?? '-',
-                'assigned_to' => $leadForm->assignedUser ? ($leadForm->assignedUser->first_name . ' ' . $leadForm->assignedUser->last_name) : '-',
+                'stage' => $stage ?? '-',
+                // 'assigned_to' => $leadForm->assignedUser ? ($leadForm->assignedUser->first_name . ' ' . $leadForm->assignedUser->last_name) : '-',
+                'assigned_to' =>  formatUserHtml($leadForm->assignedUser) ?? 'N/A',
                 'public_url' => '<a href="' . $leadForm->public_url . '" target="_blank" class="btn btn-sm btn-outline-primary"><i class="bx bx-link-external"></i> View</a>',
                 'responses' => $responses,
                     'created_at' => $leadForm->created_at->format('Y-m-d'),

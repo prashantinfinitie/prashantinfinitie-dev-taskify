@@ -30,9 +30,9 @@
         var useCsrf = Boolean(1);
         var csrfUrl = "/sanctum/csrf-cookie";
     </script>
-    <script src="../docs/js/tryitout-4.37.1.js"></script>
+    <script src="../docs/js/tryitout-4.40.0.js"></script>
 
-    <script src="../docs/js/theme-default-4.37.1.js"></script>
+    <script src="../docs/js/theme-default-4.40.0.js"></script>
 
 </head>
 
@@ -82,18 +82,6 @@
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-GETapi-lead-stages-get--id--">
                                 <a href="#endpoints-GETapi-lead-stages-get--id--">Retrieve a specific lead stage.</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-leads-follow-up-store">
-                                <a href="#endpoints-POSTapi-leads-follow-up-store">Store a newly created resource in storage.</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-leads-follow-up-get--id-">
-                                <a href="#endpoints-GETapi-leads-follow-up-get--id-">Show the form for editing the specified resource.</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-leads-follow-up-update">
-                                <a href="#endpoints-POSTapi-leads-follow-up-update">Update the specified resource in storage.</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-DELETEapi-leads-follow-up-destroy--id-">
-                                <a href="#endpoints-DELETEapi-leads-follow-up-destroy--id-">Remove the specified resource from storage.</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-GETapi-custom-fields--id--edit">
                                 <a href="#endpoints-GETapi-custom-fields--id--edit">GET api/custom-fields/{id}/edit</a>
@@ -795,6 +783,18 @@
                                                                                 <li class="tocify-item level-2" data-unique="leads-management-DELETEapi-leads-destroy--id-">
                                 <a href="#leads-management-DELETEapi-leads-destroy--id-">Delete a specific lead.</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="leads-management-POSTapi-leads-follow-up-store">
+                                <a href="#leads-management-POSTapi-leads-follow-up-store">Create a new lead follow-up.</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="leads-management-GETapi-leads-follow-up-get--id-">
+                                <a href="#leads-management-GETapi-leads-follow-up-get--id-">Retrieve a specific lead follow-up.</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="leads-management-POSTapi-leads-follow-up-update">
+                                <a href="#leads-management-POSTapi-leads-follow-up-update">Update an existing lead follow-up.</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="leads-management-DELETEapi-leads-follow-up-destroy--id-">
+                                <a href="#leads-management-DELETEapi-leads-follow-up-destroy--id-">Delete a lead follow-up.</a>
+                            </li>
                                                                                 <li class="tocify-item level-2" data-unique="leads-management-POSTapi-leads-stage-change">
                                 <a href="#leads-management-POSTapi-leads-stage-change">Change the stage of a lead.</a>
                             </li>
@@ -1134,7 +1134,7 @@
             </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: May 30, 2025 09:42:04</li>
+        <li>Last updated: June 18, 2025 03:26:45</li>
     </ul>
 </div>
 
@@ -1445,14 +1445,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "https://dev-taskify.taskhub.company/api/estimates-invoices/pdf/odit" \
+    --get "https://dev-taskify.taskhub.company/api/estimates-invoices/pdf/et" \
     --header "Accept: application/json" \
     --header "workspace_id: 1"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://dev-taskify.taskhub.company/api/estimates-invoices/pdf/odit"
+    "https://dev-taskify.taskhub.company/api/estimates-invoices/pdf/et"
 );
 
 const headers = {
@@ -1481,7 +1481,7 @@ vary: Origin
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;The route api/estimates-invoices/pdf/odit could not be found.&quot;
+    &quot;message&quot;: &quot;The route api/estimates-invoices/pdf/et could not be found.&quot;
 }</code>
  </pre>
     </span>
@@ -1561,10 +1561,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-estimates-invoices-pdf--id-"
-               value="odit"
+               value="et"
                data-component="url">
     <br>
-<p>The ID of the pdf. Example: <code>odit</code></p>
+<p>The ID of the pdf. Example: <code>et</code></p>
             </div>
                     </form>
 
@@ -1769,478 +1769,6 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>optional Indicates if the response should be formatted for API use. Defaults to false. Example: <code>true</code></p>
             </div>
                 </form>
-
-                    <h2 id="endpoints-POSTapi-leads-follow-up-store">Store a newly created resource in storage.</h2>
-
-<p>
-</p>
-
-
-
-<span id="example-requests-POSTapi-leads-follow-up-store">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request POST \
-    "https://dev-taskify.taskhub.company/api/leads/follow-up/store" \
-    --header "Accept: application/json" \
-    --header "workspace_id: 1"</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "https://dev-taskify.taskhub.company/api/leads/follow-up/store"
-);
-
-const headers = {
-    "Accept": "application/json",
-    "workspace_id": "1",
-};
-
-fetch(url, {
-    method: "POST",
-    headers,
-}).then(response =&gt; response.json());</code></pre></div>
-
-</span>
-
-<span id="example-responses-POSTapi-leads-follow-up-store">
-</span>
-<span id="execution-results-POSTapi-leads-follow-up-store" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-POSTapi-leads-follow-up-store"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-POSTapi-leads-follow-up-store"
-      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-POSTapi-leads-follow-up-store" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-POSTapi-leads-follow-up-store">
-
-Tip: Check that you&#039;re properly connected to the network.
-If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
-You can check the Dev Tools console for debugging information.</code></pre>
-</span>
-<form id="form-POSTapi-leads-follow-up-store" data-method="POST"
-      data-path="api/leads/follow-up/store"
-      data-authed="0"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('POSTapi-leads-follow-up-store', this);">
-    <h3>
-        Request&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-POSTapi-leads-follow-up-store"
-                    onclick="tryItOut('POSTapi-leads-follow-up-store');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-POSTapi-leads-follow-up-store"
-                    onclick="cancelTryOut('POSTapi-leads-follow-up-store');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-POSTapi-leads-follow-up-store"
-                    data-initial-text="Send Request 💥"
-                    data-loading-text="⏱ Sending..."
-                    hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-black">POST</small>
-            <b><code>api/leads/follow-up/store</code></b>
-        </p>
-                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="POSTapi-leads-follow-up-store"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>workspace_id</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="workspace_id"                data-endpoint="POSTapi-leads-follow-up-store"
-               value="1"
-               data-component="header">
-    <br>
-<p>Example: <code>1</code></p>
-            </div>
-                        </form>
-
-                    <h2 id="endpoints-GETapi-leads-follow-up-get--id-">Show the form for editing the specified resource.</h2>
-
-<p>
-</p>
-
-
-
-<span id="example-requests-GETapi-leads-follow-up-get--id-">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request GET \
-    --get "https://dev-taskify.taskhub.company/api/leads/follow-up/get/quod" \
-    --header "Accept: application/json" \
-    --header "workspace_id: 1"</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "https://dev-taskify.taskhub.company/api/leads/follow-up/get/quod"
-);
-
-const headers = {
-    "Accept": "application/json",
-    "workspace_id": "1",
-};
-
-fetch(url, {
-    method: "GET",
-    headers,
-}).then(response =&gt; response.json());</code></pre></div>
-
-</span>
-
-<span id="example-responses-GETapi-leads-follow-up-get--id-">
-            <blockquote>
-            <p>Example response (404):</p>
-        </blockquote>
-                <details class="annotation">
-            <summary style="cursor: pointer;">
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
-content-type: application/json
-vary: Origin
- </code></pre></details>         <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;The route api/leads/follow-up/get/quod could not be found.&quot;
-}</code>
- </pre>
-    </span>
-<span id="execution-results-GETapi-leads-follow-up-get--id-" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-GETapi-leads-follow-up-get--id-"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-leads-follow-up-get--id-"
-      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-GETapi-leads-follow-up-get--id-" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-leads-follow-up-get--id-">
-
-Tip: Check that you&#039;re properly connected to the network.
-If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
-You can check the Dev Tools console for debugging information.</code></pre>
-</span>
-<form id="form-GETapi-leads-follow-up-get--id-" data-method="GET"
-      data-path="api/leads/follow-up/get/{id}"
-      data-authed="0"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETapi-leads-follow-up-get--id-', this);">
-    <h3>
-        Request&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-leads-follow-up-get--id-"
-                    onclick="tryItOut('GETapi-leads-follow-up-get--id-');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-leads-follow-up-get--id-"
-                    onclick="cancelTryOut('GETapi-leads-follow-up-get--id-');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-leads-follow-up-get--id-"
-                    data-initial-text="Send Request 💥"
-                    data-loading-text="⏱ Sending..."
-                    hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-green">GET</small>
-            <b><code>api/leads/follow-up/get/{id}</code></b>
-        </p>
-                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="GETapi-leads-follow-up-get--id-"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>workspace_id</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="workspace_id"                data-endpoint="GETapi-leads-follow-up-get--id-"
-               value="1"
-               data-component="header">
-    <br>
-<p>Example: <code>1</code></p>
-            </div>
-                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
-                    <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
-<small>string</small>&nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="id"                data-endpoint="GETapi-leads-follow-up-get--id-"
-               value="quod"
-               data-component="url">
-    <br>
-<p>The ID of the get. Example: <code>quod</code></p>
-            </div>
-                    </form>
-
-                    <h2 id="endpoints-POSTapi-leads-follow-up-update">Update the specified resource in storage.</h2>
-
-<p>
-</p>
-
-
-
-<span id="example-requests-POSTapi-leads-follow-up-update">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request POST \
-    "https://dev-taskify.taskhub.company/api/leads/follow-up/update" \
-    --header "Accept: application/json" \
-    --header "workspace_id: 1"</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "https://dev-taskify.taskhub.company/api/leads/follow-up/update"
-);
-
-const headers = {
-    "Accept": "application/json",
-    "workspace_id": "1",
-};
-
-fetch(url, {
-    method: "POST",
-    headers,
-}).then(response =&gt; response.json());</code></pre></div>
-
-</span>
-
-<span id="example-responses-POSTapi-leads-follow-up-update">
-</span>
-<span id="execution-results-POSTapi-leads-follow-up-update" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-POSTapi-leads-follow-up-update"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-POSTapi-leads-follow-up-update"
-      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-POSTapi-leads-follow-up-update" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-POSTapi-leads-follow-up-update">
-
-Tip: Check that you&#039;re properly connected to the network.
-If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
-You can check the Dev Tools console for debugging information.</code></pre>
-</span>
-<form id="form-POSTapi-leads-follow-up-update" data-method="POST"
-      data-path="api/leads/follow-up/update"
-      data-authed="0"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('POSTapi-leads-follow-up-update', this);">
-    <h3>
-        Request&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-POSTapi-leads-follow-up-update"
-                    onclick="tryItOut('POSTapi-leads-follow-up-update');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-POSTapi-leads-follow-up-update"
-                    onclick="cancelTryOut('POSTapi-leads-follow-up-update');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-POSTapi-leads-follow-up-update"
-                    data-initial-text="Send Request 💥"
-                    data-loading-text="⏱ Sending..."
-                    hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-black">POST</small>
-            <b><code>api/leads/follow-up/update</code></b>
-        </p>
-                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="POSTapi-leads-follow-up-update"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>workspace_id</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="workspace_id"                data-endpoint="POSTapi-leads-follow-up-update"
-               value="1"
-               data-component="header">
-    <br>
-<p>Example: <code>1</code></p>
-            </div>
-                        </form>
-
-                    <h2 id="endpoints-DELETEapi-leads-follow-up-destroy--id-">Remove the specified resource from storage.</h2>
-
-<p>
-</p>
-
-
-
-<span id="example-requests-DELETEapi-leads-follow-up-destroy--id-">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request DELETE \
-    "https://dev-taskify.taskhub.company/api/leads/follow-up/destroy/earum" \
-    --header "Accept: application/json" \
-    --header "workspace_id: 1"</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "https://dev-taskify.taskhub.company/api/leads/follow-up/destroy/earum"
-);
-
-const headers = {
-    "Accept": "application/json",
-    "workspace_id": "1",
-};
-
-fetch(url, {
-    method: "DELETE",
-    headers,
-}).then(response =&gt; response.json());</code></pre></div>
-
-</span>
-
-<span id="example-responses-DELETEapi-leads-follow-up-destroy--id-">
-</span>
-<span id="execution-results-DELETEapi-leads-follow-up-destroy--id-" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-DELETEapi-leads-follow-up-destroy--id-"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-DELETEapi-leads-follow-up-destroy--id-"
-      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-DELETEapi-leads-follow-up-destroy--id-" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-DELETEapi-leads-follow-up-destroy--id-">
-
-Tip: Check that you&#039;re properly connected to the network.
-If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
-You can check the Dev Tools console for debugging information.</code></pre>
-</span>
-<form id="form-DELETEapi-leads-follow-up-destroy--id-" data-method="DELETE"
-      data-path="api/leads/follow-up/destroy/{id}"
-      data-authed="0"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('DELETEapi-leads-follow-up-destroy--id-', this);">
-    <h3>
-        Request&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-DELETEapi-leads-follow-up-destroy--id-"
-                    onclick="tryItOut('DELETEapi-leads-follow-up-destroy--id-');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-DELETEapi-leads-follow-up-destroy--id-"
-                    onclick="cancelTryOut('DELETEapi-leads-follow-up-destroy--id-');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-DELETEapi-leads-follow-up-destroy--id-"
-                    data-initial-text="Send Request 💥"
-                    data-loading-text="⏱ Sending..."
-                    hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-red">DELETE</small>
-            <b><code>api/leads/follow-up/destroy/{id}</code></b>
-        </p>
-                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="DELETEapi-leads-follow-up-destroy--id-"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>workspace_id</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="workspace_id"                data-endpoint="DELETEapi-leads-follow-up-destroy--id-"
-               value="1"
-               data-component="header">
-    <br>
-<p>Example: <code>1</code></p>
-            </div>
-                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
-                    <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
-<small>string</small>&nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="id"                data-endpoint="DELETEapi-leads-follow-up-destroy--id-"
-               value="earum"
-               data-component="url">
-    <br>
-<p>The ID of the destroy. Example: <code>earum</code></p>
-            </div>
-                    </form>
 
                     <h2 id="endpoints-GETapi-custom-fields--id--edit">GET api/custom-fields/{id}/edit</h2>
 
@@ -3486,7 +3014,7 @@ If not, the profile picture of the logged-in user will be updated.</p>
     --header "Content-Type: multipart/form-data" \
     --form "id=1"\
     --form "type=user"\
-    --form "upload=@/tmp/phpPA8B20" </code></pre></div>
+    --form "upload=@/tmp/phpaC3e0G" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -3703,7 +3231,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>The file of the new profile picture to be uploaded. Example: <code>/tmp/phpPA8B20</code></p>
+<p>The file of the new profile picture to be uploaded. Example: <code>/tmp/phpaC3e0G</code></p>
         </div>
         </form>
 
@@ -3721,7 +3249,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "https://dev-taskify.taskhub.company/api/users/20/profile" \
+    "https://dev-taskify.taskhub.company/api/users/6/profile" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Accept: application/json" \
     --header "workspace_id: 1" \
@@ -3749,7 +3277,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://dev-taskify.taskhub.company/api/users/20/profile"
+    "https://dev-taskify.taskhub.company/api/users/6/profile"
 );
 
 const headers = {
@@ -3950,10 +3478,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="POSTapi-users--id--profile"
-               value="20"
+               value="6"
                data-component="url">
     <br>
-<p>The ID of the user whose profile is being updated. Example: <code>20</code></p>
+<p>The ID of the user whose profile is being updated. Example: <code>6</code></p>
             </div>
                             <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
@@ -5217,19 +4745,19 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Content-Type: application/json" \
     --data "{
     \"user_ids\": [
-        7
+        15
     ],
     \"client_ids\": [
-        3
+        18
     ],
     \"priority_ids\": [
         7
     ],
     \"tag_ids\": [
-        9
+        14
     ],
     \"status_ids\": [
-        15
+        5
     ]
 }"
 </code></pre></div>
@@ -5275,19 +4803,19 @@ const headers = {
 
 let body = {
     "user_ids": [
-        7
+        15
     ],
     "client_ids": [
-        3
+        18
     ],
     "priority_ids": [
         7
     ],
     "tag_ids": [
-        9
+        14
     ],
     "status_ids": [
-        15
+        5
     ]
 };
 
@@ -5666,7 +5194,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                name="user_ids[1]"                data-endpoint="GETapi-projects--id--"
                data-component="body">
     <br>
-
+<p>The <code>id</code> of an existing record in the users table.</p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>client_ids</code></b>&nbsp;&nbsp;
@@ -5679,7 +5207,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                name="client_ids[1]"                data-endpoint="GETapi-projects--id--"
                data-component="body">
     <br>
-
+<p>The <code>id</code> of an existing record in the clients table.</p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>priority_ids</code></b>&nbsp;&nbsp;
@@ -5692,7 +5220,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                name="priority_ids[1]"                data-endpoint="GETapi-projects--id--"
                data-component="body">
     <br>
-
+<p>The <code>id</code> of an existing record in the priorities table.</p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>tag_ids</code></b>&nbsp;&nbsp;
@@ -5705,7 +5233,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                name="tag_ids[1]"                data-endpoint="GETapi-projects--id--"
                data-component="body">
     <br>
-
+<p>The <code>id</code> of an existing record in the tags table.</p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>status_ids</code></b>&nbsp;&nbsp;
@@ -5718,7 +5246,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                name="status_ids[1]"                data-endpoint="GETapi-projects--id--"
                data-component="body">
     <br>
-
+<p>The <code>id</code> of an existing record in the statuses table.</p>
         </div>
         </form>
 
@@ -6576,7 +6104,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PATCH \
-    "https://dev-taskify.taskhub.company/api/projects/7/favorite" \
+    "https://dev-taskify.taskhub.company/api/projects/4/favorite" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Accept: application/json" \
     --header "workspace_id: 1" \
@@ -6589,7 +6117,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://dev-taskify.taskhub.company/api/projects/7/favorite"
+    "https://dev-taskify.taskhub.company/api/projects/4/favorite"
 );
 
 const headers = {
@@ -6794,10 +6322,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="PATCHapi-projects--id--favorite"
-               value="7"
+               value="4"
                data-component="url">
     <br>
-<p>The ID of the project to update. Example: <code>7</code></p>
+<p>The ID of the project to update. Example: <code>4</code></p>
             </div>
                             <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
@@ -6827,20 +6355,20 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PATCH \
-    "https://dev-taskify.taskhub.company/api/projects/18/pinned" \
+    "https://dev-taskify.taskhub.company/api/projects/1/pinned" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Accept: application/json" \
     --header "workspace_id: 1" \
     --header "Content-Type: application/json" \
     --data "{
-    \"is_pinned\": 20
+    \"is_pinned\": 3
 }"
 </code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://dev-taskify.taskhub.company/api/projects/18/pinned"
+    "https://dev-taskify.taskhub.company/api/projects/1/pinned"
 );
 
 const headers = {
@@ -6851,7 +6379,7 @@ const headers = {
 };
 
 let body = {
-    "is_pinned": 20
+    "is_pinned": 3
 };
 
 fetch(url, {
@@ -7013,10 +6541,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="PATCHapi-projects--id--pinned"
-               value="18"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the project to update. Example: <code>18</code></p>
+<p>The ID of the project to update. Example: <code>1</code></p>
             </div>
                             <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
@@ -7025,10 +6553,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="is_pinned"                data-endpoint="PATCHapi-projects--id--pinned"
-               value="20"
+               value="3"
                data-component="body">
     <br>
-<p>Indicates whether the project is pinned. Use 1 for true and 0 for false. Example: <code>20</code></p>
+<p>Indicates whether the project is pinned. Use 1 for true and 0 for false. Example: <code>3</code></p>
         </div>
         </form>
 
@@ -7046,21 +6574,21 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PATCH \
-    "https://dev-taskify.taskhub.company/api/projects/14/status" \
+    "https://dev-taskify.taskhub.company/api/projects/16/status" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Accept: application/json" \
     --header "workspace_id: 1" \
     --header "Content-Type: application/json" \
     --data "{
-    \"statusId\": 5,
-    \"note\": \"perferendis\"
+    \"statusId\": 15,
+    \"note\": \"laborum\"
 }"
 </code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://dev-taskify.taskhub.company/api/projects/14/status"
+    "https://dev-taskify.taskhub.company/api/projects/16/status"
 );
 
 const headers = {
@@ -7071,8 +6599,8 @@ const headers = {
 };
 
 let body = {
-    "statusId": 5,
-    "note": "perferendis"
+    "statusId": 15,
+    "note": "laborum"
 };
 
 fetch(url, {
@@ -7271,10 +6799,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="PATCHapi-projects--id--status"
-               value="14"
+               value="16"
                data-component="url">
     <br>
-<p>The ID of the project whose status is to be updated. Example: <code>14</code></p>
+<p>The ID of the project whose status is to be updated. Example: <code>16</code></p>
             </div>
                             <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
@@ -7283,10 +6811,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="statusId"                data-endpoint="PATCHapi-projects--id--status"
-               value="5"
+               value="15"
                data-component="body">
     <br>
-<p>The ID of the new status to set for the project. Example: <code>5</code></p>
+<p>The ID of the new status to set for the project. Example: <code>15</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>note</code></b>&nbsp;&nbsp;
@@ -7294,10 +6822,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                               name="note"                data-endpoint="PATCHapi-projects--id--status"
-               value="perferendis"
+               value="laborum"
                data-component="body">
     <br>
-<p>optional An optional note to attach to the project update. Example: <code>perferendis</code></p>
+<p>optional An optional note to attach to the project update. Example: <code>laborum</code></p>
         </div>
         </form>
 
@@ -7315,20 +6843,20 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PATCH \
-    "https://dev-taskify.taskhub.company/api/projects/17/priority" \
+    "https://dev-taskify.taskhub.company/api/projects/10/priority" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Accept: application/json" \
     --header "workspace_id: 1" \
     --header "Content-Type: application/json" \
     --data "{
-    \"priorityId\": 20
+    \"priorityId\": 14
 }"
 </code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://dev-taskify.taskhub.company/api/projects/17/priority"
+    "https://dev-taskify.taskhub.company/api/projects/10/priority"
 );
 
 const headers = {
@@ -7339,7 +6867,7 @@ const headers = {
 };
 
 let body = {
-    "priorityId": 20
+    "priorityId": 14
 };
 
 fetch(url, {
@@ -7528,10 +7056,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="PATCHapi-projects--id--priority"
-               value="17"
+               value="10"
                data-component="url">
     <br>
-<p>The ID of the project whose priority is to be updated. Example: <code>17</code></p>
+<p>The ID of the project whose priority is to be updated. Example: <code>10</code></p>
             </div>
                             <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
@@ -7540,10 +7068,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="priorityId"                data-endpoint="PATCHapi-projects--id--priority"
-               value="20"
+               value="14"
                data-component="body">
     <br>
-<p>The ID of the new priority to set for the project. Example: <code>20</code></p>
+<p>The ID of the new priority to set for the project. Example: <code>14</code></p>
         </div>
         </form>
 
@@ -7729,7 +7257,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "https://dev-taskify.taskhub.company/api/projects/14/status-timelines" \
+    --get "https://dev-taskify.taskhub.company/api/projects/17/status-timelines" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Accept: application/json" \
     --header "workspace_id: 1"</code></pre></div>
@@ -7737,7 +7265,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://dev-taskify.taskhub.company/api/projects/14/status-timelines"
+    "https://dev-taskify.taskhub.company/api/projects/17/status-timelines"
 );
 
 const headers = {
@@ -7890,10 +7418,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="GETapi-projects--id--status-timelines"
-               value="14"
+               value="17"
                data-component="url">
     <br>
-<p>The ID of the project whose status timeline is to be retrieved. Example: <code>14</code></p>
+<p>The ID of the project whose status timeline is to be retrieved. Example: <code>17</code></p>
             </div>
                     </form>
 
@@ -7911,7 +7439,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "https://dev-taskify.taskhub.company/api/projects/18/mind-map" \
+    --get "https://dev-taskify.taskhub.company/api/projects/8/mind-map" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Accept: application/json" \
     --header "workspace_id: 1"</code></pre></div>
@@ -7919,7 +7447,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://dev-taskify.taskhub.company/api/projects/18/mind-map"
+    "https://dev-taskify.taskhub.company/api/projects/8/mind-map"
 );
 
 const headers = {
@@ -8153,10 +7681,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="GETapi-projects--id--mind-map"
-               value="18"
+               value="8"
                data-component="url">
     <br>
-<p>The ID of the data to retrieve. Example: <code>18</code></p>
+<p>The ID of the data to retrieve. Example: <code>8</code></p>
             </div>
                     </form>
 
@@ -8184,13 +7712,13 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "workspace_id: 1" \
     --header "Content-Type: application/json" \
     --data "{
-    \"project_id\": 2,
-    \"title\": \"consequatur\",
+    \"project_id\": 13,
+    \"title\": \"commodi\",
     \"status\": \"quis\",
-    \"start_date\": \"dolores\",
-    \"end_date\": \"ab\",
-    \"cost\": \"nostrum\",
-    \"description\": \"Dolor molestiae fuga sapiente voluptas doloribus.\"
+    \"start_date\": \"et\",
+    \"end_date\": \"unde\",
+    \"cost\": \"placeat\",
+    \"description\": \"Accusamus doloribus eum accusamus aliquid.\"
 }"
 </code></pre></div>
 
@@ -8208,13 +7736,13 @@ const headers = {
 };
 
 let body = {
-    "project_id": 2,
-    "title": "consequatur",
+    "project_id": 13,
+    "title": "commodi",
     "status": "quis",
-    "start_date": "dolores",
-    "end_date": "ab",
-    "cost": "nostrum",
-    "description": "Dolor molestiae fuga sapiente voluptas doloribus."
+    "start_date": "et",
+    "end_date": "unde",
+    "cost": "placeat",
+    "description": "Accusamus doloribus eum accusamus aliquid."
 };
 
 fetch(url, {
@@ -8370,10 +7898,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="project_id"                data-endpoint="POSTapi-milestones-store"
-               value="2"
+               value="13"
                data-component="body">
     <br>
-<p>The ID of the project to which the milestone belongs. Example: <code>2</code></p>
+<p>The ID of the project to which the milestone belongs. Example: <code>13</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>title</code></b>&nbsp;&nbsp;
@@ -8381,10 +7909,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="title"                data-endpoint="POSTapi-milestones-store"
-               value="consequatur"
+               value="commodi"
                data-component="body">
     <br>
-<p>The title of the milestone. Example: <code>consequatur</code></p>
+<p>The title of the milestone. Example: <code>commodi</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
@@ -8403,10 +7931,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                               name="start_date"                data-endpoint="POSTapi-milestones-store"
-               value="dolores"
+               value="et"
                data-component="body">
     <br>
-<p>optional The start date of the milestone (YYYY-MM-DD). Example: <code>dolores</code></p>
+<p>optional The start date of the milestone (YYYY-MM-DD). Example: <code>et</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>end_date</code></b>&nbsp;&nbsp;
@@ -8414,10 +7942,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                               name="end_date"                data-endpoint="POSTapi-milestones-store"
-               value="ab"
+               value="unde"
                data-component="body">
     <br>
-<p>optional The end date of the milestone (YYYY-MM-DD). Example: <code>ab</code></p>
+<p>optional The end date of the milestone (YYYY-MM-DD). Example: <code>unde</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>cost</code></b>&nbsp;&nbsp;
@@ -8425,10 +7953,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="cost"                data-endpoint="POSTapi-milestones-store"
-               value="nostrum"
+               value="placeat"
                data-component="body">
     <br>
-<p>The cost of the milestone. Example: <code>nostrum</code></p>
+<p>The cost of the milestone. Example: <code>placeat</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>description</code></b>&nbsp;&nbsp;
@@ -8436,10 +7964,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                               name="description"                data-endpoint="POSTapi-milestones-store"
-               value="Dolor molestiae fuga sapiente voluptas doloribus."
+               value="Accusamus doloribus eum accusamus aliquid."
                data-component="body">
     <br>
-<p>optional A description of the milestone. Example: <code>Dolor molestiae fuga sapiente voluptas doloribus.</code></p>
+<p>optional A description of the milestone. Example: <code>Accusamus doloribus eum accusamus aliquid.</code></p>
         </div>
         </form>
 
@@ -8458,7 +7986,7 @@ It supports searching, filtering, and sorting functionalities.</p>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "https://dev-taskify.taskhub.company/api/milestones/13?search=sit&amp;sort=similique&amp;order=debitis&amp;statuses[]=placeat&amp;date_between_from=et&amp;date_between_to=nulla&amp;start_date_from=ipsam&amp;start_date_to=omnis&amp;end_date_from=adipisci&amp;end_date_to=dolorem&amp;limit=15" \
+    --get "https://dev-taskify.taskhub.company/api/milestones/12?search=nesciunt&amp;sort=dolor&amp;order=aperiam&amp;statuses[]=sunt&amp;date_between_from=nostrum&amp;date_between_to=molestiae&amp;start_date_from=est&amp;start_date_to=molestiae&amp;end_date_from=soluta&amp;end_date_to=expedita&amp;limit=5" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Accept: application/json" \
     --header "workspace_id: 1"</code></pre></div>
@@ -8466,21 +7994,21 @@ It supports searching, filtering, and sorting functionalities.</p>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://dev-taskify.taskhub.company/api/milestones/13"
+    "https://dev-taskify.taskhub.company/api/milestones/12"
 );
 
 const params = {
-    "search": "sit",
-    "sort": "similique",
-    "order": "debitis",
-    "statuses[0]": "placeat",
-    "date_between_from": "et",
-    "date_between_to": "nulla",
-    "start_date_from": "ipsam",
-    "start_date_to": "omnis",
-    "end_date_from": "adipisci",
-    "end_date_to": "dolorem",
-    "limit": "15",
+    "search": "nesciunt",
+    "sort": "dolor",
+    "order": "aperiam",
+    "statuses[0]": "sunt",
+    "date_between_from": "nostrum",
+    "date_between_to": "molestiae",
+    "start_date_from": "est",
+    "start_date_to": "molestiae",
+    "end_date_from": "soluta",
+    "end_date_to": "expedita",
+    "limit": "5",
 };
 Object.keys(params)
     .forEach(key =&gt; url.searchParams.append(key, params[key]));
@@ -8622,10 +8150,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="GETapi-milestones--id--"
-               value="13"
+               value="12"
                data-component="url">
     <br>
-<p>The ID of the project whose milestones are to be retrieved. Example: <code>13</code></p>
+<p>The ID of the project whose milestones are to be retrieved. Example: <code>12</code></p>
             </div>
                         <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
                                     <div style="padding-left: 28px; clear: unset;">
@@ -8634,10 +8162,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                               name="search"                data-endpoint="GETapi-milestones--id--"
-               value="sit"
+               value="nesciunt"
                data-component="query">
     <br>
-<p>optional Search for milestones by title, ID, cost, or description. Example: <code>sit</code></p>
+<p>optional Search for milestones by title, ID, cost, or description. Example: <code>nesciunt</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>sort</code></b>&nbsp;&nbsp;
@@ -8645,10 +8173,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                               name="sort"                data-endpoint="GETapi-milestones--id--"
-               value="similique"
+               value="dolor"
                data-component="query">
     <br>
-<p>optional Field to sort by (default: &quot;id&quot;). Example: <code>similique</code></p>
+<p>optional Field to sort by (default: &quot;id&quot;). Example: <code>dolor</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>order</code></b>&nbsp;&nbsp;
@@ -8656,10 +8184,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                               name="order"                data-endpoint="GETapi-milestones--id--"
-               value="debitis"
+               value="aperiam"
                data-component="query">
     <br>
-<p>optional Sorting order (ASC/DESC, default: &quot;DESC&quot;). Example: <code>debitis</code></p>
+<p>optional Sorting order (ASC/DESC, default: &quot;DESC&quot;). Example: <code>aperiam</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>statuses</code></b>&nbsp;&nbsp;
@@ -8680,10 +8208,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                               name="date_between_from"                data-endpoint="GETapi-milestones--id--"
-               value="et"
+               value="nostrum"
                data-component="query">
     <br>
-<p>date optional Filter milestones starting from this date. Example: <code>et</code></p>
+<p>date optional Filter milestones starting from this date. Example: <code>nostrum</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>date_between_to</code></b>&nbsp;&nbsp;
@@ -8691,10 +8219,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                               name="date_between_to"                data-endpoint="GETapi-milestones--id--"
-               value="nulla"
+               value="molestiae"
                data-component="query">
     <br>
-<p>date optional Filter milestones ending at this date. Example: <code>nulla</code></p>
+<p>date optional Filter milestones ending at this date. Example: <code>molestiae</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>start_date_from</code></b>&nbsp;&nbsp;
@@ -8702,10 +8230,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                               name="start_date_from"                data-endpoint="GETapi-milestones--id--"
-               value="ipsam"
+               value="est"
                data-component="query">
     <br>
-<p>date optional Filter milestones with a start date after this date. Example: <code>ipsam</code></p>
+<p>date optional Filter milestones with a start date after this date. Example: <code>est</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>start_date_to</code></b>&nbsp;&nbsp;
@@ -8713,10 +8241,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                               name="start_date_to"                data-endpoint="GETapi-milestones--id--"
-               value="omnis"
+               value="molestiae"
                data-component="query">
     <br>
-<p>date optional Filter milestones with a start date before this date. Example: <code>omnis</code></p>
+<p>date optional Filter milestones with a start date before this date. Example: <code>molestiae</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>end_date_from</code></b>&nbsp;&nbsp;
@@ -8724,10 +8252,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                               name="end_date_from"                data-endpoint="GETapi-milestones--id--"
-               value="adipisci"
+               value="soluta"
                data-component="query">
     <br>
-<p>date optional Filter milestones with an end date after this date. Example: <code>adipisci</code></p>
+<p>date optional Filter milestones with an end date after this date. Example: <code>soluta</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>end_date_to</code></b>&nbsp;&nbsp;
@@ -8735,10 +8263,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                               name="end_date_to"                data-endpoint="GETapi-milestones--id--"
-               value="dolorem"
+               value="expedita"
                data-component="query">
     <br>
-<p>date optional Filter milestones with an end date before this date. Example: <code>dolorem</code></p>
+<p>date optional Filter milestones with an end date before this date. Example: <code>expedita</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>limit</code></b>&nbsp;&nbsp;
@@ -8746,10 +8274,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <i>optional</i> &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="limit"                data-endpoint="GETapi-milestones--id--"
-               value="15"
+               value="5"
                data-component="query">
     <br>
-<p>optional Number of records per page. Example: <code>15</code></p>
+<p>optional Number of records per page. Example: <code>5</code></p>
             </div>
                 </form>
 
@@ -8767,7 +8295,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "https://dev-taskify.taskhub.company/api/milestones/get/18" \
+    --get "https://dev-taskify.taskhub.company/api/milestones/get/2" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Accept: application/json" \
     --header "workspace_id: 1"</code></pre></div>
@@ -8775,7 +8303,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://dev-taskify.taskhub.company/api/milestones/get/18"
+    "https://dev-taskify.taskhub.company/api/milestones/get/2"
 );
 
 const headers = {
@@ -8910,10 +8438,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="GETapi-milestones-get--id--"
-               value="18"
+               value="2"
                data-component="url">
     <br>
-<p>The ID of the milestone to retrieve. Example: <code>18</code></p>
+<p>The ID of the milestone to retrieve. Example: <code>2</code></p>
             </div>
                     </form>
 
@@ -8937,13 +8465,13 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "workspace_id: 1" \
     --header "Content-Type: application/json" \
     --data "{
-    \"title\": \"aliquid\",
-    \"status\": \"rerum\",
-    \"start_date\": \"et\",
-    \"end_date\": \"dolores\",
-    \"cost\": \"nulla\",
-    \"progress\": 9,
-    \"description\": \"Quod enim debitis corporis molestias vitae omnis.\"
+    \"title\": \"beatae\",
+    \"status\": \"ut\",
+    \"start_date\": \"nobis\",
+    \"end_date\": \"tempora\",
+    \"cost\": \"magni\",
+    \"progress\": 15,
+    \"description\": \"Nihil est assumenda sapiente itaque et.\"
 }"
 </code></pre></div>
 
@@ -8961,13 +8489,13 @@ const headers = {
 };
 
 let body = {
-    "title": "aliquid",
-    "status": "rerum",
-    "start_date": "et",
-    "end_date": "dolores",
-    "cost": "nulla",
-    "progress": 9,
-    "description": "Quod enim debitis corporis molestias vitae omnis."
+    "title": "beatae",
+    "status": "ut",
+    "start_date": "nobis",
+    "end_date": "tempora",
+    "cost": "magni",
+    "progress": 15,
+    "description": "Nihil est assumenda sapiente itaque et."
 };
 
 fetch(url, {
@@ -9133,10 +8661,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="POSTapi-milestones-update"
-               value="13"
+               value="12"
                data-component="url">
     <br>
-<p>The ID of the milestone to be updated. Example: <code>13</code></p>
+<p>The ID of the milestone to be updated. Example: <code>12</code></p>
             </div>
                             <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
@@ -9145,10 +8673,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="title"                data-endpoint="POSTapi-milestones-update"
-               value="aliquid"
+               value="beatae"
                data-component="body">
     <br>
-<p>The updated title of the milestone. Example: <code>aliquid</code></p>
+<p>The updated title of the milestone. Example: <code>beatae</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
@@ -9156,10 +8684,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="status"                data-endpoint="POSTapi-milestones-update"
-               value="rerum"
+               value="ut"
                data-component="body">
     <br>
-<p>The updated status of the milestone. Example: <code>rerum</code></p>
+<p>The updated status of the milestone. Example: <code>ut</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>start_date</code></b>&nbsp;&nbsp;
@@ -9167,10 +8695,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                               name="start_date"                data-endpoint="POSTapi-milestones-update"
-               value="et"
+               value="nobis"
                data-component="body">
     <br>
-<p>optional The updated start date of the milestone (YYYY-MM-DD). Example: <code>et</code></p>
+<p>optional The updated start date of the milestone (YYYY-MM-DD). Example: <code>nobis</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>end_date</code></b>&nbsp;&nbsp;
@@ -9178,10 +8706,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                               name="end_date"                data-endpoint="POSTapi-milestones-update"
-               value="dolores"
+               value="tempora"
                data-component="body">
     <br>
-<p>optional The updated end date of the milestone (YYYY-MM-DD). Example: <code>dolores</code></p>
+<p>optional The updated end date of the milestone (YYYY-MM-DD). Example: <code>tempora</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>cost</code></b>&nbsp;&nbsp;
@@ -9189,10 +8717,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="cost"                data-endpoint="POSTapi-milestones-update"
-               value="nulla"
+               value="magni"
                data-component="body">
     <br>
-<p>The updated cost of the milestone. Example: <code>nulla</code></p>
+<p>The updated cost of the milestone. Example: <code>magni</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>progress</code></b>&nbsp;&nbsp;
@@ -9200,10 +8728,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="progress"                data-endpoint="POSTapi-milestones-update"
-               value="9"
+               value="15"
                data-component="body">
     <br>
-<p>The updated progress percentage of the milestone. Example: <code>9</code></p>
+<p>The updated progress percentage of the milestone. Example: <code>15</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>description</code></b>&nbsp;&nbsp;
@@ -9211,10 +8739,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                               name="description"                data-endpoint="POSTapi-milestones-update"
-               value="Quod enim debitis corporis molestias vitae omnis."
+               value="Nihil est assumenda sapiente itaque et."
                data-component="body">
     <br>
-<p>optional An updated description of the milestone. Example: <code>Quod enim debitis corporis molestias vitae omnis.</code></p>
+<p>optional An updated description of the milestone. Example: <code>Nihil est assumenda sapiente itaque et.</code></p>
         </div>
         </form>
 
@@ -9232,7 +8760,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "https://dev-taskify.taskhub.company/api/milestones/destroy/11" \
+    "https://dev-taskify.taskhub.company/api/milestones/destroy/8" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Accept: application/json" \
     --header "workspace_id: 1"</code></pre></div>
@@ -9240,7 +8768,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://dev-taskify.taskhub.company/api/milestones/destroy/11"
+    "https://dev-taskify.taskhub.company/api/milestones/destroy/8"
 );
 
 const headers = {
@@ -9380,10 +8908,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="DELETEapi-milestones-destroy--id-"
-               value="11"
+               value="8"
                data-component="url">
     <br>
-<p>The ID of the milestone to delete. Example: <code>11</code></p>
+<p>The ID of the milestone to delete. Example: <code>8</code></p>
             </div>
                     </form>
 
@@ -9406,21 +8934,21 @@ Users can also attach files and mention other users.</p>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "https://dev-taskify.taskhub.company/api/projects/1/comments" \
+    "https://dev-taskify.taskhub.company/api/projects/14/comments" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Accept: application/json" \
     --header "workspace_id: 1" \
     --header "Content-Type: multipart/form-data" \
-    --form "model_type=voluptatem"\
-    --form "model_id=20"\
-    --form "content=voluptatem"\
-    --form "parent_id=13"\
-    --form "attachments[]=@/tmp/phpHICwiC" </code></pre></div>
+    --form "model_type=qui"\
+    --form "model_id=6"\
+    --form "content=iste"\
+    --form "parent_id=16"\
+    --form "attachments[]=@/tmp/php2CSUrx" </code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://dev-taskify.taskhub.company/api/projects/1/comments"
+    "https://dev-taskify.taskhub.company/api/projects/14/comments"
 );
 
 const headers = {
@@ -9431,10 +8959,10 @@ const headers = {
 };
 
 const body = new FormData();
-body.append('model_type', 'voluptatem');
-body.append('model_id', '20');
-body.append('content', 'voluptatem');
-body.append('parent_id', '13');
+body.append('model_type', 'qui');
+body.append('model_id', '6');
+body.append('content', 'iste');
+body.append('parent_id', '16');
 body.append('attachments[]', document.querySelector('input[name="attachments[]"]').files[0]);
 
 fetch(url, {
@@ -9602,10 +9130,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="POSTapi-projects--id--comments"
-               value="1"
+               value="14"
                data-component="url">
     <br>
-<p>The ID of the project to add a comment to. Example: <code>1</code></p>
+<p>The ID of the project to add a comment to. Example: <code>14</code></p>
             </div>
                             <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
@@ -9614,10 +9142,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="model_type"                data-endpoint="POSTapi-projects--id--comments"
-               value="voluptatem"
+               value="qui"
                data-component="body">
     <br>
-<p>The type of model being commented on (e.g., &quot;Task&quot;, &quot;Project&quot;). Example: <code>voluptatem</code></p>
+<p>The type of model being commented on (e.g., &quot;Task&quot;, &quot;Project&quot;). Example: <code>qui</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>model_id</code></b>&nbsp;&nbsp;
@@ -9625,10 +9153,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="model_id"                data-endpoint="POSTapi-projects--id--comments"
-               value="20"
+               value="6"
                data-component="body">
     <br>
-<p>The ID of the model being commented on. Example: <code>20</code></p>
+<p>The ID of the model being commented on. Example: <code>6</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>content</code></b>&nbsp;&nbsp;
@@ -9636,10 +9164,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="content"                data-endpoint="POSTapi-projects--id--comments"
-               value="voluptatem"
+               value="iste"
                data-component="body">
     <br>
-<p>The comment text. Example: <code>voluptatem</code></p>
+<p>The comment text. Example: <code>iste</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>parent_id</code></b>&nbsp;&nbsp;
@@ -9647,10 +9175,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <i>optional</i> &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="parent_id"                data-endpoint="POSTapi-projects--id--comments"
-               value="13"
+               value="16"
                data-component="body">
     <br>
-<p>optional The ID of the parent comment (for replies). Example: <code>13</code></p>
+<p>optional The ID of the parent comment (for replies). Example: <code>16</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>attachments[]</code></b>&nbsp;&nbsp;
@@ -9661,7 +9189,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>optional An array of files to attach to the comment. Maximum file size is defined in the config. Example: <code>/tmp/phpHICwiC</code></p>
+<p>optional An array of files to attach to the comment. Maximum file size is defined in the config. Example: <code>/tmp/php2CSUrx</code></p>
         </div>
         </form>
 
@@ -9679,7 +9207,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "https://dev-taskify.taskhub.company/api/projects/comments/get/10" \
+    --get "https://dev-taskify.taskhub.company/api/projects/comments/get/3" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Accept: application/json" \
     --header "workspace_id: 1"</code></pre></div>
@@ -9687,7 +9215,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://dev-taskify.taskhub.company/api/projects/comments/get/10"
+    "https://dev-taskify.taskhub.company/api/projects/comments/get/3"
 );
 
 const headers = {
@@ -9830,10 +9358,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="GETapi-projects-comments-get--id-"
-               value="10"
+               value="3"
                data-component="url">
     <br>
-<p>The ID of the comment to retrieve. Example: <code>10</code></p>
+<p>The ID of the comment to retrieve. Example: <code>3</code></p>
             </div>
                     </form>
 
@@ -9857,8 +9385,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "workspace_id: 1" \
     --header "Content-Type: application/json" \
     --data "{
-    \"comment_id\": 3,
-    \"content\": \"aliquid\"
+    \"comment_id\": 16,
+    \"content\": \"autem\"
 }"
 </code></pre></div>
 
@@ -9876,8 +9404,8 @@ const headers = {
 };
 
 let body = {
-    "comment_id": 3,
-    "content": "aliquid"
+    "comment_id": 16,
+    "content": "autem"
 };
 
 fetch(url, {
@@ -10035,10 +9563,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="comment_id"                data-endpoint="POSTapi-projects-comments-update"
-               value="3"
+               value="16"
                data-component="body">
     <br>
-<p>The ID of the comment to be updated. Example: <code>3</code></p>
+<p>The ID of the comment to be updated. Example: <code>16</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>content</code></b>&nbsp;&nbsp;
@@ -10046,10 +9574,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="content"                data-endpoint="POSTapi-projects-comments-update"
-               value="aliquid"
+               value="autem"
                data-component="body">
     <br>
-<p>The updated content of the comment. Example: <code>aliquid</code></p>
+<p>The updated content of the comment. Example: <code>autem</code></p>
         </div>
         </form>
 
@@ -10068,7 +9596,7 @@ The user must be authenticated and have permission to delete comments.</p>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "https://dev-taskify.taskhub.company/api/projects/comments/destroy?comment_id=9" \
+    "https://dev-taskify.taskhub.company/api/projects/comments/destroy?comment_id=6" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Accept: application/json" \
     --header "workspace_id: 1"</code></pre></div>
@@ -10080,7 +9608,7 @@ The user must be authenticated and have permission to delete comments.</p>
 );
 
 const params = {
-    "comment_id": "9",
+    "comment_id": "6",
 };
 Object.keys(params)
     .forEach(key =&gt; url.searchParams.append(key, params[key]));
@@ -10234,10 +9762,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="comment_id"                data-endpoint="DELETEapi-projects-comments-destroy"
-               value="9"
+               value="6"
                data-component="query">
     <br>
-<p>The ID of the comment to delete. Example: <code>9</code></p>
+<p>The ID of the comment to delete. Example: <code>6</code></p>
             </div>
                 </form>
 
@@ -10264,8 +9792,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --header "workspace_id: 1" \
     --header "Content-Type: multipart/form-data" \
-    --form "id=2"\
-    --form "media_files[]=@/tmp/phprCndAo" </code></pre></div>
+    --form "id=5"\
+    --form "media_files[]=@/tmp/php2zY0J2" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -10281,7 +9809,7 @@ const headers = {
 };
 
 const body = new FormData();
-body.append('id', '2');
+body.append('id', '5');
 body.append('media_files[]', document.querySelector('input[name="media_files[]"]').files[0]);
 
 fetch(url, {
@@ -10447,10 +9975,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="POSTapi-projects-upload-media"
-               value="2"
+               value="5"
                data-component="body">
     <br>
-<p>The ID of the project to which media files are being uploaded. Example: <code>2</code></p>
+<p>The ID of the project to which media files are being uploaded. Example: <code>5</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>media_files[]</code></b>&nbsp;&nbsp;
@@ -10461,7 +9989,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>An array of media files to be uploaded. Maximum file size is defined in the config. Example: <code>/tmp/phprCndAo</code></p>
+<p>An array of media files to be uploaded. Maximum file size is defined in the config. Example: <code>/tmp/php2zY0J2</code></p>
         </div>
         </form>
 
@@ -10479,7 +10007,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "https://dev-taskify.taskhub.company/api/projects/get-media/20?search=magnam&amp;sort=harum&amp;order=officia" \
+    --get "https://dev-taskify.taskhub.company/api/projects/get-media/11?search=et&amp;sort=sed&amp;order=dolore" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Accept: application/json" \
     --header "workspace_id: 1"</code></pre></div>
@@ -10487,13 +10015,13 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://dev-taskify.taskhub.company/api/projects/get-media/20"
+    "https://dev-taskify.taskhub.company/api/projects/get-media/11"
 );
 
 const params = {
-    "search": "magnam",
-    "sort": "harum",
-    "order": "officia",
+    "search": "et",
+    "sort": "sed",
+    "order": "dolore",
 };
 Object.keys(params)
     .forEach(key =&gt; url.searchParams.append(key, params[key]));
@@ -10642,10 +10170,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="GETapi-projects-get-media--id-"
-               value="20"
+               value="11"
                data-component="url">
     <br>
-<p>The ID of the project whose media files are to be retrieved. Example: <code>20</code></p>
+<p>The ID of the project whose media files are to be retrieved. Example: <code>11</code></p>
             </div>
                         <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
                                     <div style="padding-left: 28px; clear: unset;">
@@ -10654,10 +10182,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                               name="search"                data-endpoint="GETapi-projects-get-media--id-"
-               value="magnam"
+               value="et"
                data-component="query">
     <br>
-<p>optional A search query to filter media files by name, ID, or upload date. Example: <code>magnam</code></p>
+<p>optional A search query to filter media files by name, ID, or upload date. Example: <code>et</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>sort</code></b>&nbsp;&nbsp;
@@ -10665,10 +10193,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                               name="sort"                data-endpoint="GETapi-projects-get-media--id-"
-               value="harum"
+               value="sed"
                data-component="query">
     <br>
-<p>optional The column to sort by (default: &quot;id&quot;). Example: <code>harum</code></p>
+<p>optional The column to sort by (default: &quot;id&quot;). Example: <code>sed</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>order</code></b>&nbsp;&nbsp;
@@ -10676,10 +10204,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                               name="order"                data-endpoint="GETapi-projects-get-media--id-"
-               value="officia"
+               value="dolore"
                data-component="query">
     <br>
-<p>optional The sorting order: &quot;ASC&quot; or &quot;DESC&quot; (default: &quot;DESC&quot;). Example: <code>officia</code></p>
+<p>optional The sorting order: &quot;ASC&quot; or &quot;DESC&quot; (default: &quot;DESC&quot;). Example: <code>dolore</code></p>
             </div>
                 </form>
 
@@ -10697,7 +10225,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "https://dev-taskify.taskhub.company/api/projects/delete-media/eveniet" \
+    "https://dev-taskify.taskhub.company/api/projects/delete-media/sunt" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Accept: application/json" \
     --header "workspace_id: 1"</code></pre></div>
@@ -10705,7 +10233,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://dev-taskify.taskhub.company/api/projects/delete-media/eveniet"
+    "https://dev-taskify.taskhub.company/api/projects/delete-media/sunt"
 );
 
 const headers = {
@@ -10845,10 +10373,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="DELETEapi-projects-delete-media--id-"
-               value="eveniet"
+               value="sunt"
                data-component="url">
     <br>
-<p>The ID of the delete medium. Example: <code>eveniet</code></p>
+<p>The ID of the delete medium. Example: <code>sunt</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>mediaId</code></b>&nbsp;&nbsp;
@@ -11248,19 +10776,19 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Content-Type: application/json" \
     --data "{
     \"user_ids\": [
-        6
+        17
     ],
     \"client_ids\": [
-        10
-    ],
-    \"priority_ids\": [
-        7
-    ],
-    \"project_ids\": [
         8
     ],
+    \"priority_ids\": [
+        19
+    ],
+    \"project_ids\": [
+        9
+    ],
     \"status_ids\": [
-        6
+        19
     ]
 }"
 </code></pre></div>
@@ -11306,19 +10834,19 @@ const headers = {
 
 let body = {
     "user_ids": [
-        6
+        17
     ],
     "client_ids": [
-        10
-    ],
-    "priority_ids": [
-        7
-    ],
-    "project_ids": [
         8
     ],
+    "priority_ids": [
+        19
+    ],
+    "project_ids": [
+        9
+    ],
     "status_ids": [
-        6
+        19
     ]
 };
 
@@ -11703,7 +11231,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                name="user_ids[1]"                data-endpoint="GETapi-tasks--id--"
                data-component="body">
     <br>
-
+<p>The <code>id</code> of an existing record in the users table.</p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>client_ids</code></b>&nbsp;&nbsp;
@@ -11716,7 +11244,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                name="client_ids[1]"                data-endpoint="GETapi-tasks--id--"
                data-component="body">
     <br>
-
+<p>The <code>id</code> of an existing record in the clients table.</p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>priority_ids</code></b>&nbsp;&nbsp;
@@ -11729,7 +11257,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                name="priority_ids[1]"                data-endpoint="GETapi-tasks--id--"
                data-component="body">
     <br>
-
+<p>The <code>id</code> of an existing record in the priorities table.</p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>project_ids</code></b>&nbsp;&nbsp;
@@ -11742,7 +11270,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                name="project_ids[1]"                data-endpoint="GETapi-tasks--id--"
                data-component="body">
     <br>
-
+<p>The <code>id</code> of an existing record in the projects table.</p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>status_ids</code></b>&nbsp;&nbsp;
@@ -11755,7 +11283,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                name="status_ids[1]"                data-endpoint="GETapi-tasks--id--"
                data-component="body">
     <br>
-
+<p>The <code>id</code> of an existing record in the statuses table.</p>
         </div>
         </form>
 
@@ -12126,20 +11654,20 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PATCH \
-    "https://dev-taskify.taskhub.company/api/tasks/10/favorite" \
+    "https://dev-taskify.taskhub.company/api/tasks/12/favorite" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Accept: application/json" \
     --header "workspace_id: 1" \
     --header "Content-Type: application/json" \
     --data "{
-    \"is_favorite\": 14
+    \"is_favorite\": 16
 }"
 </code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://dev-taskify.taskhub.company/api/tasks/10/favorite"
+    "https://dev-taskify.taskhub.company/api/tasks/12/favorite"
 );
 
 const headers = {
@@ -12150,7 +11678,7 @@ const headers = {
 };
 
 let body = {
-    "is_favorite": 14
+    "is_favorite": 16
 };
 
 fetch(url, {
@@ -12312,10 +11840,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="PATCHapi-tasks--id--favorite"
-               value="10"
+               value="12"
                data-component="url">
     <br>
-<p>The ID of the task to update. Example: <code>10</code></p>
+<p>The ID of the task to update. Example: <code>12</code></p>
             </div>
                             <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
@@ -12324,10 +11852,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="is_favorite"                data-endpoint="PATCHapi-tasks--id--favorite"
-               value="14"
+               value="16"
                data-component="body">
     <br>
-<p>Indicates whether the task is a favorite. Use 1 for true and 0 for false. Example: <code>14</code></p>
+<p>Indicates whether the task is a favorite. Use 1 for true and 0 for false. Example: <code>16</code></p>
         </div>
         </form>
 
@@ -12345,20 +11873,20 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PATCH \
-    "https://dev-taskify.taskhub.company/api/tasks/15/pinned" \
+    "https://dev-taskify.taskhub.company/api/tasks/17/pinned" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Accept: application/json" \
     --header "workspace_id: 1" \
     --header "Content-Type: application/json" \
     --data "{
-    \"is_pinned\": 10
+    \"is_pinned\": 20
 }"
 </code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://dev-taskify.taskhub.company/api/tasks/15/pinned"
+    "https://dev-taskify.taskhub.company/api/tasks/17/pinned"
 );
 
 const headers = {
@@ -12369,7 +11897,7 @@ const headers = {
 };
 
 let body = {
-    "is_pinned": 10
+    "is_pinned": 20
 };
 
 fetch(url, {
@@ -12531,10 +12059,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="PATCHapi-tasks--id--pinned"
-               value="15"
+               value="17"
                data-component="url">
     <br>
-<p>The ID of the task to update. Example: <code>15</code></p>
+<p>The ID of the task to update. Example: <code>17</code></p>
             </div>
                             <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
@@ -12543,10 +12071,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="is_pinned"                data-endpoint="PATCHapi-tasks--id--pinned"
-               value="10"
+               value="20"
                data-component="body">
     <br>
-<p>Indicates whether the task is pinned. Use 1 for true and 0 for false. Example: <code>10</code></p>
+<p>Indicates whether the task is pinned. Use 1 for true and 0 for false. Example: <code>20</code></p>
         </div>
         </form>
 
@@ -13241,7 +12769,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "https://dev-taskify.taskhub.company/api/tasks/9/status-timelines" \
+    --get "https://dev-taskify.taskhub.company/api/tasks/18/status-timelines" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Accept: application/json" \
     --header "workspace_id: 1"</code></pre></div>
@@ -13249,7 +12777,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://dev-taskify.taskhub.company/api/tasks/9/status-timelines"
+    "https://dev-taskify.taskhub.company/api/tasks/18/status-timelines"
 );
 
 const headers = {
@@ -13402,10 +12930,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="GETapi-tasks--id--status-timelines"
-               value="9"
+               value="18"
                data-component="url">
     <br>
-<p>The ID of the task whose status timeline is to be retrieved. Example: <code>9</code></p>
+<p>The ID of the task whose status timeline is to be retrieved. Example: <code>18</code></p>
             </div>
                     </form>
 
@@ -13428,21 +12956,21 @@ Users can also attach files and mention other users.</p>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "https://dev-taskify.taskhub.company/api/tasks/information/ullam/comments" \
+    "https://dev-taskify.taskhub.company/api/tasks/information/dolorem/comments" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Accept: application/json" \
     --header "workspace_id: 1" \
     --header "Content-Type: multipart/form-data" \
-    --form "model_type=numquam"\
-    --form "model_id=17"\
-    --form "content=quibusdam"\
-    --form "parent_id=2"\
-    --form "attachments[]=@/tmp/php09WALO" </code></pre></div>
+    --form "model_type=eius"\
+    --form "model_id=13"\
+    --form "content=recusandae"\
+    --form "parent_id=1"\
+    --form "attachments[]=@/tmp/php0ArDng" </code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://dev-taskify.taskhub.company/api/tasks/information/ullam/comments"
+    "https://dev-taskify.taskhub.company/api/tasks/information/dolorem/comments"
 );
 
 const headers = {
@@ -13453,10 +12981,10 @@ const headers = {
 };
 
 const body = new FormData();
-body.append('model_type', 'numquam');
-body.append('model_id', '17');
-body.append('content', 'quibusdam');
-body.append('parent_id', '2');
+body.append('model_type', 'eius');
+body.append('model_id', '13');
+body.append('content', 'recusandae');
+body.append('parent_id', '1');
 body.append('attachments[]', document.querySelector('input[name="attachments[]"]').files[0]);
 
 fetch(url, {
@@ -13623,10 +13151,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="POSTapi-tasks-information--id--comments"
-               value="ullam"
+               value="dolorem"
                data-component="url">
     <br>
-<p>The ID of the information. Example: <code>ullam</code></p>
+<p>The ID of the information. Example: <code>dolorem</code></p>
             </div>
                             <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
@@ -13635,10 +13163,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="model_type"                data-endpoint="POSTapi-tasks-information--id--comments"
-               value="numquam"
+               value="eius"
                data-component="body">
     <br>
-<p>The type of model being commented on (e.g., &quot;Task&quot;, &quot;Project&quot;). Example: <code>numquam</code></p>
+<p>The type of model being commented on (e.g., &quot;Task&quot;, &quot;Project&quot;). Example: <code>eius</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>model_id</code></b>&nbsp;&nbsp;
@@ -13646,10 +13174,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="model_id"                data-endpoint="POSTapi-tasks-information--id--comments"
-               value="17"
+               value="13"
                data-component="body">
     <br>
-<p>The ID of the model being commented on. Example: <code>17</code></p>
+<p>The ID of the model being commented on. Example: <code>13</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>content</code></b>&nbsp;&nbsp;
@@ -13657,10 +13185,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="content"                data-endpoint="POSTapi-tasks-information--id--comments"
-               value="quibusdam"
+               value="recusandae"
                data-component="body">
     <br>
-<p>The comment text. Example: <code>quibusdam</code></p>
+<p>The comment text. Example: <code>recusandae</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>parent_id</code></b>&nbsp;&nbsp;
@@ -13668,10 +13196,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <i>optional</i> &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="parent_id"                data-endpoint="POSTapi-tasks-information--id--comments"
-               value="2"
+               value="1"
                data-component="body">
     <br>
-<p>optional The ID of the parent comment (for replies). Example: <code>2</code></p>
+<p>optional The ID of the parent comment (for replies). Example: <code>1</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>attachments[]</code></b>&nbsp;&nbsp;
@@ -13682,7 +13210,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>optional An array of files to attach to the comment. Supported formats: jpg, jpeg, png, pdf, xlsx, txt, docx (max size: 2MB). Example: <code>/tmp/php09WALO</code></p>
+<p>optional An array of files to attach to the comment. Supported formats: jpg, jpeg, png, pdf, xlsx, txt, docx (max size: 2MB). Example: <code>/tmp/php0ArDng</code></p>
         </div>
         </form>
 
@@ -13700,7 +13228,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "https://dev-taskify.taskhub.company/api/tasks/comments/get/9" \
+    --get "https://dev-taskify.taskhub.company/api/tasks/comments/get/2" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Accept: application/json" \
     --header "workspace_id: 1"</code></pre></div>
@@ -13708,7 +13236,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://dev-taskify.taskhub.company/api/tasks/comments/get/9"
+    "https://dev-taskify.taskhub.company/api/tasks/comments/get/2"
 );
 
 const headers = {
@@ -13861,10 +13389,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="GETapi-tasks-comments-get--id-"
-               value="9"
+               value="2"
                data-component="url">
     <br>
-<p>The ID of the comment to retrieve. Example: <code>9</code></p>
+<p>The ID of the comment to retrieve. Example: <code>2</code></p>
             </div>
                     </form>
 
@@ -13888,8 +13416,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "workspace_id: 1" \
     --header "Content-Type: application/json" \
     --data "{
-    \"comment_id\": 6,
-    \"content\": \"eveniet\"
+    \"comment_id\": 16,
+    \"content\": \"excepturi\"
 }"
 </code></pre></div>
 
@@ -13907,8 +13435,8 @@ const headers = {
 };
 
 let body = {
-    "comment_id": 6,
-    "content": "eveniet"
+    "comment_id": 16,
+    "content": "excepturi"
 };
 
 fetch(url, {
@@ -14066,10 +13594,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="comment_id"                data-endpoint="POSTapi-tasks-comments-update"
-               value="6"
+               value="16"
                data-component="body">
     <br>
-<p>The ID of the comment to be updated. Example: <code>6</code></p>
+<p>The ID of the comment to be updated. Example: <code>16</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>content</code></b>&nbsp;&nbsp;
@@ -14077,10 +13605,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="content"                data-endpoint="POSTapi-tasks-comments-update"
-               value="eveniet"
+               value="excepturi"
                data-component="body">
     <br>
-<p>The updated content of the comment. Example: <code>eveniet</code></p>
+<p>The updated content of the comment. Example: <code>excepturi</code></p>
         </div>
         </form>
 
@@ -14099,7 +13627,7 @@ The user must be authenticated and have permission to delete comments.</p>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "https://dev-taskify.taskhub.company/api/tasks/comments/destroy?comment_id=20" \
+    "https://dev-taskify.taskhub.company/api/tasks/comments/destroy?comment_id=19" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Accept: application/json" \
     --header "workspace_id: 1"</code></pre></div>
@@ -14111,7 +13639,7 @@ The user must be authenticated and have permission to delete comments.</p>
 );
 
 const params = {
-    "comment_id": "20",
+    "comment_id": "19",
 };
 Object.keys(params)
     .forEach(key =&gt; url.searchParams.append(key, params[key]));
@@ -14265,10 +13793,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="comment_id"                data-endpoint="DELETEapi-tasks-comments-destroy"
-               value="20"
+               value="19"
                data-component="query">
     <br>
-<p>The ID of the comment to delete. Example: <code>20</code></p>
+<p>The ID of the comment to delete. Example: <code>19</code></p>
             </div>
                 </form>
 
@@ -14295,8 +13823,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --header "workspace_id: 1" \
     --header "Content-Type: multipart/form-data" \
-    --form "id=11"\
-    --form "media_files[]=@/tmp/phpXR45yM" </code></pre></div>
+    --form "id=10"\
+    --form "media_files[]=@/tmp/phptyHXPU" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -14312,7 +13840,7 @@ const headers = {
 };
 
 const body = new FormData();
-body.append('id', '11');
+body.append('id', '10');
 body.append('media_files[]', document.querySelector('input[name="media_files[]"]').files[0]);
 
 fetch(url, {
@@ -14468,10 +13996,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="POSTapi-tasks-upload-media"
-               value="11"
+               value="10"
                data-component="body">
     <br>
-<p>The ID of the task where the media will be uploaded. Example: <code>11</code></p>
+<p>The ID of the task where the media will be uploaded. Example: <code>10</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>media_files[]</code></b>&nbsp;&nbsp;
@@ -14482,7 +14010,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>An array of media files to upload. Max size is defined by system settings. Example: <code>/tmp/phpXR45yM</code></p>
+<p>An array of media files to upload. Max size is defined by system settings. Example: <code>/tmp/phptyHXPU</code></p>
         </div>
         </form>
 
@@ -14500,7 +14028,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "https://dev-taskify.taskhub.company/api/tasks/get-media/5?search=facilis&amp;sort=odio&amp;order=voluptas" \
+    --get "https://dev-taskify.taskhub.company/api/tasks/get-media/4?search=quisquam&amp;sort=ducimus&amp;order=quo" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Accept: application/json" \
     --header "workspace_id: 1"</code></pre></div>
@@ -14508,13 +14036,13 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://dev-taskify.taskhub.company/api/tasks/get-media/5"
+    "https://dev-taskify.taskhub.company/api/tasks/get-media/4"
 );
 
 const params = {
-    "search": "facilis",
-    "sort": "odio",
-    "order": "voluptas",
+    "search": "quisquam",
+    "sort": "ducimus",
+    "order": "quo",
 };
 Object.keys(params)
     .forEach(key =&gt; url.searchParams.append(key, params[key]));
@@ -14663,10 +14191,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="GETapi-tasks-get-media--id-"
-               value="5"
+               value="4"
                data-component="url">
     <br>
-<p>The ID of the project whose media files are to be retrieved. Example: <code>5</code></p>
+<p>The ID of the project whose media files are to be retrieved. Example: <code>4</code></p>
             </div>
                         <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
                                     <div style="padding-left: 28px; clear: unset;">
@@ -14675,10 +14203,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                               name="search"                data-endpoint="GETapi-tasks-get-media--id-"
-               value="facilis"
+               value="quisquam"
                data-component="query">
     <br>
-<p>optional A search query to filter media files by name, ID, or upload date. Example: <code>facilis</code></p>
+<p>optional A search query to filter media files by name, ID, or upload date. Example: <code>quisquam</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>sort</code></b>&nbsp;&nbsp;
@@ -14686,10 +14214,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                               name="sort"                data-endpoint="GETapi-tasks-get-media--id-"
-               value="odio"
+               value="ducimus"
                data-component="query">
     <br>
-<p>optional The column to sort by (default: &quot;id&quot;). Example: <code>odio</code></p>
+<p>optional The column to sort by (default: &quot;id&quot;). Example: <code>ducimus</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>order</code></b>&nbsp;&nbsp;
@@ -14697,10 +14225,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                               name="order"                data-endpoint="GETapi-tasks-get-media--id-"
-               value="voluptas"
+               value="quo"
                data-component="query">
     <br>
-<p>optional The sorting order: &quot;ASC&quot; or &quot;DESC&quot; (default: &quot;DESC&quot;). Example: <code>voluptas</code></p>
+<p>optional The sorting order: &quot;ASC&quot; or &quot;DESC&quot; (default: &quot;DESC&quot;). Example: <code>quo</code></p>
             </div>
                 </form>
 
@@ -14718,7 +14246,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "https://dev-taskify.taskhub.company/api/tasks/delete-media/itaque" \
+    "https://dev-taskify.taskhub.company/api/tasks/delete-media/nobis" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Accept: application/json" \
     --header "workspace_id: 1"</code></pre></div>
@@ -14726,7 +14254,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://dev-taskify.taskhub.company/api/tasks/delete-media/itaque"
+    "https://dev-taskify.taskhub.company/api/tasks/delete-media/nobis"
 );
 
 const headers = {
@@ -14866,10 +14394,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="DELETEapi-tasks-delete-media--id-"
-               value="itaque"
+               value="nobis"
                data-component="url">
     <br>
-<p>The ID of the delete medium. Example: <code>itaque</code></p>
+<p>The ID of the delete medium. Example: <code>nobis</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>mediaId</code></b>&nbsp;&nbsp;
@@ -14877,10 +14405,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="mediaId"                data-endpoint="DELETEapi-tasks-delete-media--id-"
-               value="19"
+               value="18"
                data-component="url">
     <br>
-<p>The ID of the media file to delete. Example: <code>19</code></p>
+<p>The ID of the media file to delete. Example: <code>18</code></p>
             </div>
                     </form>
 
@@ -15366,10 +14894,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "workspace_id: 1" \
     --header "Content-Type: application/json" \
     --data "{
-    \"title\": \"rerum\",
-    \"color\": \"qui\",
+    \"title\": \"qui\",
+    \"color\": \"doloribus\",
     \"role_ids\": [
-        \"repellat\"
+        \"et\"
     ]
 }"
 </code></pre></div>
@@ -15388,10 +14916,10 @@ const headers = {
 };
 
 let body = {
-    "title": "rerum",
-    "color": "qui",
+    "title": "qui",
+    "color": "doloribus",
     "role_ids": [
-        "repellat"
+        "et"
     ]
 };
 
@@ -15548,10 +15076,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="title"                data-endpoint="POSTapi-status-store"
-               value="rerum"
+               value="qui"
                data-component="body">
     <br>
-<p>The title of the status. Example: <code>rerum</code></p>
+<p>The title of the status. Example: <code>qui</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>color</code></b>&nbsp;&nbsp;
@@ -15559,10 +15087,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="color"                data-endpoint="POSTapi-status-store"
-               value="qui"
+               value="doloribus"
                data-component="body">
     <br>
-<p>The color code associated with the status. Example: <code>qui</code></p>
+<p>The color code associated with the status. Example: <code>doloribus</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>role_ids</code></b>&nbsp;&nbsp;
@@ -15599,11 +15127,11 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "workspace_id: 1" \
     --header "Content-Type: application/json" \
     --data "{
-    \"id\": 10,
-    \"title\": \"ut\",
-    \"color\": \"quis\",
+    \"id\": 1,
+    \"title\": \"quia\",
+    \"color\": \"quam\",
     \"role_ids\": [
-        \"et\"
+        \"harum\"
     ]
 }"
 </code></pre></div>
@@ -15622,11 +15150,11 @@ const headers = {
 };
 
 let body = {
-    "id": 10,
-    "title": "ut",
-    "color": "quis",
+    "id": 1,
+    "title": "quia",
+    "color": "quam",
     "role_ids": [
-        "et"
+        "harum"
     ]
 };
 
@@ -15790,10 +15318,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="POSTapi-status-update"
-               value="10"
+               value="1"
                data-component="body">
     <br>
-<p>The ID of the status to update. Example: <code>10</code></p>
+<p>The ID of the status to update. Example: <code>1</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>title</code></b>&nbsp;&nbsp;
@@ -15801,10 +15329,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="title"                data-endpoint="POSTapi-status-update"
-               value="ut"
+               value="quia"
                data-component="body">
     <br>
-<p>The updated title of the status. Example: <code>ut</code></p>
+<p>The updated title of the status. Example: <code>quia</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>color</code></b>&nbsp;&nbsp;
@@ -15812,10 +15340,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="color"                data-endpoint="POSTapi-status-update"
-               value="quis"
+               value="quam"
                data-component="body">
     <br>
-<p>The updated color code associated with the status. Example: <code>quis</code></p>
+<p>The updated color code associated with the status. Example: <code>quam</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>role_ids</code></b>&nbsp;&nbsp;
@@ -15846,7 +15374,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "https://dev-taskify.taskhub.company/api/status/get/5" \
+    --get "https://dev-taskify.taskhub.company/api/status/get/18" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Accept: application/json" \
     --header "workspace_id: 1"</code></pre></div>
@@ -15854,7 +15382,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://dev-taskify.taskhub.company/api/status/get/5"
+    "https://dev-taskify.taskhub.company/api/status/get/18"
 );
 
 const headers = {
@@ -16000,10 +15528,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="GETapi-status-get--id-"
-               value="5"
+               value="18"
                data-component="url">
     <br>
-<p>The ID of the status to retrieve. Example: <code>5</code></p>
+<p>The ID of the status to retrieve. Example: <code>18</code></p>
             </div>
                     </form>
 
@@ -16022,7 +15550,7 @@ all associated projects and tasks will be updated to have a default status ID of
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "https://dev-taskify.taskhub.company/api/status/destroy/20" \
+    "https://dev-taskify.taskhub.company/api/status/destroy/15" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Accept: application/json" \
     --header "workspace_id: 1"</code></pre></div>
@@ -16030,7 +15558,7 @@ all associated projects and tasks will be updated to have a default status ID of
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://dev-taskify.taskhub.company/api/status/destroy/20"
+    "https://dev-taskify.taskhub.company/api/status/destroy/15"
 );
 
 const headers = {
@@ -16167,10 +15695,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="DELETEapi-status-destroy--id-"
-               value="20"
+               value="15"
                data-component="url">
     <br>
-<p>The ID of the status to delete. Example: <code>20</code></p>
+<p>The ID of the status to delete. Example: <code>15</code></p>
             </div>
                     </form>
 
@@ -16442,8 +15970,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "workspace_id: 1" \
     --header "Content-Type: application/json" \
     --data "{
-    \"title\": \"illum\",
-    \"color\": \"possimus\"
+    \"title\": \"est\",
+    \"color\": \"deleniti\"
 }"
 </code></pre></div>
 
@@ -16461,8 +15989,8 @@ const headers = {
 };
 
 let body = {
-    "title": "illum",
-    "color": "possimus"
+    "title": "est",
+    "color": "deleniti"
 };
 
 fetch(url, {
@@ -16618,10 +16146,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="title"                data-endpoint="POSTapi-priority-store"
-               value="illum"
+               value="est"
                data-component="body">
     <br>
-<p>The title of the priority. Example: <code>illum</code></p>
+<p>The title of the priority. Example: <code>est</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>color</code></b>&nbsp;&nbsp;
@@ -16629,10 +16157,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="color"                data-endpoint="POSTapi-priority-store"
-               value="possimus"
+               value="deleniti"
                data-component="body">
     <br>
-<p>The color code associated with the priority. Example: <code>possimus</code></p>
+<p>The color code associated with the priority. Example: <code>deleniti</code></p>
         </div>
         </form>
 
@@ -16656,9 +16184,9 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "workspace_id: 1" \
     --header "Content-Type: application/json" \
     --data "{
-    \"id\": 19,
-    \"title\": \"eum\",
-    \"color\": \"cum\"
+    \"id\": 6,
+    \"title\": \"dolor\",
+    \"color\": \"dicta\"
 }"
 </code></pre></div>
 
@@ -16676,9 +16204,9 @@ const headers = {
 };
 
 let body = {
-    "id": 19,
-    "title": "eum",
-    "color": "cum"
+    "id": 6,
+    "title": "dolor",
+    "color": "dicta"
 };
 
 fetch(url, {
@@ -16841,10 +16369,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="POSTapi-priority-update"
-               value="19"
+               value="6"
                data-component="body">
     <br>
-<p>The ID of the priority to update. Example: <code>19</code></p>
+<p>The ID of the priority to update. Example: <code>6</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>title</code></b>&nbsp;&nbsp;
@@ -16852,10 +16380,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="title"                data-endpoint="POSTapi-priority-update"
-               value="eum"
+               value="dolor"
                data-component="body">
     <br>
-<p>The updated title of the priority. Example: <code>eum</code></p>
+<p>The updated title of the priority. Example: <code>dolor</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>color</code></b>&nbsp;&nbsp;
@@ -16863,10 +16391,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="color"                data-endpoint="POSTapi-priority-update"
-               value="cum"
+               value="dicta"
                data-component="body">
     <br>
-<p>The updated color code associated with the priority. Example: <code>cum</code></p>
+<p>The updated color code associated with the priority. Example: <code>dicta</code></p>
         </div>
         </form>
 
@@ -16884,7 +16412,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "https://dev-taskify.taskhub.company/api/priority/get/3" \
+    --get "https://dev-taskify.taskhub.company/api/priority/get/16" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Accept: application/json" \
     --header "workspace_id: 1"</code></pre></div>
@@ -16892,7 +16420,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://dev-taskify.taskhub.company/api/priority/get/3"
+    "https://dev-taskify.taskhub.company/api/priority/get/16"
 );
 
 const headers = {
@@ -17035,10 +16563,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="GETapi-priority-get--id-"
-               value="3"
+               value="16"
                data-component="url">
     <br>
-<p>The ID of the priority to retrieve. Example: <code>3</code></p>
+<p>The ID of the priority to retrieve. Example: <code>16</code></p>
             </div>
                     </form>
 
@@ -17057,7 +16585,7 @@ Before deletion, all associated projects and tasks will have their <code>priorit
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "https://dev-taskify.taskhub.company/api/priority/destroy/15" \
+    "https://dev-taskify.taskhub.company/api/priority/destroy/20" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Accept: application/json" \
     --header "workspace_id: 1"</code></pre></div>
@@ -17065,7 +16593,7 @@ Before deletion, all associated projects and tasks will have their <code>priorit
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://dev-taskify.taskhub.company/api/priority/destroy/15"
+    "https://dev-taskify.taskhub.company/api/priority/destroy/20"
 );
 
 const headers = {
@@ -17202,10 +16730,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="DELETEapi-priority-destroy--id-"
-               value="15"
+               value="20"
                data-component="url">
     <br>
-<p>The ID of the priority to delete. Example: <code>15</code></p>
+<p>The ID of the priority to delete. Example: <code>20</code></p>
             </div>
                     </form>
 
@@ -18449,7 +17977,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "role=1"\
     --form "status=1"\
     --form "require_ev=1"\
-    --form "profile=@/tmp/php6mWbeK" </code></pre></div>
+    --form "profile=@/tmp/phpIMrfhq" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -18837,7 +18365,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>nullable The profile photo of the user. Example: <code>/tmp/php6mWbeK</code></p>
+<p>nullable The profile photo of the user. Example: <code>/tmp/phpIMrfhq</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
@@ -18922,7 +18450,7 @@ Can only specify if <code>is_admin_or_has_all_data_access</code> is true for the
     --form "doj=2024-01-01"\
     --form "role=1"\
     --form "status=1"\
-    --form "profile=@/tmp/phpszSAAM" </code></pre></div>
+    --form "profile=@/tmp/phpvj1zX0" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -19321,7 +18849,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>nullable The new profile photo of the user. Example: <code>/tmp/phpszSAAM</code></p>
+<p>nullable The new profile photo of the user. Example: <code>/tmp/phpvj1zX0</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
@@ -19870,7 +19398,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "internal_purpose=on"\
     --form "status=1"\
     --form "require_ev=1"\
-    --form "profile=@/tmp/phpvnc2PP" </code></pre></div>
+    --form "profile=@/tmp/phpErji6x" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -20268,7 +19796,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>nullable The profile photo of the client. Example: <code>/tmp/phpvnc2PP</code></p>
+<p>nullable The profile photo of the client. Example: <code>/tmp/phpErji6x</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
@@ -20355,7 +19883,7 @@ Can only specify if <code>is_admin_or_has_all_data_access</code> is true for the
     --form "internal_purpose=on"\
     --form "status=1"\
     --form "require_ev=1"\
-    --form "profile=@/tmp/phprmh68T" </code></pre></div>
+    --form "profile=@/tmp/phpEXBhAv" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -20765,7 +20293,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>nullable The new profile photo of the client. Example: <code>/tmp/phprmh68T</code></p>
+<p>nullable The new profile photo of the client. Example: <code>/tmp/phpEXBhAv</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
@@ -21978,7 +21506,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PATCH \
-    "https://dev-taskify.taskhub.company/api/workspaces/3/default" \
+    "https://dev-taskify.taskhub.company/api/workspaces/5/default" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Accept: application/json" \
     --header "workspace_id: 1" \
@@ -21991,7 +21519,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://dev-taskify.taskhub.company/api/workspaces/3/default"
+    "https://dev-taskify.taskhub.company/api/workspaces/5/default"
 );
 
 const headers = {
@@ -22145,10 +21673,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="PATCHapi-workspaces--id--default"
-               value="3"
+               value="5"
                data-component="url">
     <br>
-<p>The ID of the workspace to update. Example: <code>3</code></p>
+<p>The ID of the workspace to update. Example: <code>5</code></p>
             </div>
                             <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
@@ -29716,7 +29244,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "https://dev-taskify.taskhub.company/api/roles/destroy/7" \
+    "https://dev-taskify.taskhub.company/api/roles/destroy/17" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Accept: application/json" \
     --header "workspace_id: 1"</code></pre></div>
@@ -29724,7 +29252,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://dev-taskify.taskhub.company/api/roles/destroy/7"
+    "https://dev-taskify.taskhub.company/api/roles/destroy/17"
 );
 
 const headers = {
@@ -29869,10 +29397,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="DELETEapi-roles-destroy--id-"
-               value="7"
+               value="17"
                data-component="url">
     <br>
-<p>The ID of the role to delete. Example: <code>7</code></p>
+<p>The ID of the role to delete. Example: <code>17</code></p>
             </div>
                     </form>
 
@@ -29890,7 +29418,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "https://dev-taskify.taskhub.company/api/roles/get/5" \
+    --get "https://dev-taskify.taskhub.company/api/roles/get/7" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Accept: application/json" \
     --header "workspace_id: 1"</code></pre></div>
@@ -29898,7 +29426,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://dev-taskify.taskhub.company/api/roles/get/5"
+    "https://dev-taskify.taskhub.company/api/roles/get/7"
 );
 
 const headers = {
@@ -30025,10 +29553,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="GETapi-roles-get--id--"
-               value="5"
+               value="7"
                data-component="url">
     <br>
-<p>The ID of the role to retrieve. Example: <code>5</code></p>
+<p>The ID of the role to retrieve. Example: <code>7</code></p>
             </div>
                     </form>
 
@@ -33070,7 +32598,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "workspace_id: 1" \
     --header "Content-Type: application/json" \
     --data "{
-    \"id\": \"necessitatibus\",
+    \"id\": \"quam\",
     \"user_id\": \"1\",
     \"invoice_id\": \"1\",
     \"payment_method_id\": \"1\",
@@ -33094,7 +32622,7 @@ const headers = {
 };
 
 let body = {
-    "id": "necessitatibus",
+    "id": "quam",
     "user_id": "1",
     "invoice_id": "1",
     "payment_method_id": "1",
@@ -33268,10 +32796,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="POSTapi-payments-update"
-               value="necessitatibus"
+               value="quam"
                data-component="body">
     <br>
-<p>The id of the payment. Example : 1 Example: <code>necessitatibus</code></p>
+<p>The id of the payment. Example : 1 Example: <code>quam</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>user_id</code></b>&nbsp;&nbsp;
@@ -33976,7 +33504,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "workspace_id: 1" \
     --header "Content-Type: application/json" \
     --data "{
-    \"id\": \"repellendus\",
+    \"id\": \"quas\",
     \"title\": \"Title\"
 }"
 </code></pre></div>
@@ -33995,7 +33523,7 @@ const headers = {
 };
 
 let body = {
-    "id": "repellendus",
+    "id": "quas",
     "title": "Title"
 };
 
@@ -34152,10 +33680,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="POSTapi-payment-methods-update"
-               value="repellendus"
+               value="quas"
                data-component="body">
     <br>
-<p>The id of the payment method. Example : 1 Example: <code>repellendus</code></p>
+<p>The id of the payment method. Example : 1 Example: <code>quas</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>title</code></b>&nbsp;&nbsp;
@@ -41445,6 +40973,876 @@ You can check the Dev Tools console for debugging information.</code></pre>
                data-component="url">
     <br>
 <p>The ID of the lead to delete. Must exist in the <code>leads</code> table. Example: <code>5</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="leads-management-POSTapi-leads-follow-up-store">Create a new lead follow-up.</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>This endpoint creates a follow-up activity (such as call, email, or meeting) for a specific lead. The date and time are converted to UTC before storing.</p>
+
+<span id="example-requests-POSTapi-leads-follow-up-store">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "https://dev-taskify.taskhub.company/api/leads/follow-up/store" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
+    --header "Accept: application/json" \
+    --header "workspace_id: 1" \
+    --header "Content-Type: application/json" \
+    --data "{
+    \"lead_id\": 12,
+    \"assigned_to\": 5,
+    \"type\": \"call\",
+    \"status\": \"pending\",
+    \"follow_up_at\": \"2025-06-20T14:30\",
+    \"note\": \"Call scheduled with client to discuss proposal.\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "https://dev-taskify.taskhub.company/api/leads/follow-up/store"
+);
+
+const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
+    "Accept": "application/json",
+    "workspace_id": "1",
+    "Content-Type": "application/json",
+};
+
+let body = {
+    "lead_id": 12,
+    "assigned_to": 5,
+    "type": "call",
+    "status": "pending",
+    "follow_up_at": "2025-06-20T14:30",
+    "note": "Call scheduled with client to discuss proposal."
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-leads-follow-up-store">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;error&quot;: false,
+    &quot;message&quot;: &quot;Follow Up Created Successfully&quot;,
+    &quot;data&quot;: {
+        &quot;id&quot;: 101,
+        &quot;type&quot;: &quot;lead_follow_up&quot;
+    }
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (422):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;error&quot;: true,
+    &quot;message&quot;: &quot;The given data was invalid.&quot;,
+    &quot;errors&quot;: {
+        &quot;lead_id&quot;: [
+            &quot;The lead id field is required.&quot;
+        ]
+    }
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (500):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;error&quot;: true,
+    &quot;message&quot;: &quot;Follow Up Couldn&#039;t Created.&quot;,
+    &quot;data&quot;: {
+        &quot;error&quot;: &quot;...&quot;,
+        &quot;line&quot;: 123,
+        &quot;file&quot;: &quot;/app/Http/Controllers/LeadFollowUpController.php&quot;
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-leads-follow-up-store" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-leads-follow-up-store"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-leads-follow-up-store"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-leads-follow-up-store" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-leads-follow-up-store">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-leads-follow-up-store" data-method="POST"
+      data-path="api/leads/follow-up/store"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-leads-follow-up-store', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-leads-follow-up-store"
+                    onclick="tryItOut('POSTapi-leads-follow-up-store');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-leads-follow-up-store"
+                    onclick="cancelTryOut('POSTapi-leads-follow-up-store');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-leads-follow-up-store"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/leads/follow-up/store</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-leads-follow-up-store"
+               value="Bearer {YOUR_AUTH_KEY}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-leads-follow-up-store"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>workspace_id</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="workspace_id"                data-endpoint="POSTapi-leads-follow-up-store"
+               value="1"
+               data-component="header">
+    <br>
+<p>Example: <code>1</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-leads-follow-up-store"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>lead_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="lead_id"                data-endpoint="POSTapi-leads-follow-up-store"
+               value="12"
+               data-component="body">
+    <br>
+<p>The ID of the lead to associate the follow-up with. Example: <code>12</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>assigned_to</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="assigned_to"                data-endpoint="POSTapi-leads-follow-up-store"
+               value="5"
+               data-component="body">
+    <br>
+<p>The ID of the user assigned to the follow-up. Example: <code>5</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>type</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="type"                data-endpoint="POSTapi-leads-follow-up-store"
+               value="call"
+               data-component="body">
+    <br>
+<p>The type of follow-up. One of: email, sms, call, meeting, other. Example: <code>call</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="status"                data-endpoint="POSTapi-leads-follow-up-store"
+               value="pending"
+               data-component="body">
+    <br>
+<p>The current status of the follow-up. One of: pending, completed, rescheduled. Example: <code>pending</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>follow_up_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="follow_up_at"                data-endpoint="POSTapi-leads-follow-up-store"
+               value="2025-06-20T14:30"
+               data-component="body">
+    <br>
+<p>The follow-up date and time in local format (Y-m-d\TH:i). Example: <code>2025-06-20T14:30</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>note</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="note"                data-endpoint="POSTapi-leads-follow-up-store"
+               value="Call scheduled with client to discuss proposal."
+               data-component="body">
+    <br>
+<p>optional Additional notes for the follow-up. Max 255 characters. Example: <code>Call scheduled with client to discuss proposal.</code></p>
+        </div>
+        </form>
+
+                    <h2 id="leads-management-GETapi-leads-follow-up-get--id-">Retrieve a specific lead follow-up.</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>This endpoint fetches the details of a lead follow-up for editing or displaying, including the related lead and assigned user.</p>
+
+<span id="example-requests-GETapi-leads-follow-up-get--id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "https://dev-taskify.taskhub.company/api/leads/follow-up/get/101" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
+    --header "Accept: application/json" \
+    --header "workspace_id: 1"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "https://dev-taskify.taskhub.company/api/leads/follow-up/get/101"
+);
+
+const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
+    "Accept": "application/json",
+    "workspace_id": "1",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-leads-follow-up-get--id-">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;error&quot;: false,
+    &quot;message&quot;: &quot;Follow Up Retrived Successfully&quot;,
+    &quot;follow_up&quot;: {
+        &quot;id&quot;: 101,
+        &quot;lead_id&quot;: 12,
+        &quot;assigned_to&quot;: 5,
+        &quot;type&quot;: &quot;call&quot;,
+        &quot;status&quot;: &quot;pending&quot;,
+        &quot;follow_up_at&quot;: &quot;2025-06-20T09:00:00.000000Z&quot;,
+        &quot;note&quot;: &quot;Discuss proposal&quot;,
+        &quot;lead&quot;: {
+            &quot;id&quot;: 12,
+            &quot;first_name&quot;: &quot;John&quot;,
+            &quot;last_name&quot;: &quot;Doe&quot;
+        },
+        &quot;assigned_to_user&quot;: {
+            &quot;id&quot;: 5,
+            &quot;name&quot;: &quot;Jane Smith&quot;
+        }
+    }
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (404):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;No query results for model [App\\Models\\LeadFollowUp] 101&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-leads-follow-up-get--id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-leads-follow-up-get--id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-leads-follow-up-get--id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-leads-follow-up-get--id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-leads-follow-up-get--id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-leads-follow-up-get--id-" data-method="GET"
+      data-path="api/leads/follow-up/get/{id}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-leads-follow-up-get--id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-leads-follow-up-get--id-"
+                    onclick="tryItOut('GETapi-leads-follow-up-get--id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-leads-follow-up-get--id-"
+                    onclick="cancelTryOut('GETapi-leads-follow-up-get--id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-leads-follow-up-get--id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/leads/follow-up/get/{id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-leads-follow-up-get--id-"
+               value="Bearer {YOUR_AUTH_KEY}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-leads-follow-up-get--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>workspace_id</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="workspace_id"                data-endpoint="GETapi-leads-follow-up-get--id-"
+               value="1"
+               data-component="header">
+    <br>
+<p>Example: <code>1</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="id"                data-endpoint="GETapi-leads-follow-up-get--id-"
+               value="101"
+               data-component="url">
+    <br>
+<p>The ID of the follow-up to retrieve. Example: <code>101</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="leads-management-POSTapi-leads-follow-up-update">Update an existing lead follow-up.</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>This endpoint updates the details of an existing follow-up activity for a lead, including reassignment, type, and follow-up date.</p>
+
+<span id="example-requests-POSTapi-leads-follow-up-update">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "https://dev-taskify.taskhub.company/api/leads/follow-up/update" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
+    --header "Accept: application/json" \
+    --header "workspace_id: 1" \
+    --header "Content-Type: application/json" \
+    --data "{
+    \"id\": 101,
+    \"assigned_to\": 6,
+    \"type\": \"email\",
+    \"status\": \"completed\",
+    \"follow_up_at\": \"2025-06-21T16:00\",
+    \"note\": \"Follow-up completed.\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "https://dev-taskify.taskhub.company/api/leads/follow-up/update"
+);
+
+const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
+    "Accept": "application/json",
+    "workspace_id": "1",
+    "Content-Type": "application/json",
+};
+
+let body = {
+    "id": 101,
+    "assigned_to": 6,
+    "type": "email",
+    "status": "completed",
+    "follow_up_at": "2025-06-21T16:00",
+    "note": "Follow-up completed."
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-leads-follow-up-update">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;error&quot;: false,
+    &quot;message&quot;: &quot;Follow Up Updated Successfully&quot;,
+    &quot;data&quot;: {
+        &quot;id&quot;: 101,
+        &quot;type&quot;: &quot;lead_follow_up&quot;
+    }
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (422):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;error&quot;: true,
+    &quot;message&quot;: &quot;The given data was invalid.&quot;,
+    &quot;errors&quot;: {
+        &quot;follow_up_at&quot;: [
+            &quot;The follow up at must be a valid date.&quot;
+        ]
+    }
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (500):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;error&quot;: true,
+    &quot;message&quot;: &quot;Follow Up Couldn&#039;t Be Updated.&quot;,
+    &quot;data&quot;: {
+        &quot;error&quot;: &quot;...&quot;,
+        &quot;line&quot;: 123,
+        &quot;file&quot;: &quot;/app/Http/Controllers/LeadFollowUpController.php&quot;
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-leads-follow-up-update" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-leads-follow-up-update"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-leads-follow-up-update"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-leads-follow-up-update" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-leads-follow-up-update">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-leads-follow-up-update" data-method="POST"
+      data-path="api/leads/follow-up/update"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-leads-follow-up-update', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-leads-follow-up-update"
+                    onclick="tryItOut('POSTapi-leads-follow-up-update');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-leads-follow-up-update"
+                    onclick="cancelTryOut('POSTapi-leads-follow-up-update');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-leads-follow-up-update"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/leads/follow-up/update</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-leads-follow-up-update"
+               value="Bearer {YOUR_AUTH_KEY}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-leads-follow-up-update"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>workspace_id</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="workspace_id"                data-endpoint="POSTapi-leads-follow-up-update"
+               value="1"
+               data-component="header">
+    <br>
+<p>Example: <code>1</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-leads-follow-up-update"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="id"                data-endpoint="POSTapi-leads-follow-up-update"
+               value="101"
+               data-component="body">
+    <br>
+<p>The ID of the follow-up to update. Example: <code>101</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>assigned_to</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="assigned_to"                data-endpoint="POSTapi-leads-follow-up-update"
+               value="6"
+               data-component="body">
+    <br>
+<p>The ID of the user assigned to the follow-up. Example: <code>6</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>type</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="type"                data-endpoint="POSTapi-leads-follow-up-update"
+               value="email"
+               data-component="body">
+    <br>
+<p>The type of follow-up. One of: email, sms, call, meeting, other. Example: <code>email</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="status"                data-endpoint="POSTapi-leads-follow-up-update"
+               value="completed"
+               data-component="body">
+    <br>
+<p>The current status. One of: pending, completed, rescheduled. Example: <code>completed</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>follow_up_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="follow_up_at"                data-endpoint="POSTapi-leads-follow-up-update"
+               value="2025-06-21T16:00"
+               data-component="body">
+    <br>
+<p>The updated follow-up datetime in local format (Y-m-d\TH:i). Example: <code>2025-06-21T16:00</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>note</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="note"                data-endpoint="POSTapi-leads-follow-up-update"
+               value="Follow-up completed."
+               data-component="body">
+    <br>
+<p>optional Optional follow-up notes. Max 255 characters. Example: <code>Follow-up completed.</code></p>
+        </div>
+        </form>
+
+                    <h2 id="leads-management-DELETEapi-leads-follow-up-destroy--id-">Delete a lead follow-up.</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>This endpoint deletes a follow-up record permanently from the system.</p>
+
+<span id="example-requests-DELETEapi-leads-follow-up-destroy--id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request DELETE \
+    "https://dev-taskify.taskhub.company/api/leads/follow-up/destroy/101" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
+    --header "Accept: application/json" \
+    --header "workspace_id: 1"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "https://dev-taskify.taskhub.company/api/leads/follow-up/destroy/101"
+);
+
+const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
+    "Accept": "application/json",
+    "workspace_id": "1",
+};
+
+fetch(url, {
+    method: "DELETE",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-DELETEapi-leads-follow-up-destroy--id-">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;error&quot;: false,
+    &quot;message&quot;: &quot;Lead Follow Up deleted successfully&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (404):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;error&quot;: true,
+    &quot;message&quot;: &quot;Lead Follow Up not found&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (500):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;error&quot;: true,
+    &quot;message&quot;: &quot;An error occurred while deleting Lead Follow Up.&quot;,
+    &quot;data&quot;: {
+        &quot;error&quot;: &quot;...&quot;,
+        &quot;line&quot;: 123,
+        &quot;file&quot;: &quot;/app/Services/DeletionService.php&quot;
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-DELETEapi-leads-follow-up-destroy--id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-DELETEapi-leads-follow-up-destroy--id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-DELETEapi-leads-follow-up-destroy--id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-DELETEapi-leads-follow-up-destroy--id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-DELETEapi-leads-follow-up-destroy--id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-DELETEapi-leads-follow-up-destroy--id-" data-method="DELETE"
+      data-path="api/leads/follow-up/destroy/{id}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('DELETEapi-leads-follow-up-destroy--id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-DELETEapi-leads-follow-up-destroy--id-"
+                    onclick="tryItOut('DELETEapi-leads-follow-up-destroy--id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-DELETEapi-leads-follow-up-destroy--id-"
+                    onclick="cancelTryOut('DELETEapi-leads-follow-up-destroy--id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-DELETEapi-leads-follow-up-destroy--id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-red">DELETE</small>
+            <b><code>api/leads/follow-up/destroy/{id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="DELETEapi-leads-follow-up-destroy--id-"
+               value="Bearer {YOUR_AUTH_KEY}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="DELETEapi-leads-follow-up-destroy--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>workspace_id</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="workspace_id"                data-endpoint="DELETEapi-leads-follow-up-destroy--id-"
+               value="1"
+               data-component="header">
+    <br>
+<p>Example: <code>1</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="id"                data-endpoint="DELETEapi-leads-follow-up-destroy--id-"
+               value="101"
+               data-component="url">
+    <br>
+<p>The ID of the follow-up to delete. Example: <code>101</code></p>
             </div>
                     </form>
 
@@ -55385,7 +55783,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "contract_type_id=3"\
     --form "description=Updated full-stack web development project"\
     --form "isApi=1"\
-    --form "signed_pdf=@/tmp/phpyPBqs3" </code></pre></div>
+    --form "signed_pdf=@/tmp/phposkI2w" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -55695,7 +56093,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>optional The signed PDF file. Must be a PDF file, max 10MB. No example required. Example: <code>/tmp/phpyPBqs3</code></p>
+<p>optional The signed PDF file. Must be a PDF file, max 10MB. No example required. Example: <code>/tmp/phposkI2w</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>isApi</code></b>&nbsp;&nbsp;

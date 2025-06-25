@@ -33,7 +33,6 @@ class DeletionService
             }
         } catch (\Exception $e) {
             // Log the exception and return a 500 error response
-            // dd($e);
             return response()->json(['error' => true, 'message' => 'An internal server error occurred.'], 500);
         }
     }

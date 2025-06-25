@@ -274,7 +274,6 @@ class CandidateController extends Controller
           ]
         );
       }
-      // dd($html);
       return response()->json([
         'error' => false,
         'candidate' => $candidate,

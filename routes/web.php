@@ -646,9 +646,8 @@ Route::middleware(['CheckInstallation'])->group(function () {
 
             Route::put('/settings/store_email', [SettingsController::class, 'store_email_settings'])->middleware(['demo_restriction']);
 
-            Route::get('/settings/ai-models', [SettingsController::class, 'ai_model_settings'])->middleware(['demo_restriction'])->name('settings.ai_models_setting');
+              Route::get('/settings/ai-model-settings', [SettingsController::class, 'ai_model_settings'])->middleware(['demo_restriction'])->name('settings.ai_models_setting');
             Route::put('/settings/store-ai-models-settings', [SettingsController::class, 'store_ai_model_settings'])->middleware(['demo_restriction'])->name('settings.store_ai_models');
-
             Route::get('/settings/sms-gateway', [SettingsController::class, 'sms_gateway']);
 
             Route::put('/settings/store_sms_gateway', [SettingsController::class, 'store_sms_gateway_settings'])->middleware(['demo_restriction']);
@@ -1068,5 +1067,13 @@ Route::middleware(['CheckInstallation'])->group(function () {
         Route::get('lead-forms/{leadForm}/embed', [LeadFormController::class, 'embed'])->name('lead-forms.embed');
         Route::get('lead-forms/{id}/responses', [LeadFormController::class, 'responses'])->name('lead-forms.responses');
         Route::get('lead-forms/responses/list/{id}', [LeadFormController::class, 'responseList'])->name('lead-forms.responses.list');
+        
+          Route::post('/ai/generate-description', [AIController::class, 'generateDescription'])
+            ->name('generate.description');
+        
+          Route::get('/file-manager', function () {
+            return view('file-manager.index');
+        })->name('file-manager.index')->middleware(['customRole:admin']);
+
     });
 });

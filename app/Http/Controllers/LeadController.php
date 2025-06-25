@@ -212,7 +212,6 @@ class LeadController extends Controller
             $formFields['created_by'] = $this->user->id;
             $formFields['workspace_id'] = $this->workspace->id;
 
-
             $lead = Lead::create($formFields);
 
             if ($isApi) {
