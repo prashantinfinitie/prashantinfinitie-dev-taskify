@@ -1,5 +1,5 @@
 @php
-    $auth_user = auth()->user();
+    $auth_user = getAuthenticatedUser();
     function getStatusCounts($statuses, $auth_user, $type = 'projects')
     {
         $statusCounts = [];

@@ -345,7 +345,7 @@ document.addEventListener('keydown', function(event) {
                                                 <div class="lead-form-body">
                                                     {!! str_replace(
                                                         ['<iframe', '</iframe>'],
-                                                        ['<iframe class="lead-form-iframe"', '</iframe>'],
+                                                        ['<iframe  style="width:100%; height:100%; border:0;" class="lead-form-iframe"', '</iframe>'],
                                                         $leadForm->embed_code,
                                                     ) !!}
                                                 </div>
@@ -401,7 +401,6 @@ document.addEventListener('keydown', function(event) {
     </script>
 
     <script src="{{ asset('assets/js/pages/lead-form.js') }}"></script>
-
 
 
 @endsection

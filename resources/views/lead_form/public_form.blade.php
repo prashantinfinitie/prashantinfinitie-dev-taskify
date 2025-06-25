@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="{{ asset('assets/') }}" data-template="vertical-menu-template-free">
-
+<html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
@@ -26,33 +25,86 @@
 
     <style>
         body {
-            background-color: #f8f9fa;
-            font-family: 'Roboto', sans-serif;
-        }
-        .card {
-            border-radius: 12px;
-            border: none;
-        }
-        .form-control, .form-select {
-            border-radius: 12px;
-            padding: 0.75rem 1rem;
-            font-size: 1rem;
-        }
-        .form-label {
-            font-weight: 500;
-            margin-bottom: 6px;
-        }
-        .btn-primary {
-            border-radius: 24px;
-            font-weight: 500;
-            padding: 0.6rem 1.5rem;
+            background: transparent;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
         }
         .form-section {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 12px;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            background: #ffffff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            max-width: 500px;
+            width: 100%;
+            border: 1px solid #e5e7eb;
+            margin:2rem
+        }
+        .form-section h5 {
+            color: #111827;
+            font-weight: 600;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .form-label {
+            color: #374151;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        .form-control, .form-select {
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            padding: 0.625rem;
+            font-size: 0.875rem;
+            background: #fff;
+            transition: border-color 0.2s ease;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: #3b82f6;
+            box-shadow: none;
+            outline: none;
+        }
+        .form-check-input {
+            border: 1px solid #d1d5db;
+            width: 1rem;
+            height: 1rem;
+            margin-top: 0.25rem;
+        }
+        .form-check-input:checked {
+            background-color: #3b82f6;
+            border-color: #3b82f6;
+        }
+        .form-check-label {
+            color: #374151;
+            font-size: 0.875rem;
+            margin-left: 0.25rem;
+        }
+        .btn-primary {
+            background: #3b82f6;
+            border: none;
+            border-radius: 6px;
+            padding: 0.625rem 1.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: background-color 0.2s ease;
+        }
+        .btn-primary:hover {
+            background: #2563eb;
+        }
+        .text-danger {
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+        }
+        textarea.form-control {
+            resize: vertical;
+            min-height: 80px;
+        }
+        @media (max-width: 576px) {
+            .form-section {
+                padding: 1rem;
+            }
         }
     </style>
 
@@ -65,79 +117,73 @@
 </head>
 
 <body>
-    <div class="container py-5">
-        <div class="form-section mx-auto" style="max-width: 700px;">
-            <div class="text-center mb-4">
-                <h2 class="h5 fw-semibold text-dark">{{ $form->title }}</h2>
-                {{-- @if($form->description)
-                    <p class="text-muted small mb-3">{{ $form->description }}</p>
-                @endif --}}
-            </div>
+    <div class="form-section mx-auto">
+        <div class="mb-3 text-center">
+            <h5>{{ $form->title }}</h5>
+        </div>
 
-            <form id="leadForm" action="{{ route('public.form.submit', $form->slug) }}" method="POST">
-                @csrf
-                @foreach($form->leadFormFields as $field)
-                    <div class="mb-4">
-                        <label for="{{ $field->name ?: 'field_' . $field->id }}" class="form-label">
-                            {{ $field->label }} {!! $field->is_required ? '<span class="text-danger">*</span>' : '' !!}
-                        </label>
+        <form id="leadForm" action="{{ route('public.form.submit', $form->slug) }}" method="POST">
+            @csrf
+            @foreach($form->leadFormFields as $field)
+                <div class="mb-3">
+                    <label for="{{ $field->name ?: 'field_' . $field->id }}" class="form-label">
+                        {{ $field->label }} {!! $field->is_required ? '<span class="text-danger">*</span>' : '' !!}
+                    </label>
 
-                        @if($field->type == 'textarea')
-                            <textarea class="form-control" id="{{ $field->name ?: 'field_' . $field->id }}" name="{{ $field->name ?: 'field_' . $field->id }}" placeholder="{{ $field->placeholder ?? '' }}" {{ $field->is_required ? 'required' : '' }}></textarea>
+                    @if($field->type == 'textarea')
+                        <textarea class="form-control" id="{{ $field->name ?: 'field_' . $field->id }}" name="{{ $field->name ?: 'field_' . $field->id }}" placeholder="{{ $field->placeholder ?? '' }}" {{ $field->is_required ? 'required' : '' }}></textarea>
 
-                        @elseif($field->type == 'select')
-                            <select class="form-select" id="{{ $field->name ?: 'field_' . $field->id }}" name="{{ $field->name ?: 'field_' . $field->id }}" {{ $field->is_required ? 'required' : '' }}>
-                                <option value="">{{ $field->placeholder ?? 'Select an option' }}</option>
-                                @foreach(json_decode($field->options, true) ?? [] as $option)
-                                    <option value="{{ $option }}">{{ $option }}</option>
-                                @endforeach
-                            </select>
-
-                        @elseif($field->type == 'checkbox')
-                            @if(json_decode($field->options, true))
-                                @foreach(json_decode($field->options, true) as $option)
-                                    <div class="form-check mb-2">
-                                        <input class="form-check-input" type="checkbox" id="{{ $field->name ?: 'field_' . $field->id }}_{{ $loop->index }}" name="{{ $field->name ?: 'field_' . $field->id }}[]" value="{{ $option }}" {{ $field->is_required ? 'data-required="true"' : '' }}>
-                                        <label class="form-check-label" for="{{ $field->name ?: 'field_' . $field->id }}_{{ $loop->index }}">{{ $option }}</label>
-                                    </div>
-                                @endforeach
-                            @else
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" id="{{ $field->name ?: 'field_' . $field->id }}" name="{{ $field->name ?: 'field_' . $field->id }}" value="1" {{ $field->is_required ? 'required' : '' }}>
-                                    <label class="form-check-label" for="{{ $field->name ?: 'field_' . $field->id }}">{{ $field->placeholder ?? $field->label }}</label>
-                                </div>
-                            @endif
-
-                        @elseif($field->type == 'radio')
+                    @elseif($field->type == 'select')
+                        <select class="form-select" id="{{ $field->name ?: 'field_' . $field->id }}" name="{{ $field->name ?: 'field_' . $field->id }}" {{ $field->is_required ? 'required' : '' }}>
+                            <option value="">{{ $field->placeholder ?? 'Select an option' }}</option>
                             @foreach(json_decode($field->options, true) ?? [] as $option)
+                                <option value="{{ $option }}">{{ $option }}</option>
+                            @endforeach
+                        </select>
+
+                    @elseif($field->type == 'checkbox')
+                        @if(json_decode($field->options, true))
+                            @foreach(json_decode($field->options, true) as $option)
                                 <div class="form-check mb-2">
-                                    <input class="form-check-input" type="radio" id="{{ $field->name ?: 'field_' . $field->id }}_{{ $loop->index }}" name="{{ $field->name ?: 'field_' . $field->id }}" value="{{ $option }}" {{ $field->is_required ? 'data-required="true"' : '' }}>
+                                    <input class="form-check-input" type="checkbox" id="{{ $field->name ?: 'field_' . $field->id }}_{{ $loop->index }}" name="{{ $field->name ?: 'field_' . $field->id }}[]" value="{{ $option }}" {{ $field->is_required ? 'data-required="true"' : '' }}>
                                     <label class="form-check-label" for="{{ $field->name ?: 'field_' . $field->id }}_{{ $loop->index }}">{{ $option }}</label>
                                 </div>
                             @endforeach
-
                         @else
-                            <input type="{{ $field->type }}" class="form-control" id="{{ $field->name ?: 'field_' . $field->id }}" name="{{ $field->name ?: 'field_' . $field->id }}" placeholder="{{ $field->placeholder ?? '' }}" {{ $field->is_required ? 'required' : '' }}>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="{{ $field->name ?: 'field_' . $field->id }}" name="{{ $field->name ?: 'field_' . $field->id }}" value="1" {{ $field->is_required ? 'required' : '' }}>
+                                <label class="form-check-label" for="{{ $field->name ?: 'field_' . $field->id }}">{{ $field->placeholder ?? $field->label }}</label>
+                            </div>
                         @endif
 
-                        <div class="text-danger small mt-1 error-message" id="error_{{ $field->name ?: 'field_' . $field->id }}"></div>
-                    </div>
-                @endforeach
+                    @elseif($field->type == 'radio')
+                        @foreach(json_decode($field->options, true) ?? [] as $option)
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" id="{{ $field->name ?: 'field_' . $field->id }}_{{ $loop->index }}" name="{{ $field->name ?: 'field_' . $field->id }}" value="{{ $option }}" {{ $field->is_required ? 'data-required="true"' : '' }}>
+                                <label class="form-check-label" for="{{ $field->name ?: 'field_' . $field->id }}_{{ $loop->index }}">{{ $option }}</label>
+                            </div>
+                        @endforeach
 
-                <button type="submit" class="btn btn-primary w-100">Submit</button>
-            </form>
+                    @else
+                        <input type="{{ $field->type }}" class="form-control" id="{{ $field->name ?: 'field_' . $field->id }}" name="{{ $field->name ?: 'field_' . $field->id }}" placeholder="{{ $field->placeholder ?? '' }}" {{ $field->is_required ? 'required' : '' }}>
+                    @endif
+
+                    <div class="text-danger small mt-1 error-message" id="error_{{ $field->name ?: 'field_' . $field->id }}"></div>
+                </div>
+            @endforeach
+
+            <button type="submit" class="btn btn-primary w-100">Submit</button>
+        </form>
+    </div>
+
+    <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1080;">
+        <div id="formToast" class="toast align-items-center text-white bg-primary" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="3000">
+            <div class="d-flex">
+                <div class="toast-body" id="toastMessage"></div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
         </div>
     </div>
-<!-- Toast Container -->
-<div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1080;">
-    <div id="formToast" class="toast align-items-center text-white bg-primary" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="3000">
-        <div class="d-flex">
-            <div class="toast-body" id="toastMessage"></div>
-            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-    </div>
-</div>
-
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios@1.4.0/dist/axios.min.js"></script>
