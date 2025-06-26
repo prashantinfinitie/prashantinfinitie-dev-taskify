@@ -63,6 +63,7 @@ class PublicFormController extends Controller
                     $messages[$fieldName . '.size'] = $field->label . ' must be exactly 2 characters.';
                     break;
                 case 'country_code':
+                    dd('in country code');
                     $fieldRules[] = 'max:5';
                     $messages[$fieldName . '.max'] = $field->label . ' may not be greater than 5 characters.';
                     break;

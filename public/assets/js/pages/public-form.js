@@ -112,3 +112,11 @@ $(document).ready(function () {
         width: '100%'
     });
 });
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const isInIframe = window.self !== window.top;
+    if (!isInIframe) {
+        document.body.classList.add('standalone-form');
+    }
+});
