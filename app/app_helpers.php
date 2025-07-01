@@ -4939,6 +4939,7 @@ if (!function_exists('formatLead')) {
             'lead_source' => $lead->source ? $lead->source->name : '-',
             'lead_stage_id' => $lead->stage_id,
             'lead_stage' => $lead->stage ? $lead->stage->name : '-',
+            'lead_stage_color' => $lead->stage->color ? $lead->stage->color : '-',
             'assigned_to' => $lead->assigned_to,
             'assigned_user' => ucfirst($lead->assigned_user->first_name) . ' ' . ucfirst($lead->assigned_user->last_name),
             'job_title' => $lead->job_title,
@@ -5059,8 +5060,8 @@ if (!function_exists('formatLeadUserHtml')) {
     if (!function_exists('formatPayslip')) {
         function formatPayslip($payslip)
         {
-            
-            
+
+
             // dd(format_date($payslip->payment_date, true, to_format: 'Y-m-d'));
             return [
                 'id' => $payslip->id,

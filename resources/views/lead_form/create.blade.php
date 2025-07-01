@@ -149,6 +149,12 @@
                                 @endforeach
                             </div>
                         </div>
+                        <div class="alert alert-primary d-flex align-items-center">
+            <i class="bx bx-move fs-4 me-2"></i>
+            <span
+                class="fw-semibold">{{ get_label('custom_form_fields_reorder_info','Drag and drop the rows below to change the order of your form fields.'
+                ) }}</span>
+        </div>
 
                         <div class="col-md-12">
                             <div id="fieldsContainer" class="sortable"></div>

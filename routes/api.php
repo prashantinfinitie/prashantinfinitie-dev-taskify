@@ -75,6 +75,7 @@ Route::get('/permissions/{permission?}', [RolesController::class, 'checkPermissi
 Route::get('/settings/{variable}', [SettingsController::class, 'show'])->middleware(['multiguard', 'custom-verified']);
 Route::post('/settings/update', [SettingsController::class, 'store_settings_api'])->middleware(['multiguard', 'custom-verified', 'isApi','customRole:admin']);
 
+Route::get('/estimates-invoices/pdf/{id}', [EstimatesInvoicesController::class, 'pdf']);
 // Protected Routes
 Route::middleware(['multiguard', 'custom-verified', 'has_workspace'])->group(function () {
 
@@ -340,12 +341,13 @@ Route::middleware(['multiguard', 'custom-verified', 'has_workspace'])->group(fun
         Route::delete('/items/destroy/{id}', [ItemsController::class, 'destroy'])->middleware(['customcan:delete_items', 'demo_restriction', 'log.activity']);
     });
 
+
     //Estimate Invoices
     Route::middleware(['customcan:manage_estimates_invoices', 'isApi'])->group(function () {
 
         Route::get('/estimates-invoices', [EstimatesInvoicesController::class, 'apiList']);
         Route::post('/estimates-invoices/store', [EstimatesInvoicesController::class, 'store'])->middleware(['customcan:create_estimates_invoices', 'log.activity']);
-        Route::get('/estimates-invoices/pdf/{id}', [EstimatesInvoicesController::class, 'pdf'])->middleware(['checkAccess:App\Models\EstimatesInvoice,estimates_invoices,id,estimates_invoices']);
+
         Route::post('/estimates-invoices/update', [EstimatesInvoicesController::class, 'update'])->middleware(['customcan:edit_estimates_invoices', 'log.activity']);
         Route::delete('/estimates-invoices/destroy/{id}', [EstimatesInvoicesController::class, 'destroy'])->middleware(['demo_restriction', 'customcan:delete_estimates_invoices', 'checkAccess:App\Models\EstimatesInvoice,estimates_invoices,id,estimates_invoices', 'log.activity']);
     });

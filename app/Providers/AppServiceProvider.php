@@ -37,14 +37,14 @@ class AppServiceProvider extends ServiceProvider
             'half_logo' => 'storage/logos/default_half_logo.png',
             'favicon' => 'storage/logos/default_favicon.png',
             'footer_logo' => 'storage/logos/footer_logo.png',
-            'company_title' => 'Taskify - SaaS',
+            'company_title' => 'Taskify',
             'currency_symbol' => '₹',
             'currency_full_form' => 'Indian Rupee',
             'currency_code' => 'INR',
             'date_format' => 'DD-MM-YYYY|d-m-Y',
             'toast_time_out' => '5',
             'toast_position' => 'toast-top-right',
-            'allowed_file_types' => '.png,.jpg,.pdf,.doc,.docx,.xls,.xlsx,.zip,.rar,.txt',
+            'allowed_file_types' => '.png,.jpg,.pdf,.doprivate function getSettingsWithDefaults(string $key, array $defaults): arrayc,.docx,.xls,.xlsx,.zip,.rar,.txt',
             'max_files_allowed' => '10',
             'allowed_max_upload_size' => '512',
             'timezone' => 'UTC',
@@ -144,9 +144,9 @@ class AppServiceProvider extends ServiceProvider
         // Register PHP date format singleton
         $this->registerDateFormatSingleton();
 
-        // $settings = get_settings('general_settings');
+        $settings = get_settings('general_settings');
         // Load general settings from DB
-        // $this->configureRecaptcha($settings);
+        $this->configureRecaptcha($settings);
     }
 
     /**
@@ -265,7 +265,7 @@ class AppServiceProvider extends ServiceProvider
 
         if ($settings instanceof \Illuminate\Support\Collection) {
             $settings = $settings->toArray();
-    }
+        }
 
         // In case it's stored as a JSON string (common with one-row settings table)
         if (is_string($settings)) {
@@ -275,7 +275,7 @@ class AppServiceProvider extends ServiceProvider
             }
         }
 
-        return array_merge($defaults, is_array($settings) ? $settings : []);
+        return array_merge(is_array($settings) ? $settings : [], $defaults);
     }
 
 
@@ -504,7 +504,7 @@ class AppServiceProvider extends ServiceProvider
         }
 
         // Merge database settings into manifest defaults
-        $manifest = array_merge($manifestDefaults, $pwaSettings);
+        $manifest = array_merge($pwaSettings, $manifestDefaults);
 
         // Handle logo/icon override
         if (!empty($pwaSettings['logo']) && isset($manifest['icons'][0]) && is_array($manifest['icons'][0])) {

@@ -50,6 +50,9 @@
             <x-dashboard.card :title="get_label('income_vs_expense', 'Income vs Expense')">
                 <input type="text" id="filter_date_range_income_expense" class="form-control mb-3"
                     placeholder="{{ get_label('date_between', 'Date Between') }}" autocomplete="off">
+                <input type="hidden" id="filter_date_range_from" name="start_date">
+<input type="hidden" id="filter_date_range_to" name="end_date">
+
                 <div id="income-expense-chart"></div>
             </x-dashboard.card>
         </div>

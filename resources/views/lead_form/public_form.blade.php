@@ -143,8 +143,8 @@ body.standalone-form #leadForm {
 body.standalone-form .form-section {
     padding: 1.5rem;
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    border: 1px solid #e5e7eb;
+    /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); */
+    /* border: 1px solid #e5e7eb; */
 }
 
 @media (max-width: 768px) {

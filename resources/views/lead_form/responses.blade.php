@@ -16,7 +16,7 @@
                         {{ get_label('leads_management', 'Leads Management') }}
                     </li>
                     <li class="breadcrumb-item">
-                        {{ get_label('lead_forms', 'Lead Forms') }}
+                        <a href="{{ url('lead-forms') }}">{{ get_label('lead_forms', 'Lead Forms') }}</a>
                     </li>
                     <li class="breadcrumb-item active">
                         {{ get_label('responses', 'Responses') }}

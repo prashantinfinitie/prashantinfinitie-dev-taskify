@@ -146,7 +146,7 @@ class ExpensesController extends Controller
                 return
                     formatApiResponse(
                         false,
-                        'Expense updated successfully.',
+                    'Expense created successfully.',
                         [
                             'id' => $exp->id,
                             'data' => [
@@ -155,13 +155,13 @@ class ExpensesController extends Controller
                                 'expense_type_id' => $exp->expense_type_id,
                             'expense_type' => $exp->expense_type,
                                 'user_id' => $exp->user_id,
-                            'user' => [
+                            'user' =>  $exp->user ? [
                                 'id' => $exp->user->id,
                                 'first_name' => $exp->user->first_name,
                                 'last_name' => $exp->user->last_name,
                                 'email' => $exp->user->email,
                                 'photo' => $exp->user->photo ? asset('storage/' . $exp->user->photo) : asset('storage/photos/no-image.jpg'),
-                            ],
+                            ] : [],
                                 'amount' => format_currency($exp->amount, false, false),
                                 'expense_date' => format_date($exp->expense_date, false, to_format: 'Y-m-d'),
                                 'note' => $exp->note,
@@ -552,13 +552,13 @@ class ExpensesController extends Controller
                                 'expense_type_id' => $exp->expense_type_id,
                             'expense_type' => $exp->expense_type,
                                 'user_id' => $exp->user_id,
-                            'user' => [
+                            'user' => $exp->user ? [
                                 'id' => $exp->user->id,
                                 'first_name' => $exp->user->first_name,
                                 'last_name' => $exp->user->last_name,
                                 'email' => $exp->user->email,
                                 'photo' => $exp->user->photo ? asset('storage/' . $exp->user->photo) : asset('storage/photos/no-image.jpg'),
-                            ],
+                            ] : [],
                                 'amount' => format_currency($exp->amount, false, false),
                                 'expense_date' => format_date($exp->expense_date, false, to_format: 'Y-m-d'),
                                 'note' => $exp->note,

@@ -591,6 +591,7 @@ class PaymentsController extends Controller
         $total = $payments->count();
         $canEdit = checkPermission('edit_payments');
         $canDelete = checkPermission('delete_payments');
+        // dd($canDelete);
         if ($id) {
             $payment = $payments->find($id);
 
@@ -654,17 +655,19 @@ class PaymentsController extends Controller
                 );
             }
             $data = $payments->map(function ($payment) {
+                // dd($payment);
                 $created_by = strpos($payment->created_by, 'u_') === 0 ? User::find(substr($payment->created_by, 2)) : Client::find(substr($payment->created_by, 2));
                 return [
                     'id' => $payment->id,
                     'user_id' => $payment->user_id,
-                    'user' =>  [
+                    'user' =>  $payment->user ? [
                         'id' => $payment->user->id,
                         'first_name' => $payment->user->first_name,
                         'last_name' => $payment->user->last_name,
                         'email' => $payment->user->email,
                         'photo' => $payment->user->photo ? asset('storage/' . $payment->user->photo) : asset('storage/photos/no-image.jpg')
-                    ],
+                    ] : [],
+
                     'invoice_id' => $payment->invoice_id,
                     'invoice' => $payment->invoice ? '<a href="' . url("/estimates-invoices/view/{$payment->invoice}") . '">' . get_label('invoice_id_prefix', 'INVC-') . $payment->invoice_id . '</a>' : '-',
                     'payment_method_id' => $payment->payment_method_id,

@@ -22,6 +22,8 @@ class PublicFormController extends Controller
 
     public function submit(Request $request, $slug)
     {
+
+        // dd($request->input('country_code'));
         $form = LeadForm::with(['leadFormFields' => function ($query) {
             $query->orderBy('order');
         }])->where('slug', $slug)->firstOrFail();
@@ -43,7 +45,7 @@ class PublicFormController extends Controller
                 });
                 $fieldRules[] = 'regex:/^[\+]?[0-9\-\(\)\s]{7,20}$/';
             }
-
+            // dd($field->name)
             // Additional hardcoded validations for known mapped fields
             switch ($field->name) {
                 case 'email':
@@ -63,16 +65,19 @@ class PublicFormController extends Controller
                     $messages[$fieldName . '.size'] = $field->label . ' must be exactly 2 characters.';
                     break;
                 case 'country_code':
-                    dd('in country code');
-                    $fieldRules[] = 'max:5';
-                    $messages[$fieldName . '.max'] = $field->label . ' may not be greater than 5 characters.';
+                    $fieldRules[] = 'regex:/^[\+\-A-Za-z0-9]{1,5}$/';
+                    $messages[$fieldName . '.regex'] = $field->label . ' must be alphanumeric and may include "+" or "-".';
                     break;
             }
-
             if (!empty($fieldRules)) {
                 $rules[$fieldName] = $fieldRules;
                 $messages[$fieldName . '.required'] = $field->label . ' is required.';
-                $messages[$fieldName . '.max'] = $field->label . ' may not be greater than the allowed length.';
+
+                // Fix: only add fallback if no custom message set
+                if (!isset($messages[$fieldName . '.max'])) {
+                    $messages[$fieldName . '.max'] = $field->label . ' may not be greater than the allowed length.';
+                }
+
                 $messages[$fieldName . '.regex'] = $field->label . ' is invalid.';
                 $messages[$fieldName . '.numeric'] = $field->label . ' must be a number.';
                 $messages[$fieldName . '.date'] = $field->label . ' must be a valid date.';
@@ -82,6 +87,7 @@ class PublicFormController extends Controller
         $validator = Validator::make($request->all(), $rules, $messages);
 
         if ($validator->fails()) {
+
             return response()->json([
                 'success' => false,
                 'message' => 'Please fix the errors below.',
@@ -131,10 +137,10 @@ class PublicFormController extends Controller
 
             DB::commit();
 
-            return redirect()->route('lead_form.submitted');
+            // return redirect()->route('lead_form.submitted');
 
 
-            return response()->json($response);
+            return response()->json(['error' => false, 'message' => 'Form Submitted Successfully', 'redirect_url' => route('lead_form.submitted')]);
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json([
