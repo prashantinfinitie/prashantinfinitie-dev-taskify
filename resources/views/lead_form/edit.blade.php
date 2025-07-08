@@ -43,18 +43,16 @@
                         <div class="col-md-6 mb-3">
                             <label for="title" class="form-label">{{ get_label('title', 'Form Title') }} <span
                                     class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="title" name="title" required
+                            <input type="text" class="form-control" id="title" name="title"
                                 placeholder="{{ get_label('enter_form_title', 'Enter a descriptive title for your form') }}"
                                 value="{{ old('title', $leadForm->title) }}">
-                            @error('title')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
+
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="source_id" class="form-label">{{ get_label('source', 'Lead Source') }} <span
                                     class="text-danger">*</span></label>
                             <select class="form-select select2" id="select_lead_source" name="source_id"
-                                data-single-select="true" data-allow-clear="false" data-consider-workspace="true" required>
+                                data-single-select="true" data-allow-clear="false" data-consider-workspace="true" >
                                 <option value="">{{ get_label('select_source', 'Select Source') }}</option>
                                 @foreach ($sources as $source)
                                     <option value="{{ $source->id }}"
@@ -63,16 +61,14 @@
                                     </option>
                                 @endforeach
                             </select>
-                            @error('source_id')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
+
                         </div>
 
                         <div class="col-md-6 mb-3">
                             <label for="stage_id" class="form-label">{{ get_label('stage', 'Initial Stage') }} <span
                                     class="text-danger">*</span></label>
                             <select class="form-select select2" id="select_lead_stage" name="stage_id"
-                                data-single-select="true" data-allow-clear="false" data-consider-workspace="true" required>
+                                data-single-select="true" data-allow-clear="false" data-consider-workspace="true" >
                                 <option value="">{{ get_label('select_stage', 'Select Stage') }}</option>
                                 @foreach ($stages as $stage)
                                     <option value="{{ $stage->id }}"
@@ -81,15 +77,13 @@
                                     </option>
                                 @endforeach
                             </select>
-                            @error('stage_id')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
+
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="assigned_to" class="form-label">{{ get_label('assigned_to', 'Assign To') }} <span
                                     class="text-danger">*</span></label>
                             <select class="form-select select2" id="select_lead_assignee" name="assigned_to"
-                                data-single-select="true" data-allow-clear="false" data-consider-workspace="true" required>
+                                data-single-select="true" data-allow-clear="false" data-consider-workspace="true" >
                                 <option value="">{{ get_label('select_user', 'Select User') }}</option>
                                 @foreach ($users as $user)
                                     <option value="{{ $user->id }}"
@@ -98,9 +92,7 @@
                                     </option>
                                 @endforeach
                             </select>
-                            @error('assigned_to')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
+
                         </div>
 
                         <div class="col-md-12 mb-3">
@@ -108,9 +100,7 @@
                                 class="form-label">{{ get_label('description', 'Description') }}</label>
                             <textarea class="form-control" id="description" name="description" rows="3"
                                 placeholder="{{ get_label('enter_description', 'Provide a brief description of the form\'s purpose (optional)') }}">{{ old('description', $leadForm->description) }}</textarea>
-                            @error('description')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
+
                         </div>
 
                         <!-- Form Fields Configuration -->

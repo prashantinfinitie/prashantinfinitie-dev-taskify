@@ -12,6 +12,7 @@ use App\Services\DeletionService;
 use App\Models\UserClientPreference;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Validation\Rule;
 
 class LeadController extends Controller
 {
@@ -212,8 +213,11 @@ class LeadController extends Controller
             $formFields['created_by'] = $this->user->id;
             $formFields['workspace_id'] = $this->workspace->id;
 
+
+            // dd($request);
             $lead = Lead::create($formFields);
 
+            // dd($lead);
             if ($isApi) {
                 return formatApiResponse(
                     false,
@@ -232,8 +236,10 @@ class LeadController extends Controller
                 ]);
             }
         } catch (ValidationException $e) {
+
             return formatApiValidationError($isApi, $e->errors());
         } catch (Exception $e) {
+
             return formatApiResponse(
                 true,
                 'Lead Couldn\'t Created.',
@@ -341,7 +347,7 @@ class LeadController extends Controller
             $formFields = $request->validate([
                 'first_name'        => 'required|string|max:255',
                 'last_name'         => 'required|string|max:255',
-                'email'             => 'required|email|unique:leads,email,' . $lead->id,
+                'email'             => ['required', 'email', Rule::unique('leads', 'email')->ignore($lead->id)],
                 'phone'             => 'required|string|max:20',
                 'country_code'      => 'required|string|max:5',
                 'country_iso_code'  => 'required|string|size:2',

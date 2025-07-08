@@ -12,6 +12,7 @@ use App\Services\DeletionService;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Validation\ValidationException;
 
 class PayslipsController extends Controller
 {
@@ -168,7 +169,7 @@ class PayslipsController extends Controller
             ]);
 
             $payment_date = $request->input('payment_date');
-            
+
             $status = $request->input('status');
 
             if ($status == '0') {
@@ -183,6 +184,7 @@ class PayslipsController extends Controller
             $formFields['created_by'] = isClient() ? 'c_' . $this->user->id : 'u_' . $this->user->id;
             $allowance_ids = $request->input('allowances') ?? [];
             $deduction_ids = $request->input('deductions') ?? [];
+
             if ($payslip = Payslip::create($formFields)) {
                 $payslip->allowances()->attach($allowance_ids);
                 $payslip->deductions()->attach($deduction_ids);
@@ -210,8 +212,10 @@ class PayslipsController extends Controller
             } else {
                 return response()->json(['error' => true, 'message' => 'Payslip couldn\'t created.']);
             }
+        } catch (ValidationException $e) {
+            return formatApiValidationError($isApi, $e->errors());
         } catch (\Exception $e) {
-            
+
             return formatApiResponse(
                 true,
                 config('app.debug') ? $e->getMessage() : 'An error occurred.',
@@ -516,7 +520,7 @@ class PayslipsController extends Controller
                 'total_earnings.regex' => 'The total earnings must be a valid number with or without decimals.',
                 'net_pay.regex' => 'The net payable must be a valid number with or without decimals.'
             ]);
-            
+
 
             $payment_date = $request->input('payment_date');
             $status = $request->input('status');
@@ -560,6 +564,8 @@ class PayslipsController extends Controller
 
             Session::flash('message', 'Payslip updated successfully.');
             return response()->json(['error' => false, 'id' => $payslip->id]);
+        } catch (ValidationException $e) {
+            return formatApiValidationError($isApi, $e->errors());
         } catch (\Exception $e) {
             return formatApiResponse(
                 true,

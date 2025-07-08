@@ -88,6 +88,8 @@ class EmailTemplateController extends Controller
 
     public function store(Request $request)
     {
+
+
         $isApi = $request->get('isApi', false);
         if ($request->has('is_encoded') && $request->is_encoded == '1') {
             $decodedContent = base64_decode($request->content);
@@ -120,6 +122,8 @@ class EmailTemplateController extends Controller
                     'email_templates' => $email_templates
                 ]);
             }
+        } catch (ValidationException $e) {
+            return formatApiValidationError($isApi, $e->errors());
         } catch (\Exception $e) {
             return formatApiResponse(
                 true,

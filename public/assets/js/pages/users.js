@@ -33,7 +33,9 @@ addDebouncedEventListener('#user_status_filter, #user_roles_filter, #user_ev_sta
 $(document).on('click', '.clear-users-filters', function (e) {
     e.preventDefault();
     $('#user_status_filter').val('').trigger('change', [0]);
-    $('#user_roles_filter').val('').trigger('change', [0]); 
-    $('#user_ev_status_filter').val('').trigger('change', [0]); 
-    $('#table').bootstrapTable('refresh');   
+    $('#user_roles_filter').val('').trigger('change', [0]);
+    $('#user_ev_status_filter').val('').trigger('change', [0]);
+    $('#table').bootstrapTable('refresh');
 })
+
+

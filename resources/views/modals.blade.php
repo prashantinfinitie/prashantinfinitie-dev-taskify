@@ -1045,6 +1045,7 @@
                                 class="asterisk">*</span></label>
                         <input type="text" class="form-control" name="type"
                             placeholder="<?= get_label('please_enter_contract_type', 'Please enter contract type') ?>" />
+
                     </div>
                 </div>
             </div>
@@ -1898,6 +1899,7 @@
                             <div class="col mb-3">
                                 <label for="noteDescription"
                                     class="form-label"><?= get_label('description', 'Description') ?></label>
+                                    <span class="asterisk">*</span></label>
                                 <textarea id="noteDescription" class="form-control description" name="description"
                                     placeholder="<?= get_label('please_enter_description', 'Please enter description') ?>"></textarea>
                             </div>
@@ -1909,6 +1911,7 @@
                             <div class="col mb-3">
                                 <label for="drawing-container"
                                     class="form-label"><?= get_label('drawing', 'Drawing') ?></label>
+                                    <span class="asterisk">*</span></label>
                                 <div id="drawing-container" class="drawing-container"></div>
                                 <input type="hidden" id="drawing_data" name="drawing_data" value="">
 
@@ -5783,7 +5786,7 @@
                     <label for="template-subject"
                         class="form-label">{{ get_label('email_subject', 'Email Subject') }} <span
                             class="text-danger">*</span></label>
-                    <input type="text" name="subject" id="template-subject" class="form-control" required>
+                    <input type="text" name="subject" id="template-subject" class="form-control" required >
                 </div>
 
                 <div class="mb-3">
@@ -6162,15 +6165,15 @@
 
                 <div class="modal-body row g-3">
                     <div class="col-md-6">
-                        <label for="name" class="form-label">{{ get_label('full_name', 'Full Name') }} <span
-                                class="text-danger">*</span></label>
+                        <label for="name" class="form-label">{{ get_label('full_name', 'Full Name') }}</label> <span
+                                class="text-danger">*</span>
                         <input type="text" name="name" class="form-control"
                             placeholder="{{ get_label('full_name', 'Full Name') }}" required>
                     </div>
 
                     <div class="col-md-6">
-                        <label for="email" class="form-label">{{ get_label('email', 'Email') }} <span
-                                class="text-danger">*</span></label>
+                        <label for="email" class="form-label">{{ get_label('email', 'Email') }} </label><span
+                                class="text-danger">*</span>
                         <input type="email" name="email" class="form-control"
                             placeholder="{{ get_label('email', 'Email') }}" required>
                     </div>
@@ -6178,20 +6181,26 @@
                     <div class="col-md-6">
                         <label for="phone"
                             class="form-label">{{ get_label('phone_number', 'Phone Number') }}</label>
+                            <span
+                                class="text-danger">*</span></label>
                         <input type="text" name="phone" class="form-control"
-                            placeholder="{{ get_label('phone_number', 'Phone Number') }}">
+                            placeholder="{{ get_label('phone_number', 'Phone Number') }}" required>
+
                     </div>
 
                     <div class="col-md-6">
                         <label for="position" class="form-label">{{ get_label('position', 'Position') }}</label>
+                        <span
+                                class="text-danger">*</span></label>
                         <input type="text" name="position" class="form-control"
-                            placeholder="{{ get_label('position', 'Position') }}">
+                            placeholder="{{ get_label('position', 'Position') }}" required >
                     </div>
 
                     <div class="col-md-6">
-                        <label for="source" class="form-label">{{ get_label('source', 'Source') }}</label>
+                        <label for="source" class="form-label">{{ get_label('source', 'Source') }}</label><span
+                                class="text-danger">*</span></label>
                         <input type="text" name="source" class="form-control"
-                            placeholder="{{ get_label('source', 'Source') }}">
+                            placeholder="{{ get_label('source', 'Source') }} "required >
                     </div>
 
                     <div class="col-12">
@@ -6212,12 +6221,14 @@
                             </div>
                             <small
                                 class="text-muted d-block mt-2">{{ get_label('accepted_file_types', 'Accepted file types: pdf, doc, docx, jpg, png') }}</small>
+
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <label for="status" class="form-label">{{ get_label('status', 'Status') }}</label>
-
+                        <span
+                                class="text-danger">*</span></label>
                         @if (isset($statuses) && $statuses->isNotEmpty())
                             <select name="status_id" class="form-select" required>
                                 <option value="">{{ get_label('select_status', 'Select Status') }}</option>
@@ -6264,30 +6275,34 @@
 
                 <div class="modal-body row g-3">
                     <div class="col-md-6">
-                        <label for="name" class="form-label">{{ get_label('full_name', 'Full Name') }} <span
-                                class="text-danger">*</span></label>
+                        <label for="name" class="form-label">{{ get_label('full_name', 'Full Name') }} </label>
+                        <span
+                                class="text-danger">*</span>
                         <input type="text" name="name" class="form-control" id="candidateName" required>
                     </div>
 
                     <div class="col-md-6">
-                        <label for="email" class="form-label">{{ get_label('email', 'Email') }} <span
-                                class="text-danger">*</span></label>
+                        <label for="email" class="form-label">{{ get_label('email', 'Email') }} </label><span
+                                class="text-danger">*</span>
                         <input type="email" name="email" class="form-control" id="candidateEmail" required>
                     </div>
 
                     <div class="col-md-6">
-                        <label for="phone" class="form-label">{{ get_label('phone', 'Phone') }}</label>
-                        <input type="text" name="phone" class="form-control" id="candidatePhone">
+                        <label for="phone" class="form-label">{{ get_label('phone', 'Phone') }}</label></label>
+                          <span class="text-danger">*</span>
+                        <input type="text" name="phone" class="form-control" id="candidatePhone" required>
                     </div>
 
                     <div class="col-md-6">
                         <label for="position" class="form-label">{{ get_label('position', 'Position') }}</label>
-                        <input type="text" name="position" class="form-control" id="candidatePosition">
+                          <span class="text-danger">*</span>
+                        <input type="text" name="position" class="form-control" id="candidatePosition" required>
                     </div>
 
                     <div class="col-md-6">
                         <label for="source" class="form-label">{{ get_label('source', 'Source') }}</label>
-                        <input type="text" name="source" class="form-control" id="candidateSource">
+                        <span class="text-danger">*</span>
+                        <input type="text" name="source" class="form-control" id="candidateSource" required>
                     </div>
 
                     <div class="col-12">
@@ -6313,6 +6328,7 @@
 
                     <div class="col-md-6">
                         <label for="status" class="form-label">{{ get_label('status', 'Status') }}</label>
+                          <span class="text-danger">*</span>
                         @if (isset($statuses) && $statuses->isNotEmpty())
                             <select name="status_id" class="form-select" id="candidateStatusId" required>
                                 <option value="">{{ get_label('select_status', 'Select Status') }}</option>
@@ -6360,6 +6376,7 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="statusName" class="form-label">Name</label>
+                        <span class="text-danger">*</span>
                         <input type="text" class="form-control" name="name" id="statusName"
                             placeholder="Enter status name" required>
                     </div>
@@ -6422,6 +6439,7 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="editStatusName" class="form-label">Name</label>
+                        <span class="text-danger">*</span>
                         <input type="text" class="form-control" name="name" id="editStatusName"
                             placeholder="Enter new name" required>
                     </div>
@@ -6620,9 +6638,9 @@
                             aria-label="Close"></button>
                     </div>
 
-                    <div class="modal-body row">
+                    <div class="modal-body row g-3">
                         <div class="form-group col-md-6">
-                            <label for="candidate_id">Candidate</label>
+                            <label for="candidate_id">Candidate <span class="text-danger">*</span></label>
                             @if (Route::currentRouteName() == 'interviews.index')
                                 <select name="candidate_id" id="candidate_id"
                                     class="form-control select-interview-candidate" required
@@ -6643,7 +6661,7 @@
                         </div>
 
                         <div class="form-group col-md-6">
-                            <label for="interviewer_id">Interviewer</label>
+                            <label for="interviewer_id">Interviewer <span class="text-danger">*</span></label>
                             <select name="interviewer_id" id="interviewer_id"
                                 class="form-control select-interview-interviewer" required
                                 data-placeholder="{{ get_label('select_interviewer', 'Select Interviewer') }}"
@@ -6658,19 +6676,19 @@
                         </div>
 
                         <div class="form-group col-md-6">
-                            <label for="round">Round</label>
+                            <label for="round">Round <span class="text-danger">*</span></label>
                             <input type="text" name="round" id="round" class="form-control"
                                 placeholder="e.g. Technical, HR" required>
                         </div>
 
                         <div class="form-group col-md-6">
-                            <label for="scheduled_at">Scheduled At</label>
+                            <label for="scheduled_at">Scheduled At <span class="text-danger">*</span></label>
                             <input type="datetime-local" name="scheduled_at" id="scheduled_at"
                                 class="form-control" required>
                         </div>
 
                         <div class="form-group col-md-6">
-                            <label for="mode">Mode</label>
+                            <label for="mode">Mode <span class="text-danger">*</span></label>
                             <select name="mode" id="mode" class="form-control" required>
                                 <option value="">Select Mode</option>
                                 <option value="online">Online</option>
@@ -6686,7 +6704,7 @@
 
                         <!-- New Status Field for Editing -->
                         <div class="form-group col-md-6">
-                            <label for="status">Status</label>
+                            <label for="status">Status <span class="text-danger">*</span></label>
                             <select name="status" id="status" class="form-control" required>
                                 <option value="">Select Status</option>
                                 <option value="scheduled">Scheduled</option>

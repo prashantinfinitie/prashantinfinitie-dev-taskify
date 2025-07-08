@@ -270,8 +270,8 @@ class EstimatesInvoicesController extends Controller
                 $type = $request->input('type');
                 $from_date = $request->input('from_date');
                 $to_date = $request->input('to_date');
-                $from_date = Carbon::createFromFormat('d-m-Y', $from_date);
-                $to_date = Carbon::createFromFormat('d-m-Y', $to_date);
+                $from_date = Carbon::parse($from_date);
+                $to_date = Carbon::parse($to_date);
 
                 $formFields['from_date'] =  format_date($from_date, false, $isApi ? 'Y-m-d' : app('php_date_format'), 'Y-m-d');
                 $formFields['to_date'] =  format_date($to_date, false, $isApi ? 'Y-m-d' : app('php_date_format'), 'Y-m-d');
@@ -730,6 +730,7 @@ class EstimatesInvoicesController extends Controller
                 $from_date = $request->input('from_date');
                 $to_date = $request->input('to_date');
 
+                // dd('here');
                 $formFields['from_date'] =  format_date($from_date, false, $isApi ? 'Y-m-d' : app('php_date_format'), 'Y-m-d');
                 $formFields['to_date'] = format_date($to_date, false, $isApi ? 'Y-m-d' : app('php_date_format'), 'Y-m-d');
                 $formFields['total'] = str_replace(',', '', $request->input('total'));
@@ -779,10 +780,17 @@ class EstimatesInvoicesController extends Controller
         } catch (ValidationException $e) {
             return formatApiValidationError($isApi, $e->errors());
         } catch (Exception $e) {
+
             if ($isApi) {
                 return formatApiResponse(
                     true,
                     ucfirst($type) . 'couldn\'t updated',
+                    [
+                        'data' => [
+                            'message' => $e->getMessage(),
+                            'line' => $e->getLine()
+                        ]
+                    ]
                 );
             } else {
                 return response()->json(['error' => true, 'message' => ucfirst($type) . ' couldn\'t updated.']);

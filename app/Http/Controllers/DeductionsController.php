@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Deduction;
 use App\Models\Workspace;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use App\Models\Deduction;
-use Illuminate\Support\Facades\Session;
 use App\Services\DeletionService;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Validation\ValidationException;
 
 class DeductionsController extends Controller
 {
@@ -142,6 +143,9 @@ class DeductionsController extends Controller
 
                 return response()->json(['error' => true, 'message' => 'Deduction couldn\'t created.']);
             }
+        } catch (ValidationException $e) {
+
+            return formatApiValidationError($isApi, $e->errors());
         } catch (\Exception $e) {
             return formatApiResponse(
                 true,
@@ -484,6 +488,8 @@ class DeductionsController extends Controller
                     'message' => 'Deduction couldn\'t be updated.',
                 ]);
             }
+        } catch (ValidationException $e) {
+            return formatApiValidationError($isApi, $e->errors());
         } catch (\Exception $e) {
             return formatApiResponse(
                 true,

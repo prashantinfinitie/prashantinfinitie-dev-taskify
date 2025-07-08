@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ContractsController extends Controller
@@ -166,6 +167,9 @@ class ContractsController extends Controller
                 }
                 return response()->json(['error' => true, 'message' => 'Contract couldn\'t created.']);
             }
+        } catch (ValidationException $e) {
+
+            return formatApiValidationError($isApi, $e->errors());
         } catch (\Exception $e) {
             return formatApiResponse(
                 true,
@@ -328,6 +332,9 @@ class ContractsController extends Controller
 
                 return response()->json(['error' => true, 'message' => 'Contract couldn\'t be updated.']);
             }
+        } catch (ValidationException $e) {
+
+            return formatApiValidationError($isApi, $e->errors());
         } catch (\Exception $e) {
             return formatApiResponse(
                 true,
@@ -1205,8 +1212,6 @@ class ContractsController extends Controller
 
             $isApi = request()->get('isApi', false);
 
-
-
             // Validate the request data
             $formFields = $request->validate([
                 'type' => 'required|unique:contract_types,type', // Validate the type
@@ -1240,6 +1245,9 @@ class ContractsController extends Controller
 
                 return response()->json(['error' => true, 'message' => 'Contract type couldn\'t created.']);
             }
+        } catch (ValidationException $e) {
+
+            return formatApiValidationError($isApi, $e->errors());
         } catch (\Exception $e) {
             return formatApiResponse(
                 true,
@@ -1549,6 +1557,8 @@ class ContractsController extends Controller
 
                 return response()->json(['error' => true, 'message' => 'Contract type couldn\'t updated.']);
             }
+        } catch (ValidationException $e) {
+            return formatApiValidationError($isApi, $e->errors());
         } catch (\Exception $e) {
             formatApiResponse(
                 true,

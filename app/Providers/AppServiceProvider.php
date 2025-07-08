@@ -44,7 +44,7 @@ class AppServiceProvider extends ServiceProvider
             'date_format' => 'DD-MM-YYYY|d-m-Y',
             'toast_time_out' => '5',
             'toast_position' => 'toast-top-right',
-            'allowed_file_types' => '.png,.jpg,.pdf,.doprivate function getSettingsWithDefaults(string $key, array $defaults): arrayc,.docx,.xls,.xlsx,.zip,.rar,.txt',
+            'allowed_file_types' => '.png,.jpg,.pdf,.doc,.docx,.xls,.xlsx,.zip,.rar,.txt',
             'max_files_allowed' => '10',
             'allowed_max_upload_size' => '512',
             'timezone' => 'UTC',
@@ -107,8 +107,8 @@ class AppServiceProvider extends ServiceProvider
             "max_prompt_length" => "1000",
             "enable_fallback" => "1",
             "fallback_provider" => "openrouter",
-            "openrouter_api_key" => "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",
-            "gemini_api_key" => "AIzaSyDkFbg7NJIRGw66VGLI6ZHupFSNOOrc9xc",
+            "openrouter_api_key" => "",
+            "gemini_api_key" => "",
             "is_active" => "gemini",
             "openrouter_model" => "nousresearch/deephermes-3-mistral-24b-preview:free",
             "openrouter_frequency_penalty" => "0",
@@ -265,7 +265,7 @@ class AppServiceProvider extends ServiceProvider
 
         if ($settings instanceof \Illuminate\Support\Collection) {
             $settings = $settings->toArray();
-        }
+    }
 
         // In case it's stored as a JSON string (common with one-row settings table)
         if (is_string($settings)) {
@@ -275,7 +275,7 @@ class AppServiceProvider extends ServiceProvider
             }
         }
 
-        return array_merge(is_array($settings) ? $settings : [], $defaults);
+        return array_merge($defaults, is_array($settings) ? $settings : []);
     }
 
 
@@ -504,7 +504,7 @@ class AppServiceProvider extends ServiceProvider
         }
 
         // Merge database settings into manifest defaults
-        $manifest = array_merge($pwaSettings, $manifestDefaults);
+        $manifest = array_merge($manifestDefaults, $pwaSettings);
 
         // Handle logo/icon override
         if (!empty($pwaSettings['logo']) && isset($manifest['icons'][0]) && is_array($manifest['icons'][0])) {

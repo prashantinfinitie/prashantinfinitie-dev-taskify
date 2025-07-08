@@ -31,6 +31,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Request;
@@ -473,6 +474,7 @@ if (!function_exists('duplicateRecord')) {
 
             return $duplicateRecord;
         } catch (\Exception $e) {
+
             // Handle any exceptions and rollback the transaction on failure
             DB::rollback();
             return false;
@@ -4845,7 +4847,6 @@ if (!function_exists('formatEstimateInvoice')) {
     function formatEstimateInvoice($invoice)
     {
         $invoice->load('client', 'items'); // Load relationships
-
         return [
             'id' => $invoice->id,
             'type' => $invoice->type,
@@ -5201,7 +5202,7 @@ if (!function_exists('formatLeadUserHtml')) {
         return [
             'id' => $contract->id,
             'title' => $contract->title,
-            'value' => format_currency($contract->value),
+            'value' => format_currency($contract->value, 0),
             'start_date' => format_date($contract->start_date, to_format: 'Y-m-d'),
             'end_date' => format_date($contract->end_date, to_format: 'Y-m-d'),
             'client' => [

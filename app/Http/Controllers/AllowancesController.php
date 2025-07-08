@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Services\DeletionService;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Validation\ValidationException;
 
 class AllowancesController extends Controller
 {
@@ -126,6 +127,9 @@ class AllowancesController extends Controller
 
                 return response()->json(['error' => true, 'message' => 'Allowance couldn\'t created.']);
             }
+        } catch (ValidationException $e) {
+
+            return formatApiValidationError($isApi, $e->errors());
         } catch (\Exception $e) {
             return formatApiResponse(
                 true,
@@ -362,6 +366,8 @@ class AllowancesController extends Controller
 
                 return response()->json(['error' => true, 'message' => 'Allowance couldn\'t updated.']);
             }
+        } catch (ValidationException $e) {
+            return formatApiValidationError($isApi, $e->errors());
         } catch (\Exception $e) {
             return formatApiResponse(
                 true,

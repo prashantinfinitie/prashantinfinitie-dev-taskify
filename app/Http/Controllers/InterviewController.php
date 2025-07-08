@@ -440,7 +440,7 @@ class InterviewController extends Controller
                     'round' => ucwords($interview->round),
                     'scheduled_at' => ucwords($interview->scheduled_at),
                     'mode' => ucwords($interview->mode),
-                    'location' => ucwords($interview->location),
+                'location' => $interview->location ? ucwords($interview->location) : '-',
                     'status' => ucwords($interview->status),
                     'created_at' => format_date($interview->created_at),
                     'updated_at' => format_date($interview->updated_at),

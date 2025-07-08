@@ -112,7 +112,7 @@
                     </div>
                     <div class="mb-3 col-md-4">
                         <label class="form-label" for=""><?= get_label('payment_method', 'Payment method') ?></label>
-                        <select name="payment_method_id" class="form-select js-example-basic-multiple" data-placeholder="<?= get_label('Please select', 'Please select') ?>" data-allow-clear="true">                            
+                        <select name="payment_method_id" class="form-select js-example-basic-multiple" data-placeholder="<?= get_label('Please select', 'Please select') ?>" data-allow-clear="true">
                             <option></option>
                             @foreach ($payment_methods as $payment_method)
                             <option value="{{$payment_method->id}}">{{$payment_method->title}}</option>

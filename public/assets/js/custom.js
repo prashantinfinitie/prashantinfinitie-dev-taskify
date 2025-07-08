@@ -1480,6 +1480,12 @@ $(document).on("submit", ".form-submit-event", function (e) {
 
 
     var currentForm = $(this);
+    console.log(currentForm.find("input").length);
+    console.log(currentForm.find("select").length);
+    console.log(currentForm.find("textarea").length);
+
+
+    console.log(currentForm);
     var submit_btn = $(this).find("#submit_btn");
     var btn_html = submit_btn.html();
     var btn_val = submit_btn.val();
@@ -1799,6 +1805,7 @@ $(document).on("submit", ".form-submit-event", function (e) {
                                         .trigger("change");
                                 }
                             }
+
                         }
                         toastr.success(result["message"]);
                         currentForm.find(".error-message").html("");
@@ -1858,9 +1865,16 @@ $(document).on("submit", ".form-submit-event", function (e) {
                     "input[name], select[name], textarea[name]"
                 );
                 inputFields = $(inputFields.toArray().reverse());
+
+
+                console.log("input-fields", inputFields)
+                // var inputFields = currentForm.find("input[name], select[name], textarea[name]").get().reverse();
                 // Iterate through all input fields
                 inputFields.each(function () {
+
                     var inputField = $(this);
+
+                    console.log(inputField);
                     var fieldName = inputField.attr("name");
                     var errorMessageElement = $(
                         '<span class="text-danger error-message"></span>'

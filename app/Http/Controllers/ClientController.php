@@ -145,7 +145,14 @@ class ClientController extends Controller
                 'last_name' => 'required',
                 'company' => 'nullable',
                 'email' => ['required', 'email', 'unique:clients,email'],
-                'phone' => 'nullable|required_with:country_code|unique:clients,phone,NULL,id,country_code,' . $request->country_code,
+                'phone' => [
+                    'nullable',
+                    'required_with:country_code',
+                    'regex:/^[0-9]{6,15}$/',
+                    Rule::unique('clients')->ignore($request->id)->where(function ($query) use ($request) {
+                        return $query->where('country_code', $request->country_code);
+                    }),
+                ],
                 'country_code' => 'nullable|required_with:phone',
                 'country_iso_code' => 'nullable',
                 'password' => $internal_purpose ? 'nullable|confirmed|min:6' : 'required|min:6',
@@ -468,6 +475,7 @@ class ClientController extends Controller
                 'phone' => [
                     'nullable',
                     'required_with:country_code',
+                    'regex:/^[0-9]{6,15}$/',
                     Rule::unique('clients')->ignore($request->id)->where(function ($query) use ($request) {
                         return $query->where('country_code', $request->country_code);
                     }),

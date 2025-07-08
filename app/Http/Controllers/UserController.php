@@ -158,7 +158,15 @@ class UserController extends Controller
                 'password' => 'required|min:6',
                 'password_confirmation' => 'required|same:password',
                 'address' => 'nullable',
-                'phone' => 'nullable|required_with:country_code|unique:users,phone,NULL,id,country_code,' . $request->country_code,
+                'phone' => [
+                    'nullable',
+                    'required_with:country_code',
+                    'regex:/^[0-9]{6,15}$/',
+                    Rule::unique('users')->where(function ($query) use ($request) {
+                        return $query->where('country_code', $request->input('country_code'));
+                    }),
+                ],
+
                 'country_code' => 'nullable|required_with:phone',
                 'country_iso_code' => 'nullable',
                 'city' => 'nullable',
@@ -509,6 +517,7 @@ class UserController extends Controller
                 'phone' => [
                     'nullable',
                     'required_with:country_code',
+                    'regex:/^[0-9]{6,15}$/',
                     Rule::unique('users')->ignore($request->id)->where(function ($query) use ($request) {
                         return $query->where('country_code', $request->country_code);
                     }),

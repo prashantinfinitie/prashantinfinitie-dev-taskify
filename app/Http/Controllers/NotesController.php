@@ -87,8 +87,8 @@ class NotesController extends Controller
             'note_type' => 'required|in:text,drawing',
             'title' => 'required|string',
             'color' => 'required|in:info,warning,danger',
-            'description' => 'nullable|string|required_if:type,text',
-            'drawing_data' => 'nullable|string|required_if:type,drawing',
+            'description' => 'nullable|string|required_if:note_type,text',
+            'drawing_data' => 'nullable|string|required_if:note_type,drawing',
         ];
         $drawingData = $request->input('drawing_data');
 
@@ -108,6 +108,16 @@ class NotesController extends Controller
 
         try {
             $formFields = $request->validate($rules);
+
+            if ($formFields['note_type'] === 'drawing') {
+                if (empty($decodedSvg) || !preg_match('/<(path|line|circle|rect|polyline|polygon)\b/i', $decodedSvg)) {
+                    return response()->json([
+                        'error' => true,
+                        'message' => 'The drawing field is required'
+                    ]);
+                }
+            }
+
             $formFields['drawing_data'] = $decodedSvg;
             $formFields['workspace_id'] = $this->workspace->id;
             $formFields['creator_id'] = getGuardName() == 'client' ? 'c_' . $this->user->id : 'u_' . $this->user->id;
@@ -215,6 +225,17 @@ class NotesController extends Controller
 
         try {
             $formFields = $request->validate($rules);
+            // dd(($formFields['note_type'] = 'drawing'));
+
+
+            if ($formFields['note_type'] === 'drawing') {
+                if (empty($decodedSvg) || !preg_match('/<(path|line|circle|rect|polyline|polygon)\b/i', $decodedSvg)) {
+                    return response()->json([
+                        'error' => true,
+                        'message' => 'The drawing field is required'
+                    ]);
+                }
+            }
             $formFields['drawing_data'] = $decodedSvg;
             // dd($formFields);
             $note = Note::findOrFail($request->id);

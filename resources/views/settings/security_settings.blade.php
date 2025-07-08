@@ -86,6 +86,16 @@
                                 value="{{ !isset($general_settings['allowed_file_types']) ? '.pdf, .doc, .docx, .png, .jpg, .xls, .xlsx, .zip, .rar, .txt' : $general_settings['allowed_file_types'] }}">
                         </div>
                         {{-- For reCAPATCHA --}}
+                        <div class="col-md-12 mb-3">
+                            <div class="alert alert-info">
+
+                                    {!! get_label(
+                                        'recaptcha_not_configured_info',
+                                        'If Google reCAPTCHA is not configured Please generate your keys from the <a href="https://www.google.com/recaptcha/admin" target="_blank" rel="noopener noreferrer">Google reCAPTCHA Admin Console</a> or contact the admin.',
+                                    ) !!}
+                                </div>
+
+                        </div>
 
                         <div class="col-md-12 mb-3">
                             <label class="form-check-label" for="recaptcha_enabled">
@@ -95,16 +105,11 @@
                                 title="<?= get_label('enable_recaptcha_info', 'If enabled, reCAPTCHA will be shown on login and signup pages.') ?>"></i>
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" id="recaptcha_enabled"
-                                    name="recaptcha_enabled" @if (isset($general_settings['recaptcha_enabled']) && $general_settings['recaptcha_enabled'] == 1) checked @endif>
+                                    name="recaptcha_enabled" @if (!isset($general_settings['recaptcha_enabled']) || $general_settings['recaptcha_enabled'] == 1) checked @endif>
                             </div>
                         </div>
 
-    <div class="alert alert-info">
-        {!! get_label(
-            'recaptcha_not_configured_info',
-            'If Google reCAPTCHA is not configured Please generate your keys from the <a href="https://www.google.com/recaptcha/admin" target="_blank" rel="noopener noreferrer">Google reCAPTCHA Admin Console</a> or contact the admin.'
-        ) !!}
-    </div>
+
 
                         <div class="col-md-6 mb-3">
                             <label for="recaptcha_site_key"
