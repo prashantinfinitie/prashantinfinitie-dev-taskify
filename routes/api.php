@@ -142,6 +142,7 @@ Route::middleware(['multiguard', 'custom-verified', 'has_workspace'])->group(fun
         Route::get('/comments/get/{id}', [ProjectsController::class, 'get_comment']);
         Route::post('/comments/update', [ProjectsController::class, 'update_comment'])->middleware(['isApi']);
         Route::delete('/comments/destroy', [ProjectsController::class, 'destroy_comment'])->middleware(['demo_restriction', 'log.activity']);
+        Route::any('/projects/comments/destroy-attachment/{id}', [ProjectsController::class, 'destroy_comment_attachment'])->name('comments.destroy_attachment');
     });
 
     //Project Media

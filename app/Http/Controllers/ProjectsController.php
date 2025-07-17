@@ -3244,6 +3244,34 @@ class ProjectsController extends Controller
             ], 500);
         }
     }
+
+    /**
+     * Delete a comment attachment.
+     *
+     * This endpoint deletes a specific attachment belonging to a comment and removes its file from storage.
+     * The user must be authenticated and have permission to delete comment attachments.
+     *
+     * @authenticated
+     *
+     * @group Project Comments
+     *
+     * @urlParam id int required The ID of the comment attachment to delete.
+     *
+     * @response 200 {
+     *   "error": false,
+     *   "message": "Attachment deleted successfully."
+     * }
+     *
+     * @response 404 {
+     *   "error": true,
+     *   "message": "Attachment not found."
+     * }
+     *
+     * @response 500 {
+     *   "error": true,
+     *   "message": "Attachment couldn't be deleted."
+     * }
+     */
     public function destroy_comment_attachment($id)
     {
         $attachment = CommentAttachment::findOrFail($id);
